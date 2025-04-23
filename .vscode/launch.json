@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-RentALookApplication<rent-a-look>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.lucia.palermo.rentalapp.rent_a_look.RentALookApplication",
+            "projectName": "rent-a-look",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

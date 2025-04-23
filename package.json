@@ -1,0 +1,16 @@
+{
+  "name": "desafioprofesional",
+  "version": "1.0.0",
+  "description": "Proyecto de alquiler de vestidos - Frontend + Backend",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm --prefix frontend run dev\" \"./mvnw -f backend spring-boot:run\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
