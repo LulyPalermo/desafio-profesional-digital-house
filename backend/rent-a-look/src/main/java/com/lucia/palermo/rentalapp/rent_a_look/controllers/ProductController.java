@@ -3,8 +3,11 @@ package com.lucia.palermo.rentalapp.rent_a_look.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lucia.palermo.rentalapp.rent_a_look.services.ProductService;
@@ -24,6 +27,12 @@ public class ProductController {
     @GetMapping("/products") // Expone un endpoint para listar todas los productos.
     public List<Product> list() {
         return service.findAll(); // El framework convierte el list de productos en una estructura json
+    }
+
+     @DeleteMapping("/products/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+        service.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

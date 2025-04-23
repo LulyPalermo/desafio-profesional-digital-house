@@ -34,7 +34,7 @@ export const ProductDetail = () => {
       <main className="mainDetailProduct">
         <section className="detailHeader">
           <h1 className="product-detail-title">{product.name}</h1>
-          <Link to="/" className="nav-link secondary-button">Volver al listado</Link>
+          <Link to="/" className="nav-link secondary-button">Volver</Link>
         </section>
 
         <div className="product-detail">

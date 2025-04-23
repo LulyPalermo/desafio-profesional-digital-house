@@ -44,7 +44,7 @@ export const NavBarComponent = () => {
                 </div>
                 <div className='account-container-mobile'>
                 <span><i className="ri-user-3-line"></i></span>
-                <Link to="/administración" className="nav-link secondary-button" onClick={toggleMenu}>Crear Cuenta</Link>
+                <Link className="nav-link secondary-button" onClick={toggleMenu}>Crear Cuenta</Link>
                 <span>/</span>
                 <Link className="nav-link secondary-button" onClick={toggleMenu}>Iniciar sesión</Link>
                 </div>

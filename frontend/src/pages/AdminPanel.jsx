@@ -50,7 +50,7 @@ export const AdminPanel = () => {
 
                 <section className="admin-panel">
                     <nav className="admin-menu">
-                        <Link to='/admin'>
+                        <Link to='/adminProducts'>
                             <button className="admin-panel-button">
                                 <i className="ri-file-list-line"></i>
                                 Lista de productos

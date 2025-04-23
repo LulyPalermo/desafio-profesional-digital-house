@@ -7,3 +7,14 @@ export const getProducts = async () => {
 
     return products;
 }
+
+// Acá se elimina producto por ID
+export const deleteProductById = async (id) => {
+    const response = await fetch(`http://localhost:8080/products/${id}`, {
+        method: 'DELETE',
+    });
+
+    if (!response.ok) {
+        throw new Error("No se pudo eliminar el producto");
+    }
+};

@@ -1,13 +1,17 @@
 import { Link } from "react-router-dom"
 import { AdminNavBar } from "../components/AdminNavBar"
 import { useEffect, useState } from "react";
-import { getProducts } from "../services/productService";
+import { deleteProductById, getProducts } from "../services/productService";
+import { ConfirmDeleteModal } from "../components/ConfirmDeleteModal";
 
+// import Swal from 'sweetalert2';
 
 export const AdminProducts = () => {
 
     const [products, setProducts] = useState([]);
 
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [selectedProductId, setSelectedProductId] = useState(null);
 
     const showAllProducts = async () => {
         const allProducts = await getProducts();
@@ -17,6 +21,37 @@ export const AdminProducts = () => {
         () => {
             showAllProducts();
         }, []);
+
+    // Lógica de confirmación y eliminación dentro del componente:
+    const handleDeleteClick = (id) => {
+        setSelectedProductId(id);
+        setShowDeleteModal(true);
+    };
+
+    const confirmDelete = async () => {
+        try {
+            await deleteProductById(selectedProductId);
+            showAllProducts();
+            setShowDeleteModal(false);
+            setSelectedProductId(null);
+        } catch (error) {
+            console.error("Error al eliminar el producto:", error);
+            alert("Hubo un problema al eliminar el producto.");
+        }
+    };
+
+    /* const handleDelete = async (id) => {
+        const confirmDelete = window.confirm("¿Estás segura/o de que querés eliminar este producto?");
+        if (confirmDelete) {
+            try {
+                await deleteProductById(id); // Llama al backend
+                showAllProducts(); // vuelve a cargar productos actualizados
+            } catch (error) {
+                console.error("Error al eliminar el producto:", error);
+                alert("Hubo un problema al eliminar el producto.");
+            }
+        }
+    }; */
 
 
     return (
@@ -72,15 +107,30 @@ export const AdminProducts = () => {
                                 <div id="edit-product" >
                                     <span className="accions"><i className="ri-pencil-fill"></i></span>
                                 </div>
-                                <div id="delete-product">
+                                <div id="delete-product" onClick={() => handleDeleteClick(product.id)}>
                                     <span className="accions"><i className="ri-delete-bin-fill"></i></span>
                                 </div>
                             </div>
                         </div>
                     ))}
+
+                   {/*  <div className="pagination">
+                        <p>Filas por página:</p>
+                        <p>5</p>
+                        <p>1-5 de 6</p>
+                        <span><i className="ri-arrow-left-s-line"></i><i className="ri-arrow-right-s-line"></i></span>
+                    </div> */}
+
                 </section>
+
             </main>
-          
+            {/* Modal de confirmación */}
+            {showDeleteModal && (
+                <ConfirmDeleteModal
+                    onClose={() => setShowDeleteModal(false)}
+                    onConfirm={confirmDelete}
+                />
+            )}
         </>
     )
 }

@@ -23,6 +23,12 @@ public class ProductServiceImpl implements ProductService {
         return (List<Product>) repository.findAll();
     }
 
+    @Override
+    @Transactional
+    public void deleteById(Long id) {
+        repository.deleteById(id);
+    }
+
    
 
 }

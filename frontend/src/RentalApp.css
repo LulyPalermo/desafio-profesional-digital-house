@@ -436,6 +436,14 @@ footer {
     footer {
         padding: 2rem;
     }
+
+    .social-media {
+        gap: 1rem;
+    }
+
+    .social-media i{
+        font-size: 2rem;
+    }
 }
 
 /* -------------------------------------------------------------------- */
