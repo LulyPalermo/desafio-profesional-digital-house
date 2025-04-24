@@ -18,6 +18,7 @@ export const AdminPanel = () => {
     if (isMobile) {
         return (
             <>
+            <AdminNavBar />
                 <main className="mainAdmin">
                     <section className="section-title">
                         <h1 className="page-title">Panel de administración</h1>

@@ -9,7 +9,6 @@ import { ConfirmDeleteModal } from "../components/ConfirmDeleteModal";
 export const AdminProducts = () => {
 
     const [products, setProducts] = useState([]);
-
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedProductId, setSelectedProductId] = useState(null);
 
@@ -86,13 +85,25 @@ export const AdminProducts = () => {
                         <div className="table-info" key={product.id}>
                             <p className="header-row-cell id-cell">{product.id}</p>
 
-                            {console.log("Imagen URL:", product.images[0])}
+                            {/* {console.log("Imagen URL:", product.images[0])}
                             <img
                                 src={product.images[0].imageUrl}
                                 // src={product.images[0]}
                                 alt="imagen del producto"
                                 className="header-row-cell img-cell"
-                            />
+                            /> */}
+
+                            <div className="header-row-cell img-cell">
+                                {product.images && product.images.length > 0 && product.images[0].imageUrl ? (
+                                    <img
+                                        src={product.images[0].imageUrl}
+                                        alt="imagen del producto"
+                                        className="product-image"
+                                    />
+                                ) : (
+                                    <span className="no-image">Sin imagen</span>
+                                )}
+                            </div>
 
                             {/* <img src={product.images[0]} alt="imagen del producto" className="header-row-cell img-cell" /> */}
                             <p className="header-row-cell name-cell">{product.name}</p>
@@ -114,7 +125,7 @@ export const AdminProducts = () => {
                         </div>
                     ))}
 
-                   {/*  <div className="pagination">
+                    {/*  <div className="pagination">
                         <p>Filas por página:</p>
                         <p>5</p>
                         <p>1-5 de 6</p>

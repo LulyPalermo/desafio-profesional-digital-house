@@ -7,4 +7,6 @@ que es parte del framework de sprint data para implementar un CRUD.
 Para todas las operaciones a la base de datos*/
 public interface ProductRepository extends CrudRepository<Product, Long>{
 
+    Product findByName(String name); // Este método nos permite buscar un producto por su nombre, para validar que no esté duplicado antes de guardarlo.
+
 }

@@ -7,4 +7,8 @@ public interface ProductService {
     List<Product> findAll();
 
     void deleteById(Long id); // Método para eliminar producto
+
+    Product save(Product product); // Método para guardar un producto
+
+    Product findByName (String name); // Método para buscar por nombre
 }
