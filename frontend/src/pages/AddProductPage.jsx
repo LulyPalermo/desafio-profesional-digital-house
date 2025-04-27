@@ -138,7 +138,7 @@ export const AddProductPage = () => {
                     <div className="form-info-section">
                         <div className="form-title">
                             <h1>Imágenes</h1>
-                            <p>Para mantener el orden nombra a tus imagenes seguidas de un número. Ejemplo: <br />nombre1.png <br />nombre.png</p>
+                            <p>Para mantener el orden nombra a tus imágenes seguidas de un número. Ejemplo: <br />nombre1.png <br />nombre.png</p>
                         </div>
 
                         <div className="form-info">
