@@ -9,6 +9,7 @@
     --mediumGrey: #939395;
     --darkGrey: #4C5666;
     --black: #2E3644;
+    --error: #D03F3F;
 
     /* Fuentes */
     /* --fontPrimary: 'Raleway', sans-serif; */
@@ -118,6 +119,7 @@ body {
 /* Ocultar menú hamburguesa en desktop */
 .desktop {
     display: flex;
+    align-items: baseline;
 }
 
 .mobile {
@@ -441,7 +443,7 @@ footer {
         gap: 1rem;
     }
 
-    .social-media i{
+    .social-media i {
         font-size: 2rem;
     }
 }
@@ -557,7 +559,7 @@ footer {
         gap: 1rem;
     }
 
-    .product-detail-title{
+    .product-detail-title {
         order: 2;
     }
 
@@ -1237,6 +1239,168 @@ form {
 }
 
 
+/* -------------------------------------------------------------------- */
+
+/* MODAL LOGIN | REGISTRO */
+
+.login-modal-overlay,
+.register-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.login-modal-content,
+.register-modal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--white);
+    padding: 3rem;
+    border-radius: 0.4rem;
+    z-index: 1000;
+    max-width: 45rem;
+    width: 90%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.login-modal-header,
+.register-modal-header {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-end;
+}
+
+.login-modal-header h1,
+.register-modal-header h1 {
+    font-size: 3rem;
+    border-bottom: 1px solid var(--lightGrey);
+    padding-bottom: 1rem;
+    width: 100%;
+    font-weight: 500;
+    text-align: center;
+}
+
+.login-modal-description,
+.register-modal-description {
+    font-weight: 300;
+    text-align: center;
+    padding-top: 1rem;
+    margin: 0 auto;
+}
+
+.login-close-button,
+.register-close-button {
+    border: none;
+    background: none;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.login-modal-form ,
+.register-modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.login-form-labels,
+.register-form-labels {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.login-form-checkbox {
+    display: flex;
+    gap: 1rem;
+}
+
+.login-form-checkbox label {
+    font-weight: 350;
+}
+
+.login-form-labels input,
+.register-form-labels input  {
+    min-height: 4.5rem;
+    /* width: 100%; */
+    font: var(--font);
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--black);
+    border: 1px solid var(--mediumGrey);
+    border-radius: 0.4rem;
+    letter-spacing: .06rem;
+    outline: none;
+    background-color: var(--taupe);
+    padding: 0 2rem;
+}
+
+.login-form-labels input:focus,
+.register-form-labels input:focus {
+    border: 1.5px solid var(--secondary);
+}
+
+.login-helper-text,
+.register-helper-text {
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: var(--error);
+    line-height: 1.8rem;
+}
+
+.login-error{
+    border: 1px solid var(--error);
+    border-radius: 0.4rem;
+    padding: 1.5rem;
+}
+
+.login-modal-links,
+.register-modal-links {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    font-size: 1.6rem;
+    font-weight: 350;
+    /* line-height: 2rem; */
+}
+
+.link-button{
+    /* font-size: 1.6rem; */
+    color: var(--black);
+    cursor: pointer;
+    letter-spacing: .04rem;
+    border-bottom: 0.1rem solid transparent;
+    /* transition-duration: .3s; */
+    transition: all .5s ease;
+}
+
+.link-button:hover{
+    color: var(--secondary);
+}
+
+.password-requirement{
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: var(--black);
+    line-height: 1.8rem;
+}
+
+
+/* -------------------------------------------------------------------- */
+
 
 
 /* BOTONES */
@@ -1285,16 +1449,18 @@ form {
 }
 
 .secondary-button {
+    font-family: var(--fontPrimary);
     font-size: 1.6rem;
     text-decoration: none;
     color: var(--secondary);
     cursor: pointer;
     letter-spacing: .08rem;
+    padding-bottom: 0.2rem;
+    border: none;
+    background-color: transparent;
     border-bottom: 0.1rem solid transparent;
     transition-duration: .3s;
-    /* transition-property: color; */
     transition: all .5s ease;
-
 }
 
 .secondary-button:hover {
