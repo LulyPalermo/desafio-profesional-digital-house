@@ -19,7 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController // Indica que esta clase maneja peticiones HTTP.
 /* @RequestMapping("/products") */ // Define la ruta base del controlador.
-@CrossOrigin(origins = "http://localhost:5173") // Permite que el frontend acceda a los endpoints.
+@CrossOrigin(origins = "*") // Permite peticiones desde cualquier frontend 
+//@CrossOrigin(origins = "http://localhost:5173") // Permite que el frontend acceda a los endpoints.
 
 public class ProductController {
 

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 export const RegisterModal = ({ isOpen, onClose }) => {
-  
+
   const [formData, setFormData] = useState({
     name: '',
     apellido: '',
@@ -11,6 +11,8 @@ export const RegisterModal = ({ isOpen, onClose }) => {
   });
 
   const [errors, setErrors] = useState({});
+  const [apiError, setApiError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   if (!isOpen) return null;
 
@@ -43,14 +45,42 @@ export const RegisterModal = ({ isOpen, onClose }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setApiError('');
+    setSuccessMessage('');
     const validationErrors = validate();
 
     if (Object.keys(validationErrors).length === 0) {
-      console.log('Datos válidos para registrar:', formData);
-      // Aquí va el POST al backend o llamada a la API.
-      setErrors({});
+      try {
+        const response = await fetch('http://localhost:8080/api/users/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            nombre: formData.name,
+            apellido: formData.apellido,
+            email: formData.email,
+            password: formData.password
+          }),
+        });
+
+        if (response.ok) {
+          setSuccessMessage('Registro exitoso. Puedes iniciar sesión ahora.');
+          setFormData({ name: '', apellido: '', email: '', password: '' });
+          setErrors({});
+          // Opcional: cerrar modal automáticamente o esperar que usuario cierre
+          // onClose();
+        } else if (response.status === 400) {
+          setApiError('Ya existe un usuario registrado con ese correo.');
+        } else {
+          setApiError('Error en el servidor. Intenta más tarde.');
+        }
+      } catch (error) {
+        console.error('Error en la llamada al backend:', error);
+        setApiError('No se pudo conectar con el servidor.');
+      }
     } else {
       setErrors(validationErrors);
     }
@@ -127,6 +157,9 @@ export const RegisterModal = ({ isOpen, onClose }) => {
               <p>- 1 símbolo o caracter especial (ej: # _ @ - $ . / )</p>
             </div>
           </div>
+
+          {apiError && <p className="login-helper-text" style={{ color: 'red' }}>{apiError}</p>}
+          {successMessage && <p className="login-helper-text" style={{ color: 'green' }}>{successMessage}</p>}
 
           <button type="submit" className="primary-button">Crear cuenta</button>
 
