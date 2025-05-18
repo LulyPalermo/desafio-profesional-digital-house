@@ -23,11 +23,11 @@ export const RegisterModal = ({ isOpen, onClose }) => {
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/;
 
     if (!nameRegex.test(formData.name)) {
-      newErrors.name = 'El nombre solo debe contener letras y espacios.';
+      newErrors.name = 'El nombre solo debe contener letras.';
     }
 
     if (!nameRegex.test(formData.apellido)) {
-      newErrors.apellido = 'El apellido solo debe contener letras y espacios.';
+      newErrors.apellido = 'El apellido solo debe contener letras.';
     }
 
     if (!emailRegex.test(formData.email)) {
@@ -67,7 +67,7 @@ export const RegisterModal = ({ isOpen, onClose }) => {
         });
 
         if (response.ok) {
-          setSuccessMessage('Registro exitoso. Puedes iniciar sesión ahora.');
+          setSuccessMessage('Tu cuenta se ha creado exitosamente. Ahora puedes iniciar sesión.');
           setFormData({ name: '', apellido: '', email: '', password: '' });
           setErrors({});
           // Opcional: cerrar modal automáticamente o esperar que usuario cierre
@@ -103,6 +103,10 @@ export const RegisterModal = ({ isOpen, onClose }) => {
         </div>
 
         <form className="register-modal-form" onSubmit={handleSubmit}>
+
+        {apiError && <p className="login-error">{apiError}</p>}
+        {successMessage && <p className="register-success-message">{successMessage}</p>}
+
           <div className='register-form-labels'>
             <label>Nombre</label>
             <input
@@ -156,16 +160,13 @@ export const RegisterModal = ({ isOpen, onClose }) => {
               <p>- 1 número</p>
               <p>- 1 símbolo o caracter especial (ej: # _ @ - $ . / )</p>
             </div>
-          </div>
-
-          {apiError && <p className="login-helper-text" style={{ color: 'red' }}>{apiError}</p>}
-          {successMessage && <p className="login-helper-text" style={{ color: 'green' }}>{successMessage}</p>}
+          </div>          
 
           <button type="submit" className="primary-button">Crear cuenta</button>
 
-          <div className="register-modal-links">
+          {/* <div className="register-modal-links">
             <p>Ya tengo una cuenta y quiero <a href="#" className="link-button">iniciar sesión</a></p>
-          </div>
+          </div> */}
         </form>
       </div>
     </>

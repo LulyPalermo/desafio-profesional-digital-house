@@ -9,6 +9,7 @@
     --mediumGrey: #939395;
     --darkGrey: #4C5666;
     --black: #2E3644;
+    --success: #3C9B94;
     --error: #D03F3F;
 
     /* Fuentes */
@@ -124,6 +125,41 @@ body {
 
 .mobile {
     display: none;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.login-avatar{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.info-avatar {
+    width: 4rem;
+    height: 4rem;
+    background-color: var(--secondary);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* font-weight: 300; */
+    font-size: 1.6rem;
+    user-select: none;
+    /* esto es para que no se pueda seleccionar el texto */
+    text-transform: uppercase;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.login-greeting{
+    font-size: 1.6rem;
+    color: var(--black);
+    font-weight: 350;
 }
 
 /* Menú hamburguesa */
@@ -1272,6 +1308,10 @@ form {
     z-index: 1000;
     max-width: 45rem;
     width: 90%;
+    max-height: 90vh;
+    /* máximo 90% del alto de la ventana */
+    overflow-y: auto;
+    /* activa scroll si es necesario */
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
@@ -1309,7 +1349,7 @@ form {
     cursor: pointer;
 }
 
-.login-modal-form ,
+.login-modal-form,
 .register-modal-form {
     display: flex;
     flex-direction: column;
@@ -1333,7 +1373,7 @@ form {
 }
 
 .login-form-labels input,
-.register-form-labels input  {
+.register-form-labels input {
     min-height: 4.5rem;
     /* width: 100%; */
     font: var(--font);
@@ -1361,8 +1401,18 @@ form {
     line-height: 1.8rem;
 }
 
-.login-error{
+.login-error {
     border: 1px solid var(--error);
+    border-radius: 0.4rem;
+    padding: 1.5rem;
+}
+
+.register-success-message {
+    font-size: 1.6rem;
+    font-weight: 350;
+    color: var(--success);
+    line-height: 1.8rem;
+    border: 1px solid var(--success);
     border-radius: 0.4rem;
     padding: 1.5rem;
 }
@@ -1377,7 +1427,7 @@ form {
     /* line-height: 2rem; */
 }
 
-.link-button{
+.link-button {
     /* font-size: 1.6rem; */
     color: var(--black);
     cursor: pointer;
@@ -1387,11 +1437,11 @@ form {
     transition: all .5s ease;
 }
 
-.link-button:hover{
+.link-button:hover {
     color: var(--secondary);
 }
 
-.password-requirement{
+.password-requirement {
     font-size: 1.6rem;
     font-weight: 300;
     color: var(--black);

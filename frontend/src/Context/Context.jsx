@@ -1,8 +1,9 @@
+import PropTypes from "prop-types";
 import { createContext, useState } from "react";
 
 export const Context = createContext()
 
-/* eslint-disable-next-line react/prop-types */
+
 const ContextProvider = ({ children }) => {
 
     const [detail, setDetail] = useState([])
@@ -16,3 +17,7 @@ const ContextProvider = ({ children }) => {
 }
 
 export default ContextProvider
+
+ContextProvider.propTypes = {
+    children: PropTypes.node.isRequired,
+  };

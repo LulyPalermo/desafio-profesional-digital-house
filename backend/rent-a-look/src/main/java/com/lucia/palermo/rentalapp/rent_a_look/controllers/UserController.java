@@ -2,13 +2,16 @@ package com.lucia.palermo.rentalapp.rent_a_look.controllers;
 
 import com.lucia.palermo.rentalapp.rent_a_look.models.entities.User;
 import com.lucia.palermo.rentalapp.rent_a_look.services.UserService;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/users")  // Endpoint base para usuarios
-@CrossOrigin(origins = "*") // Permite peticiones desde cualquier frontend 
+@RequestMapping("/api/users") // Endpoint base para usuarios
+@CrossOrigin(origins = "*") // Permite peticiones desde cualquier frontend
 public class UserController {
 
     @Autowired
@@ -16,7 +19,7 @@ public class UserController {
 
     // Registro de usuario
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody User user) { //recibe un user en la petición
+    public ResponseEntity<User> registerUser(@RequestBody User user) { // recibe un user en la petición
         // Aquí se pueden agregar validaciones
 
         User existingUser = userService.findByEmail(user.getEmail());
@@ -24,14 +27,20 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         }
         User savedUser = userService.save(user);
-        return ResponseEntity.ok(savedUser); //retorna el usuario guardado
+        return ResponseEntity.ok(savedUser); // retorna el usuario guardado
     }
-    
+
+    // Ver todos los usuarios registrados
+    @GetMapping
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userService.findAll();
+        return ResponseEntity.ok(users);
+    }
 
     // Login de usuario
     @PostMapping("/login")
-    public ResponseEntity<User> loginUser(@RequestBody User user) { //Recibe un User con email y password.
-        User existingUser = userService.findByEmail(user.getEmail()); //Busca el usuario por email.
+    public ResponseEntity<User> loginUser(@RequestBody User user) { // Recibe un User con email y password.
+        User existingUser = userService.findByEmail(user.getEmail()); // Busca el usuario por email.
         if (existingUser == null) {
             // Usuario no existe
             return ResponseEntity.status(404).build();

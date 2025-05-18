@@ -9,6 +9,7 @@ import { AddProductPage } from './pages/AddProductPage'
 import ContextProvider from './Context/Context'
 import { ProductDetail } from './pages/ProductDetail'
 import { AdminPanel } from './pages/AdminPanel'
+import { UserProvider } from './Context/UserContext'
 // import { BrowserRouter } from 'react-router-dom'
 
 const router = createBrowserRouter([
@@ -42,9 +43,11 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
 
   <StrictMode>
+    <UserProvider>
     <ContextProvider>
     {/* <RentalApp /> */}
     <RouterProvider router={router}/>
     </ContextProvider>
+    </UserProvider>
   </StrictMode>,
 )
