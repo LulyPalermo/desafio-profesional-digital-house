@@ -15,7 +15,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAll() {
-        return userRepository.findAll(); //Retorna una lista con todos los usuarios almacenados en la base de datos.
+        return userRepository.findAll(); //Retorna una lista con todos los usuarios almacenados
     }
 
     @Override
@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByEmail(String email) { //Busca un usuario por su correo electrónico.
+    public User findByEmail(String email) { //Busca un usuario por su correo electrónico para login y validaciones
         return userRepository.findByEmail(email);
     }
 }
