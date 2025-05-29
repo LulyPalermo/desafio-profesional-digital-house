@@ -5,6 +5,7 @@ import { AdminProducts } from "./pages/AdminProducts";
 import { ProductDetail } from './pages/ProductDetail';
 import { AddProductPage } from './pages/AddProductPage';
 import { AdminPanel } from './pages/AdminPanel';
+import { ProductHighlights } from './pages/ProductHighlights';
 
 
 export const RentalApp = () => {
@@ -16,6 +17,7 @@ export const RentalApp = () => {
                 <Route path='/administración' element={<AdminPanel />}></Route>
                 <Route path='/adminProducts' element={<AdminProducts />}></Route>
                 <Route path='/addProduct' element={<AddProductPage />}></Route>
+                <Route path='/caracteristicas' element={<ProductHighlights />}></Route>
                 <Route path='/*' element={<Navigate to='*' />}></Route>
                 {/* <Route path="*" component={NotFound} /> */}
             </Routes>

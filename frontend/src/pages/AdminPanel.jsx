@@ -18,14 +18,14 @@ export const AdminPanel = () => {
     if (isMobile) {
         return (
             <>
-            <AdminNavBar />
+                <AdminNavBar />
                 <main className="mainAdmin">
                     <section className="section-title">
                         <h1 className="page-title">Panel de administración</h1>
                     </section>
                     <section className="section-admin-mobile">
                         <div className="admin-panel-image" >
-                            <img src="/assets/img/empty-state.svg" alt="Panel de administración no disponible en mobile"/>
+                            <img src="/assets/img/empty-state.svg" alt="Panel de administración no disponible en mobile" />
                         </div>
                         <p>El panel de administración no está disponible en dispositivos móviles.</p>
                     </section>
@@ -63,6 +63,13 @@ export const AdminPanel = () => {
                                 <i className="ri-add-fill"></i>
                                 {/* <i className="ri-add-large-fill"></i> */}
                                 Agregar producto
+                            </button>
+                        </Link>
+
+                        <Link to='/caracteristicas'>
+                            <button className="admin-panel-button">
+                                <i className="ri-menu-search-line"></i>
+                                Administrar características
                             </button>
                         </Link>
 
