@@ -69,7 +69,7 @@ export const ProductDetail = () => {
 
               <div className="product-detail-category">
                 <p>Categoría</p>
-                <p>{product.category}</p>
+                <p>{product.category ? product.category.name : "Sin categoría"}</p>
               </div>
 
               <div className="product-detail-size">

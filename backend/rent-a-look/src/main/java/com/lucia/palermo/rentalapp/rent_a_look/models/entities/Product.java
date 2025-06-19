@@ -2,6 +2,8 @@ package com.lucia.palermo.rentalapp.rent_a_look.models.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 /* import jakarta.persistence.Column; */
@@ -9,6 +11,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -29,7 +33,10 @@ public class Product {
 
     private String description;
 
-    private String category;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    @JsonIgnoreProperties("products")
+    private Category category;
 
     private Long code;
 
@@ -40,10 +47,13 @@ public class Product {
     private String status;
 
     // @OneToMany mappedBy = "product": Un producto puede tener varias imágenes.
-    // mappedBy = "product": dice que ProductImage ya maneja la relación con Product.
-    // cascade = CascadeType.ALL: Si elimino un producto, también se eliminan sus imágenes asociadas.
-    // orphanRemoval = true: Si una imagen ya no pertenece a ningún producto, se elimina de la base de datos.
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true) //"product" hace referencia al nombre del atributo en la clase ProductImage que establece la relación con Product.
+    // mappedBy = "product": dice que ProductImage ya maneja la relación con
+    // Product.
+    // cascade = CascadeType.ALL: Si elimino un producto, también se eliminan sus
+    // imágenes asociadas.
+    // orphanRemoval = true: Si una imagen ya no pertenece a ningún producto, se
+    // elimina de la base de datos.
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true) // "product" hace referencia al nombre del atributo en la clase ProductImage que establece la relación con Product.
     private List<ProductImage> images;
 
     public List<ProductImage> getImages() {
@@ -78,11 +88,11 @@ public class Product {
         this.description = description;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
-
-    public void setCategory(String category) {
+    
+    public void setCategory(Category category) {
         this.category = category;
     }
 
@@ -117,6 +127,5 @@ public class Product {
     public void setStatus(String status) {
         this.status = status;
     }
-
 
 }

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { AdminNavBar } from "../components/AdminNavBar";
-import { useState } from "react";
-import { createProduct } from "../services/productService";
+import { useEffect, useState } from "react";
+import { createProduct, getCategories } from "../services/productService";
 import { useNavigate } from "react-router-dom";
 import { ProductNameExistsModal } from "../components/ProductNameExistsModal";
 
@@ -20,15 +20,40 @@ export const AddProductPage = () => {
 
     const navigate = useNavigate(); // Esto es para que cuando agregue un producto me devuelva al dashboard
 
+    //Creamos un estado para guardar las categorías que se obtienen del back:
+    const [categories, setCategories] = useState([]);
+
     const [showNameExistsModal, setShowNameExistsModal] = useState(false);
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const data = await getCategories();
+                setCategories(data);
+            } catch (error) {
+                alert("Error al cargar las categorías");
+            }
+        };
+
+        fetchCategories();
+    }, []);
 
     // Manejo de inputs de texto y selects
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setProductData({
-            ...productData,
-            [name]: value
-        });
+
+        if (name === "category") {
+            const selectedCategory = categories.find(cat => cat.id === parseInt(value));
+            setProductData({
+                ...productData,
+                category: selectedCategory
+            });
+        } else {
+            setProductData({
+                ...productData,
+                [name]: value
+            });
+        }
     };
 
     // Manejo de carga de imágenes
@@ -200,19 +225,29 @@ export const AddProductPage = () => {
                                 <select
                                     name="category"
                                     id="product-category"
+                                    value={productData.category?.id || ''}
+                                    onChange={handleChange}>
+                                    <option value="">Elegir una opción</option>
+                                    {categories.map(cat => (
+                                        <option key={cat.id} value={cat.id}>{cat.name}</option>
+                                    ))}
+                                </select>
+                                {/* <select
+                                    name="category"
+                                    id="product-category"
                                     value={productData.category}
                                     onChange={handleChange}>
                                     <option value="">Elegir una opción</option>
                                     <option value="vestimenta">Vestimenta</option>
                                     <option value="calzado">Calzado</option>
                                     <option value="accesorios">Accesorios</option>
-                                </select>
+                                </select> */}
                                 <i className="ri-arrow-down-s-line chevron-select"></i>
                             </div>
 
                             {/* Código producto */}
                             <div className="new-product-info">
-                                <label htmlFor="product-code">SKU:</label>
+                                <label htmlFor="product-code">Código:</label>
                                 <input
                                     type="text"
                                     name="code"

@@ -1,5 +1,5 @@
 
-// Acá se obtienen los productos
+// Acá se obtienen todos los productos
 export const getProducts = async () => {
 
     const response = await fetch('http://localhost:8080/products');
@@ -19,6 +19,7 @@ export const deleteProductById = async (id) => {
     }
 };
 
+// Acá se crea un nuevo producto
 export const createProduct = async (productData) => {
     const response = await fetch(`http://localhost:8080/products`,{
         method: 'POST',
@@ -35,4 +36,13 @@ export const createProduct = async (productData) => {
 
     return await response.json();
 
+};
+
+// Método para obtener categorías desde el backend
+export const getCategories = async () => {
+    const response = await fetch('http://localhost:8080/categories');
+    if (!response.ok) {
+        throw new Error('No se pudieron obtener las categorías');
+    }
+    return await response.json();
 };
