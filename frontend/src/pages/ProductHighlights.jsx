@@ -51,11 +51,14 @@ export const ProductHighlights = () => {
                             </div>
                         </div>
                     </div>
-                    
+
                 </section>
+
                 <div className="new-highlights-buttons">
-                        <input type="submit" value="Añadir nueva" className="primary-button" />
-                    </div>
+                <Link to='/addHighlights'>
+                    <button className="primary-button">Añadir nueva</button>
+                </Link>
+                </div>
             </main>
         </>
     )

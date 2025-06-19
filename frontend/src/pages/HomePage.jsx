@@ -61,7 +61,69 @@ export const HomePage = () => {
                 </section>
 
                 <section id="categoriesSection">
-                    <h1>Categorías</h1>
+                    <h1>Filtrar por categorías</h1>
+                    <div id="categoriesGrid">
+                        <div className="category-card">
+                            <i className="ri-home-line"></i>
+                            <p>Faldas</p>
+                        </div>
+                        <div className="category-card">
+                            <i className="ri-home-line"></i>
+                            <p>Tops</p>
+                        </div>
+                        <div className="category-card">
+                            <i className="ri-home-line"></i>
+                            <p>Vestidos</p>
+                        </div>
+                        <div className="category-card">
+                            <i className="ri-home-line"></i>
+                            <p>Cintos</p>
+                        </div>
+                        <div className="category-card">
+                            <i className="ri-home-line"></i>
+                            <p>Sandalias</p>
+                        </div>
+                        <div className="category-card">
+                            <i className="ri-home-line"></i>
+                            <p>Faldas</p>
+                        </div>
+                        <div className="category-card">
+                            <i className="ri-home-line"></i>
+                            <p>Tops</p>
+                        </div>
+                        <div className="category-card">
+                            <i className="ri-home-line"></i>
+                            <p>Vestidos</p>
+                        </div>
+                        <div className="category-card">
+                            <i className="ri-home-line"></i>
+                            <p>Cintos</p>
+                        </div>
+                    </div>
+
+                    {/* <div className="filter-results">
+                        <p className="filter-results-title">Estás filtrando por:</p>
+                        <div className="filter-results-list">
+                            <div className="filter-results-pills">
+                                <p >Faldas</p>
+                                <i className="ri-close-large-line"></i>
+                            </div>
+                            <div className="filter-results-pills">
+                                <p >Vestidos</p>
+                                <i className="ri-close-large-line"></i>
+                            </div>
+                            <div className="filter-results-pills">
+                                <p >Tops</p>
+                                <i className="ri-close-large-line"></i>
+                            </div>
+
+                            <button className="filter-button">Quitar filtros</button>
+                        </div>
+                    </div> */}
+                </section>
+
+                {/* <section id="categoriesSection">
+                    <h1>Buscar por tipo de producto</h1>
                     <div id="categoriesGrid">
                         <div>
                             <img src="/assets/img/category-clothing.png" alt="Categoría vestimenta" className="categoryImage" />
@@ -73,7 +135,7 @@ export const HomePage = () => {
                             <img src="/assets/img/category-shoes.png" alt="Categoría calzado" className="categoryImage" />
                         </div>
                     </div>
-                </section>
+                </section> */}
 
                 <section id="recommendationsSection">
                     <h1>¡Nuestros preferidos!</h1>

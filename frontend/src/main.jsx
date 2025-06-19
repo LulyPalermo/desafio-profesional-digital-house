@@ -10,6 +10,8 @@ import ContextProvider from './Context/Context'
 import { ProductDetail } from './pages/ProductDetail'
 import { AdminPanel } from './pages/AdminPanel'
 import { UserProvider } from './Context/UserContext'
+import { AddHighlightPage } from './pages/AddHighlightPage'
+import { ProductHighlights } from './pages/ProductHighlights'
 // import { BrowserRouter } from 'react-router-dom'
 
 const router = createBrowserRouter([
@@ -37,6 +39,15 @@ const router = createBrowserRouter([
   path: '/addProduct',
   element: <AddProductPage/>
 },
+{
+  path: '/caracteristicas',
+  element: <ProductHighlights/>
+},
+{
+  path: '/addHighlights',
+  element: <AddHighlightPage/>
+},
+
 
 ])
 

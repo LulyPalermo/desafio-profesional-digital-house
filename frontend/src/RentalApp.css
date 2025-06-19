@@ -308,8 +308,90 @@ body {
     padding: 3rem;
 }
 
-
 #categoriesGrid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2rem;
+    padding-bottom: 3rem;
+    /* grid-gap: 4rem 10rem; */
+}
+
+.category-card {
+    width: 20rem;
+    font-weight: 300;
+    border: 1px solid var(--lightGrey);
+    /* background-color: var(--taupe); */
+    padding: 1.5rem;
+    text-align: center;
+    border-radius: 0.4rem;
+    display: flex;
+    gap: 1rem;
+    align-items: baseline;
+    cursor: pointer;
+}
+
+.filter-results {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--lightGrey);
+}
+
+.filter-results-title{
+    font-size: 1.6rem;
+    font-weight: 350;
+    color: var(--darkGrey);
+}
+
+.filter-results-list {
+    display: flex;
+    gap: 2rem;
+}
+
+.filter-results-pills {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    font-size: 1.4rem;
+    font-weight: 300;
+    letter-spacing: .08rem;
+    border: 1px solid var(--mediumGrey);
+    padding: 1.2rem;
+    cursor: pointer;
+    color: var(--darkGrey);
+    background-color: var(--taupe);
+    transition: all .3s ease;
+}
+
+.filter-results-pills i {
+    font-size: 1.2rem;
+}
+
+.filter-results-pills:hover {
+    color: var(--secondary);
+    border: 1px solid var(--secondary);
+}
+
+.filter-button {
+    font: var(--fontPrimary);
+    font-size: 1.4rem;
+    font-weight: 350;
+    background-color: var(--white);
+    border: none;
+    text-decoration: underline;
+    /* border-radius: 0.4rem; */
+    color: var(--secondary);
+    cursor: pointer;
+    transition: all .3s ease;
+    letter-spacing: .08rem;
+}
+
+.filter-button:hover {
+    text-decoration: none;
+}
+
+/* #categoriesGrid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 4rem;
@@ -318,7 +400,7 @@ body {
 #categoriesGrid img {
     display: block;
     width: 100%;
-}
+} */
 
 @media (max-width: 768px) {
 
@@ -329,6 +411,11 @@ body {
 
     #categoriesGrid {
         gap: 2rem;
+    }
+
+    #categoriesGrid {
+        grid-template-columns: repeat(2, 1fr);
+      
     }
 }
 
@@ -622,6 +709,7 @@ footer {
 }
 
 .highlights-img {
+    border-radius: 5rem;
     width: 6rem;
 }
 
@@ -638,6 +726,10 @@ footer {
 
     .product-detail-title {
         order: 2;
+    }
+
+    .product-highlights-items {
+        grid-template-columns: repeat(2, 1fr);
     }
 
 }
@@ -1127,6 +1219,7 @@ footer {
     cursor: pointer;
 }
 
+/* -------------------------------------------------------------------- */
 
 /* Sección agregar producto  */
 
@@ -1215,7 +1308,6 @@ form {
     letter-spacing: .06rem;
     outline: none;
     padding: 2rem;
-
     appearance: none;
     /* Oculta el chevron nativo */
     -webkit-appearance: none;
@@ -1236,6 +1328,10 @@ form {
     /* Para poder desplegar las opciones del select sin que el chevron moleste*/
 }
 
+::-webkit-input-placeholder {
+    color: var(--mediumGrey);
+}
+
 .form-info input:hover,
 .form-info input:focus,
 .form-info textarea:hover,
@@ -1244,9 +1340,7 @@ form {
     border: 1.5px solid var(--secondary);
 }
 
-::-webkit-input-placeholder {
-    color: var(--mediumGrey);
-}
+
 
 .upload-picture {
     display: flex;
@@ -1502,7 +1596,7 @@ form {
     align-items: flex-end;
     background-color: var(--white);
     /* min-height: 100vh; */
-    max-width: 120rem;
+    /* max-width: 120rem; */
     padding: 4rem;
 }
 
