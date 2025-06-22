@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users") // Endpoint base para usuarios
-@CrossOrigin(origins = "*") // Permite peticiones desde cualquier frontend
-public class UserController {
+/* @CrossOrigin(origins = "*") // Permite peticiones desde cualquier frontend
+ */public class UserController {
 
     @Autowired
     private UserService userService;

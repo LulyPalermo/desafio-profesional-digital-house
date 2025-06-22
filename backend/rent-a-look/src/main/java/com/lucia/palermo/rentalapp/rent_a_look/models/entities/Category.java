@@ -3,7 +3,7 @@ package com.lucia.palermo.rentalapp.rent_a_look.models.entities;
 import jakarta.persistence.*;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "categories")
@@ -16,14 +16,17 @@ public class Category {
     @Column(nullable = false, unique = true)
     private String name;
 
-    // Una categoría puede tener muchos productos
     @OneToMany(mappedBy = "category")
-    @JsonIgnoreProperties("category") 
+    @JsonIgnore
     private List<Product> products;
 
     // Getters y Setters
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

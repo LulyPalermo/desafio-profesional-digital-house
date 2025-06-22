@@ -1,16 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AdminNavBar } from "../components/AdminNavBar";
 import { useEffect, useState } from "react";
-import { createProduct, getCategories } from "../services/productService";
-import { useNavigate } from "react-router-dom";
 import { ProductNameExistsModal } from "../components/ProductNameExistsModal";
+import { createProduct, getCategories } from "../services/productService";
 
 export const AddProductPage = () => {
 
     const [productData, setProductData] = useState({
         name: '',
         description: '',
-        category: '',
+        categoryId: '',
         size: '',
         code: '',
         price: '',
@@ -20,40 +19,23 @@ export const AddProductPage = () => {
 
     const navigate = useNavigate(); // Esto es para que cuando agregue un producto me devuelva al dashboard
 
-    //Creamos un estado para guardar las categorías que se obtienen del back:
-    const [categories, setCategories] = useState([]);
-
     const [showNameExistsModal, setShowNameExistsModal] = useState(false);
 
-    useEffect(() => {
-        const fetchCategories = async () => {
-            try {
-                const data = await getCategories();
-                setCategories(data);
-            } catch (error) {
-                alert("Error al cargar las categorías");
-            }
-        };
+    const [categories, setCategories] = useState([]); // estado para categorías dinámicas
 
-        fetchCategories();
+    useEffect(() => {
+        getCategories()
+            .then(data => setCategories(data))
+            .catch(() => alert("No se pudieron cargar las categorías"));
     }, []);
 
     // Manejo de inputs de texto y selects
     const handleChange = (e) => {
         const { name, value } = e.target;
-
-        if (name === "category") {
-            const selectedCategory = categories.find(cat => cat.id === parseInt(value));
-            setProductData({
-                ...productData,
-                category: selectedCategory
-            });
-        } else {
-            setProductData({
-                ...productData,
-                [name]: value
-            });
-        }
+        setProductData({
+            ...productData,
+            [name]: value
+        });
     };
 
     // Manejo de carga de imágenes
@@ -223,26 +205,19 @@ export const AddProductPage = () => {
                             <div className="new-product-info">
                                 <label htmlFor="product-category">Categoría:</label>
                                 <select
-                                    name="category"
+                                    name="categoryId"
                                     id="product-category"
-                                    value={productData.category?.id || ''}
-                                    onChange={handleChange}>
+                                    value={productData.categoryId}
+                                    onChange={handleChange}
+                                    required
+                                >
                                     <option value="">Elegir una opción</option>
                                     {categories.map(cat => (
                                         <option key={cat.id} value={cat.id}>{cat.name}</option>
                                     ))}
                                 </select>
-                                {/* <select
-                                    name="category"
-                                    id="product-category"
-                                    value={productData.category}
-                                    onChange={handleChange}>
-                                    <option value="">Elegir una opción</option>
-                                    <option value="vestimenta">Vestimenta</option>
-                                    <option value="calzado">Calzado</option>
-                                    <option value="accesorios">Accesorios</option>
-                                </select> */}
                                 <i className="ri-arrow-down-s-line chevron-select"></i>
+                                {/* <i className="ri-arrow-down-s-line chevron-select"></i> */}
                             </div>
 
                             {/* Código producto */}
@@ -276,7 +251,6 @@ export const AddProductPage = () => {
 
                     <div className="new-product-buttons">
                         <Link to="/administración" className="nav-link secondary-button">Cancelar</Link>
-                        {/* <input type="button" value="Cancelar" className="secondary-button"></input> */}
                         <input type="submit" value="Agregar producto" className="primary-button" />
                     </div>
                 </form>

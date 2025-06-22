@@ -7,6 +7,7 @@ import { AddProductPage } from './pages/AddProductPage';
 import { AdminPanel } from './pages/AdminPanel';
 import { ProductHighlights } from './pages/ProductHighlights';
 import { AddHighlightPage } from './pages/AddHighlightPage';
+import { EditProductPage } from './pages/EditProductPage';
 
 
 export const RentalApp = () => {
@@ -20,6 +21,7 @@ export const RentalApp = () => {
                 <Route path='/addProduct' element={<AddProductPage />}></Route>
                 <Route path='/caracteristicas' element={<ProductHighlights />}></Route>
                 <Route path='/addHighlights' element={<AddHighlightPage />}></Route>
+                <Route path='/editProduct/:id' element={<EditProductPage />} />
                 <Route path='/*' element={<Navigate to='*' />}></Route>
                 {/* <Route path="*" component={NotFound} /> */}
             </Routes>

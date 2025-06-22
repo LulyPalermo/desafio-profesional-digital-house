@@ -69,7 +69,9 @@ export const ProductDetail = () => {
 
               <div className="product-detail-category">
                 <p>Categoría</p>
-                <p>{product.category ? product.category.name : "Sin categoría"}</p>
+                {/* <p>{product.category}</p> */}
+                <p>{product.category?.name || "Sin categoría"}</p>  {/* si product.category no existe aún, no se rompe, sino que simplemente no muestra nada. */}
+
               </div>
 
               <div className="product-detail-size">

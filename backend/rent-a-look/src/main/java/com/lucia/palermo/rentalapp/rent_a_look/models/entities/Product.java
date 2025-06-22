@@ -33,6 +33,8 @@ public class Product {
 
     private String description;
 
+/*     private String category;
+ */
     @ManyToOne
     @JoinColumn(name = "category_id")
     @JsonIgnoreProperties("products")
@@ -53,7 +55,10 @@ public class Product {
     // imágenes asociadas.
     // orphanRemoval = true: Si una imagen ya no pertenece a ningún producto, se
     // elimina de la base de datos.
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true) // "product" hace referencia al nombre del atributo en la clase ProductImage que establece la relación con Product.
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true) // "product" hace referencia al
+                                                                                      // nombre del atributo en la clase
+                                                                                      // ProductImage que establece la
+                                                                                      // relación con Product.
     private List<ProductImage> images;
 
     public List<ProductImage> getImages() {
@@ -87,7 +92,7 @@ public class Product {
     public void setDescription(String description) {
         this.description = description;
     }
-
+    
     public Category getCategory() {
         return category;
     }
@@ -95,6 +100,15 @@ public class Product {
     public void setCategory(Category category) {
         this.category = category;
     }
+    
+
+ /*    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    } */
 
     public Long getCode() {
         return code;

@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { AdminNavBar } from "../components/AdminNavBar"
 import { useEffect, useState } from "react";
-import { deleteProductById, getProducts } from "../services/productService";
+import { deleteProductById, getCategories, getProducts, updateProductCategory } from "../services/productService";
 import { ConfirmDeleteModal } from "../components/ConfirmDeleteModal";
 
 // import Swal from 'sweetalert2';
@@ -9,17 +9,30 @@ import { ConfirmDeleteModal } from "../components/ConfirmDeleteModal";
 export const AdminProducts = () => {
 
     const [products, setProducts] = useState([]);
+    const [categories, setCategories] = useState([]); // Guardar categorías
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedProductId, setSelectedProductId] = useState(null);
+
+    const navigate = useNavigate();
 
     const showAllProducts = async () => {
         const allProducts = await getProducts();
         setProducts(allProducts);
-    }
-    useEffect(
-        () => {
-            showAllProducts();
-        }, []);
+    };
+
+    const loadCategories = async () => {
+        try {
+            const cats = await getCategories();
+            setCategories(cats);
+        } catch (error) {
+            console.error("Error cargando categorías", error);
+        }
+    };
+
+    useEffect(() => {
+        showAllProducts();
+        loadCategories();
+    }, []);
 
     // Lógica de confirmación y eliminación dentro del componente:
     const handleDeleteClick = (id) => {
@@ -39,18 +52,15 @@ export const AdminProducts = () => {
         }
     };
 
-    /* const handleDelete = async (id) => {
-        const confirmDelete = window.confirm("¿Estás segura/o de que querés eliminar este producto?");
-        if (confirmDelete) {
-            try {
-                await deleteProductById(id); // Llama al backend
-                showAllProducts(); // vuelve a cargar productos actualizados
-            } catch (error) {
-                console.error("Error al eliminar el producto:", error);
-                alert("Hubo un problema al eliminar el producto.");
-            }
+    // Función que maneja asignar categoría a producto
+    const handleCategoryChange = async (productId, newCategoryId) => {
+        try {
+            await updateProductCategory(productId, newCategoryId);
+            await showAllProducts(); // refrescar lista
+        } catch (error) {
+            console.error("Error actualizando categoría", error);
         }
-    }; */
+    };
 
 
     return (
@@ -107,7 +117,25 @@ export const AdminProducts = () => {
 
                             {/* <img src={product.images[0]} alt="imagen del producto" className="header-row-cell img-cell" /> */}
                             <p className="header-row-cell name-cell">{product.name}</p>
-                            <p className="header-row-cell category-cell">{product.category}</p>
+                            {/*  <p className="header-row-cell category-cell">{product.category?.name || "Asignar categoría"}</p>  */}{/* Esto: ?. es para evitar errores si aún no tiene categoría cargada */}
+                            <p className="header-row-cell category-cell">
+                                {product.category ? (
+                                    product.category.name
+                                ) : (
+                                    <select
+                                        onChange={(e) => handleCategoryChange(product.id, e.target.value)}
+                                        defaultValue=""
+                                    >
+                                        <option value="" disabled>Asignar categoría</option>
+                                        {categories.map((cat) => (
+                                            <option key={cat.id} value={cat.id}>
+                                                {cat.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                )}
+                            </p>
+
                             <p className="header-row-cell size-cell">{product.size}</p>
                             <p className="header-row-cell code-cell">{product.code}</p>
                             <p className="header-row-cell price-cell">{product.price}</p>
@@ -115,7 +143,7 @@ export const AdminProducts = () => {
                             <p className={`header-row-cell status-cell ${product.status === "Disponible" ? "available-label" : "unavailable-label"}`}>
                                 {product.status} </p>
                             <div className="header-row-cell accions-cell">
-                                <div id="edit-product" >
+                                <div id="edit-product" onClick={() => navigate(`/editProduct/${product.id}`)}>
                                     <span className="accions"><i className="ri-pencil-fill"></i></span>
                                 </div>
                                 <div id="delete-product" onClick={() => handleDeleteClick(product.id)}>
