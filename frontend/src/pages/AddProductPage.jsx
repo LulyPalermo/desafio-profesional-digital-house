@@ -86,6 +86,7 @@ export const AddProductPage = () => {
                         </div>
 
                         <div className="form-info">
+                            
                             {/* Nombre producto */}
                             <div className="new-product-info">
                                 <label htmlFor="product-name">Nombre del producto:</label>

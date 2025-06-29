@@ -391,6 +391,14 @@ body {
     text-decoration: none;
 }
 
+.results-count{
+    font-size: 1.6rem;
+    font-weight: 350;
+    color: var(--darkGrey);
+    text-align: right;
+    padding-bottom: 3rem;
+}
+
 /* #categoriesGrid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1146,6 +1154,44 @@ footer {
     padding: 1rem 1.5rem;
     border-radius: 5rem;
 }
+
+.category-cell select{
+    font: var(--font);
+    font-size: 1.5rem;
+    font-weight: 300;
+    border: 1px solid var(--lightGrey);
+    background-color: var(--taupe);
+    border-radius: 0.5rem;
+    /* letter-spacing: .06rem; */
+    outline: none;
+    padding: 1rem;
+    appearance: none;
+    /* Oculta el chevron nativo */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    transition: all .3s ease;
+    /* width: 100%; */
+    /* height: auto; */
+    /* padding-right: 2.5rem; */
+    /* Deja espacio para el ícono */
+}
+
+.category-cell select:hover {
+    font-weight: 350;
+    color: var(--secondary);
+    border: 1px solid var(--secondary);
+}
+
+/* .chevron-category-select {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    font-size: 2rem;
+    color: var(--darkGrey);
+    transform: translateY(50%);
+    pointer-events: none;
+    Para poder desplegar las opciones del select sin que el chevron moleste
+} */
 
 /* .pagination {
     display: flex;

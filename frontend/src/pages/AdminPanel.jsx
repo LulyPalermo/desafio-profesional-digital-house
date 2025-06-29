@@ -73,12 +73,20 @@ export const AdminPanel = () => {
                             </button>
                         </Link>
 
-                        <Link>
+                        <Link to='/addCategory'>
+                            <button className="admin-panel-button">
+                                <i className="ri-add-fill"></i>
+                                {/* <i className="ri-add-large-fill"></i> */}
+                                Agregar categoría
+                            </button>
+                        </Link>
+
+                        {/* <Link>
                             <button className="admin-panel-button">
                                 <i className="ri-tools-fill"></i>
                                 Configuración
                             </button>
-                        </Link>
+                        </Link> */}
                     </nav>
                 </section>
             </main>

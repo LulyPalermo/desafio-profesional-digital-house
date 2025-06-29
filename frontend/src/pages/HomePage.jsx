@@ -4,24 +4,75 @@ import { FooterComponent } from "../components/FooterComponent";
 import { getProducts } from "../services/productService";
 import { Context } from "../Context/Context";
 import { Link } from "react-router-dom";
+import { getCategories } from "../services/productService";
 
 export const HomePage = () => {
     const [products, setProducts] = useState([]);
     const [paginatedProducts, setPaginatedProducts] = useState([]); // Contiene los productos de la página actual.
     const [currentPage, setCurrentPage] = useState(1); // Guarda en qué página estoy.
-    const productsPerPage = 4;
+    const [categories, setCategories] = useState([]);
+    const [selectedCategories, setSelectedCategories] = useState([]); // Categorías seleccionadas (filtrado)
 
+    const productsPerPage = 4;
     const { setDetail } = useContext(Context);
 
+    // Se cargan las categorías
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const cats = await getCategories();
+                setCategories(cats);
+            } catch (error) {
+                console.error("Error cargando categorías", error);
+            }
+        };
+        fetchCategories();
+    }, []);
+
+    //Para cargar productos (y filtrar si hay categorías seleccionadas)
     useEffect(() => {
         const showProducts = async () => {
             const allProducts = await getProducts();
-            const shuffled = getRandomProducts(allProducts);
+            const filtered = selectedCategories.length > 0
+                ? allProducts.filter((p) => p.category && selectedCategories.includes(p.category.id))
+                : allProducts;
+
+            const shuffled = getRandomProducts(filtered);
             setProducts(shuffled);
             setPaginatedProducts(getPageProducts(shuffled, 1));
+            setCurrentPage(1);
         };
         showProducts();
-    }, []);
+    }, [selectedCategories]);
+    /*  useEffect(() => {
+         const showProducts = async () => {
+             const allProducts = await getProducts();
+             const shuffled = getRandomProducts(allProducts);
+             setProducts(shuffled);
+             setPaginatedProducts(getPageProducts(shuffled, 1));
+         };
+         showProducts();
+     }, []); */
+
+    // Función toggleCategory para alternar selección::
+    const toggleCategory = (categoryId) => {
+        setCurrentPage(1);
+        setSelectedCategories((prevSelected) => {
+            if (prevSelected.includes(categoryId)) {
+                return prevSelected.filter((id) => id !== categoryId);
+            } else {
+                return [...prevSelected, categoryId];
+            }
+        });
+    };
+
+    const clearAllFilters = () => {
+        setSelectedCategories([]);
+    };
+
+    const removeFilter = (categoryId) => {
+        setSelectedCategories((prevSelected) => prevSelected.filter((id) => id !== categoryId));
+    };
 
     const getRandomProducts = (array) => {
         return [...array].sort(() => 0.5 - Math.random());
@@ -52,6 +103,8 @@ export const HomePage = () => {
         localStorage.setItem("selectedProduct", JSON.stringify(product));
     };
 
+
+
     return (
         <>
             <NavBarComponent />
@@ -61,65 +114,36 @@ export const HomePage = () => {
                 </section>
 
                 <section id="categoriesSection">
-                    <h1>Filtrar por categorías</h1>
+                    <h1>Filtrar por categorías</h1>
                     <div id="categoriesGrid">
-                        <div className="category-card">
-                            <i className="ri-home-line"></i>
-                            <p>Faldas</p>
-                        </div>
-                        <div className="category-card">
-                            <i className="ri-home-line"></i>
-                            <p>Tops</p>
-                        </div>
-                        <div className="category-card">
-                            <i className="ri-home-line"></i>
-                            <p>Vestidos</p>
-                        </div>
-                        <div className="category-card">
-                            <i className="ri-home-line"></i>
-                            <p>Cintos</p>
-                        </div>
-                        <div className="category-card">
-                            <i className="ri-home-line"></i>
-                            <p>Sandalias</p>
-                        </div>
-                        <div className="category-card">
-                            <i className="ri-home-line"></i>
-                            <p>Faldas</p>
-                        </div>
-                        <div className="category-card">
-                            <i className="ri-home-line"></i>
-                            <p>Tops</p>
-                        </div>
-                        <div className="category-card">
-                            <i className="ri-home-line"></i>
-                            <p>Vestidos</p>
-                        </div>
-                        <div className="category-card">
-                            <i className="ri-home-line"></i>
-                            <p>Cintos</p>
-                        </div>
+                        {categories.map((cat) => (
+                            <div
+                                key={cat.id}
+                                className={`category-card ${selectedCategories.includes(cat.id) ? "active" : ""}`}
+                                onClick={() => toggleCategory(cat.id)}>
+                                <i className="ri-price-tag-3-line"></i>
+                                <p>{cat.name}</p>
+                            </div>
+                        ))}
                     </div>
 
-                    {/* <div className="filter-results">
-                        <p className="filter-results-title">Estás filtrando por:</p>
-                        <div className="filter-results-list">
-                            <div className="filter-results-pills">
-                                <p >Faldas</p>
-                                <i className="ri-close-large-line"></i>
+                    {selectedCategories.length > 0 && (
+                        <div className="filter-results">
+                            <p className="filter-results-title">Estás filtrando por:</p>
+                            <div className="filter-results-list">
+                                {selectedCategories.map((catId) => {
+                                    const cat = categories.find((c) => c.id === catId);
+                                    return (
+                                        <div key={catId} className="filter-results-pills">
+                                            <p>{cat?.name}</p>
+                                            <i className="ri-close-line" onClick={() => removeFilter(catId)}></i>
+                                        </div>
+                                    );
+                                })}
+                                <button className="filter-button" onClick={clearAllFilters}>Quitar filtros</button>
                             </div>
-                            <div className="filter-results-pills">
-                                <p >Vestidos</p>
-                                <i className="ri-close-large-line"></i>
-                            </div>
-                            <div className="filter-results-pills">
-                                <p >Tops</p>
-                                <i className="ri-close-large-line"></i>
-                            </div>
-
-                            <button className="filter-button">Quitar filtros</button>
                         </div>
-                    </div> */}
+                    )}
                 </section>
 
                 {/* <section id="categoriesSection">
@@ -139,6 +163,8 @@ export const HomePage = () => {
 
                 <section id="recommendationsSection">
                     <h1>¡Nuestros preferidos!</h1>
+                    <p className="results-count"> Mostrando {products.length} producto(s){selectedCategories.length > 0 ? " filtrado(s)" : ""}</p>
+                    
                     <ul id="products-grid">
                         {paginatedProducts.map((product) => (
                             <li className="product-description" key={product.id}>

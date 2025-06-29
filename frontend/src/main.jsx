@@ -13,6 +13,7 @@ import { UserProvider } from './Context/UserContext'
 import { AddHighlightPage } from './pages/AddHighlightPage'
 import { ProductHighlights } from './pages/ProductHighlights'
 import { EditProductPage } from './pages/EditProductPage'
+import { AddCategoryPage } from './pages/AddCategoryPage'
 // import { BrowserRouter } from 'react-router-dom'
 
 const router = createBrowserRouter([
@@ -52,7 +53,10 @@ const router = createBrowserRouter([
   path: '/editProduct/:id', // Ruta con parámetro id
   element: <EditProductPage />
 },
-
+{
+  path: '/administración',
+  element: <AddCategoryPage/>
+},
 
 ])
 
