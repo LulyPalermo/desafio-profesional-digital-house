@@ -1,9 +1,9 @@
 --Categorías
-INSERT INTO categories (name) VALUES('Tops');
-INSERT INTO categories (name) VALUES('Faldas');
-INSERT INTO categories (name) VALUES('Vestidos');
-INSERT INTO categories (name) VALUES('Calzado');
-INSERT INTO categories (name) VALUES('Accesorios');
+INSERT INTO categories (name, description, image_url) VALUES('Tops', 'Tanto para looks de noche o para elevar outfits casuales', '/assets/img/category-tops.png');
+INSERT INTO categories (name, description, image_url) VALUES('Faldas', 'Descripción categoría faldas', '/assets/img/category-skirts.png');
+INSERT INTO categories (name, description, image_url) VALUES('Vestidos', 'Largos, minis o midis. Tenemos el perfecto para vos', '/assets/img/category-dresses.png');
+INSERT INTO categories (name, description, image_url) VALUES('Calzado', 'Completá tu outfit con pasos llenos de estilo', '/assets/img/category-shoes.png');
+INSERT INTO categories (name, description, image_url) VALUES('Accesorios', 'El toque final que transforma tu look', '/assets/img/category-accesories.png');
 
 --Productos
 INSERT INTO products (name, description, category_id, code, price, size, status) VALUES ('Top Pekin', 'Tejido de punto apto para agua.\n-Color crema\n-Tela dry fit\n-Tela con protección UV.', 1, 22123, 1000, 'M', 'Disponible');

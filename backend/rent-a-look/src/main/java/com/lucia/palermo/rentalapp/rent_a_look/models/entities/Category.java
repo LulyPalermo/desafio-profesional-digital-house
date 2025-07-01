@@ -16,6 +16,12 @@ public class Category {
     @Column(nullable = false, unique = true)
     private String name;
 
+    @Column(length = 255)
+    private String description;
+
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @OneToMany(mappedBy = "category")
     @JsonIgnore
     private List<Product> products;
@@ -35,6 +41,22 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public List<Product> getProducts() {
