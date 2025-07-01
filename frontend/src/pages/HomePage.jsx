@@ -114,15 +114,19 @@ export const HomePage = () => {
                 </section>
 
                 <section id="categoriesSection">
-                    <h1>Filtrar por categorías</h1>
+                    <h1>Filtrar por tipo de producto</h1>
                     <div id="categoriesGrid">
                         {categories.map((cat) => (
                             <div
                                 key={cat.id}
                                 className={`category-card ${selectedCategories.includes(cat.id) ? "active" : ""}`}
                                 onClick={() => toggleCategory(cat.id)}>
-                                <i className="ri-price-tag-3-line"></i>
-                                <p>{cat.name}</p>
+                                {/* <i className="ri-price-tag-3-line"></i> */}
+                                <img src="/assets/img/category-tops.png" alt="Categoría vestimenta" className="categoryImage" />
+                                <div className="category-info">
+                                <p className="category-title">{cat.name}</p>
+                                {/* <p className="category-description">Largos, minis o midis. Tenemos el perfecto para vos.</p> */}
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -164,7 +168,7 @@ export const HomePage = () => {
                 <section id="recommendationsSection">
                     <h1>¡Nuestros preferidos!</h1>
                     <p className="results-count"> Mostrando {products.length} producto(s){selectedCategories.length > 0 ? " filtrado(s)" : ""}</p>
-                    
+
                     <ul id="products-grid">
                         {paginatedProducts.map((product) => (
                             <li className="product-description" key={product.id}>
