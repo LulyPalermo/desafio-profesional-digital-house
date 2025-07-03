@@ -122,11 +122,14 @@ export const HomePage = () => {
                                 className={`category-card ${selectedCategories.includes(cat.id) ? "active" : ""}`}
                                 onClick={() => toggleCategory(cat.id)}>
                                 {/* <i className="ri-price-tag-3-line"></i> */}
-                                <img src="/assets/img/category-tops.png" alt="Categoría vestimenta" className="categoryImage" />
-                                <div className="category-info">
-                                <p className="category-title">{cat.name}</p>
-                                {/* <p className="category-description">Largos, minis o midis. Tenemos el perfecto para vos.</p> */}
+                                <img src={cat.imageUrl} alt={cat.name} className="category-image" />
+                                <div className="category-description">
+                                    <p>{cat.description}</p>
                                 </div>
+                                <div className="category-title">
+                                    <p>{cat.name}</p>
+                                </div>
+                               
                             </div>
                         ))}
                     </div>
