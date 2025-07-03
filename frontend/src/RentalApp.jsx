@@ -9,6 +9,7 @@ import { ProductHighlights } from './pages/ProductHighlights';
 import { AddHighlightPage } from './pages/AddHighlightPage';
 import { EditProductPage } from './pages/EditProductPage';
 import { AddCategoryPage } from './pages/AddCategoryPage';
+import { CategoryPage } from './pages/CategoryPage';
 
 
 export const RentalApp = () => {
@@ -24,6 +25,7 @@ export const RentalApp = () => {
                 <Route path='/addHighlights' element={<AddHighlightPage />}></Route>
                 <Route path='/editProduct/:id' element={<EditProductPage />} />
                 <Route path='/addCategory' element={<AddCategoryPage />}></Route>
+                <Route path='/categories' element={<CategoryPage />}></Route>
                 <Route path='/*' element={<Navigate to='*' />}></Route>
                 {/* <Route path="*" component={NotFound} /> */}
             </Routes>

@@ -351,7 +351,7 @@ body {
     left: 0;
     width: 100%;
     background-color: rgba(247, 246, 242, 0.9);
-    color: var(--black);   
+    color: var(--black);
     padding: 8px;
     opacity: 0;
     transform: translateY(100%);
@@ -364,9 +364,9 @@ body {
     transform: translateY(0%);
 }
 
-/* .category-card img {
+.category-card img {
     width: 100%;
-} */
+}
 
 .filter-results {
     display: flex;
@@ -466,7 +466,7 @@ body {
 
     .category-description {
         display: none;
-      }
+    }
 }
 
 
@@ -1674,6 +1674,102 @@ form {
 
 /* -------------------------------------------------------------------- */
 
+/* Admin categorías de productos */
+
+/* Sección tabla */
+
+.main-categories {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    background-color: var(--white);
+    /* min-height: 100vh; */
+    /* max-width: 120rem; */
+    padding: 4rem;
+}
+
+.category-section-table {
+    width: 100%;
+    border-radius: 1.5rem;
+    box-shadow: 0px 0px 20px 0 rgba(0, 0, 0, 0.1);
+}
+
+.category-table-header {
+    font-size: 1.6rem;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4rem;
+    align-items: center;
+    justify-items: center;
+    background-color: var(--taupe);
+    padding: 0 2rem;
+    height: 8rem;
+}
+
+.category-table-info {
+    font-weight: 350;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4rem;
+    align-items: center;
+    justify-items: center;
+    background-color: white;
+    padding: 0 2rem;
+    border-bottom: 1px solid var(--lightGrey);
+}
+
+.category-img {
+    /* width: 100%; */
+    width: 10rem;
+    padding: 1.5rem;
+    border-radius: 2.5rem;
+}
+
+.category-id-cell {
+    grid-column: 1 / 2;
+}
+
+.category-img-cell {
+    grid-column: 2 / 3;
+    padding: 1.5rem 0;
+}
+
+.category-description-cell {
+    grid-column: 4 / 6;
+    font-weight: 300;
+}
+.category-table-header .category-description-cell {
+    font-weight: 500; /
+  }
+
+.category-accions-cell {
+    grid-column: 6 / 8;
+    display: flex;
+    gap: 2rem;
+}
+
+/* .category-accions-cell div:first-child {
+    color: var(--success);
+} */
+
+.category-accions-cell div:last-child {
+    color: var(--error);
+}
+
+.category-section-table div:last-child {
+    border-bottom: none;
+    border-radius: 1.5rem;
+}
+
+.new-category-buttons {
+    width: 30rem;
+    padding: 4rem 0;
+}
+
+
+/* -------------------------------------------------------------------- */
+
+
 /* Admin características productos */
 
 /* Sección tabla */
@@ -1706,7 +1802,7 @@ form {
     height: 8rem;
 }
 
-.highlights-table-info {
+/* .highlights-table-info {
     font-weight: 350;
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -1716,50 +1812,47 @@ form {
     background-color: white;
     padding: 0 2rem;
     border-bottom: 1px solid var(--lightGrey);
-}
+} */
 
-.highlight-id-cell {
+/* .highlight-id-cell {
     grid-column: 1 / 2;
-}
+} */
 
-.highlight-icon-cell {
+/* .highlight-icon-cell {
     grid-column: 2 / 3;
     padding: 1.5rem 0;
-}
+} */
 
-.highlight-name-cell {
+/* .highlight-name-cell {
     grid-column: 3 / 5;
-}
+} */
 
-.highlight-accions-cell {
+/* .highlight-accions-cell {
     grid-column: 5 / 7;
     display: flex;
     gap: 2rem;
-}
+} */
 
-.highlight-accions-cell div:first-child {
+/* .highlight-accions-cell div:first-child {
     color: var(--success);
-}
+} */
 
-.highlight-accions-cell div:last-child {
+/* .highlight-accions-cell div:last-child {
     color: var(--error);
-}
+} */
 
-.highlights-section-table div:last-child {
+/* .highlights-section-table div:last-child {
     border-bottom: none;
     border-radius: 1.5rem;
-}
+} */
 
-.new-highlights-buttons {
+/* .new-highlights-buttons {
     width: 30rem;
     padding: 4rem 0;
-}
-
-
+} */
 
 
 /* -------------------------------------------------------------------- */
-
 
 
 /* BOTONES */

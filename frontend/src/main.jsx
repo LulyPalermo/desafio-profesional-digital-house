@@ -14,6 +14,7 @@ import { AddHighlightPage } from './pages/AddHighlightPage'
 import { ProductHighlights } from './pages/ProductHighlights'
 import { EditProductPage } from './pages/EditProductPage'
 import { AddCategoryPage } from './pages/AddCategoryPage'
+import { CategoryPage } from './pages/CategoryPage'
 // import { BrowserRouter } from 'react-router-dom'
 
 const router = createBrowserRouter([
@@ -54,8 +55,12 @@ const router = createBrowserRouter([
   element: <EditProductPage />
 },
 {
-  path: '/administración',
+  path: '/addCategory',
   element: <AddCategoryPage/>
+},
+{
+  path: '/categories',
+  element: <CategoryPage/>
 },
 
 ])
