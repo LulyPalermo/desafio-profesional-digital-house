@@ -105,3 +105,21 @@ export const updateProductCategory = async (productId, categoryId) => {
 
     return await response.json();
 };
+
+// Crear una nueva categoría
+export const createCategory = async (categoryData) => {
+    const response = await fetch(API_URL_CATEGORIES, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(categoryData),
+    });
+  
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Error al agregar categoría");
+    }
+  
+    return await response.json();
+  };

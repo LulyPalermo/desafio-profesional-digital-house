@@ -1674,9 +1674,22 @@ form {
 
 /* -------------------------------------------------------------------- */
 
-/* Admin categorías de productos */
+/* Sección categorías de productos */
 
-/* Sección tabla */
+/* Formulario agregar categoría*/
+
+.category-form-info-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6rem;
+    width: 100%;
+    background-color: white;
+    padding: 4rem;
+    box-shadow: 0px 0px 20px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 1rem;
+}
+
+/* Sección tabla de categorías */
 
 .main-categories {
     display: flex;

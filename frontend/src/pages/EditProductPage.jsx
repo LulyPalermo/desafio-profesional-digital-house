@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { AdminNavBar } from "../components/AdminNavBar";
 import { getCategories, getProductById, updateProduct } from "../services/productService";
+import { SuccessModal } from "../components/SuccessModal";
 
 export const EditProductPage = () => {
     const { id } = useParams(); // id producto desde URL
@@ -20,6 +21,7 @@ export const EditProductPage = () => {
 
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [showSuccessModal, setShowSuccessModal] = useState(false); //modal de confirmacion
 
     // Carga producto y categorías al inicio
     useEffect(() => {
@@ -52,17 +54,17 @@ export const EditProductPage = () => {
     };
 
     // Manejo de carga de imágenes (igual que en AddProductPage)
-   /*  const handleImageChange = (e) => {
-        const files = Array.from(e.target.files);
-        const imagePreviews = files.map((file) => ({
-            imageUrl: URL.createObjectURL(file),
-        }));
-
-        setProductData({
-            ...productData,
-            images: imagePreviews,
-        });
-    }; */
+    /*  const handleImageChange = (e) => {
+         const files = Array.from(e.target.files);
+         const imagePreviews = files.map((file) => ({
+             imageUrl: URL.createObjectURL(file),
+         }));
+ 
+         setProductData({
+             ...productData,
+             images: imagePreviews,
+         });
+     }; */
 
     // Envío del formulario para actualizar
     const handleSubmit = async (e) => {
@@ -70,8 +72,9 @@ export const EditProductPage = () => {
 
         try {
             await updateProduct(id, productData);
-            alert("Producto actualizado correctamente");
-            navigate("/administración");
+            setShowSuccessModal(true); //Aca se muestra el modal que reemplaza el alert de Producto actualizado
+            // alert("Producto actualizado correctamente");
+            // navigate("/administración"); //esto lo saco para que muestre el modal, de lo contrario al actualizar un producto va a dirigirse directamente al panel, sin mostrar el modal
         } catch (error) {
             alert(error.message || "Error al actualizar el producto");
         }
@@ -217,6 +220,16 @@ export const EditProductPage = () => {
 
                 </form>
             </main>
+
+            {showSuccessModal && (
+                <SuccessModal
+                    message="El producto se ha actualizado correctamente."
+                    onClose={() => {
+                        setShowSuccessModal(false);
+                        navigate("/administración");
+                    }}
+                />
+            )}
         </>
     );
 };
