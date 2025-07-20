@@ -1,15 +1,13 @@
---Categorías
 INSERT INTO categories (name, description, image_url) VALUES('Tops', 'Tanto para looks de noche o para elevar outfits casuales.', '/assets/img/category-tops.png');
 INSERT INTO categories (name, description, image_url) VALUES('Faldas', 'Largas, minis, con transparencia. Combinalas con tops y creá looks únicos.', '/assets/img/category-skirts.png');
 INSERT INTO categories (name, description, image_url) VALUES('Vestidos', 'Largos, minis o midis. Tenemos el perfecto para vos.', '/assets/img/category-dresses.png');
 INSERT INTO categories (name, description, image_url) VALUES('Calzado', 'Completá tu look con pasos llenos de estilo.', '/assets/img/category-shoes.png');
 INSERT INTO categories (name, description, image_url) VALUES('Accesorios', 'El toque final que transforma tu look.', '/assets/img/category-accesories.png');
 
---Productos
 INSERT INTO products (name, description, category_id, code, price, size, status) VALUES ('Top Pekin', 'Tejido de punto apto para agua.\n-Color crema\n-Tela dry fit\n-Tela con protección UV.', 1, 22123, 1000, 'M', 'Disponible');
 INSERT INTO products (name, description, category_id, code, price, size, status) VALUES ('Vestido Latina', 'Vestido corto en tejido de punto, con escote en espalda y corte en laterales frontales.\n-Color gris oscuro\n-Tejido de lúrex', 3, 22234, 800, 'S', 'Disponible');
 INSERT INTO products (name, description, category_id, code, price, size, status) VALUES ('Falda Ibiza', 'Falda de tejido de punto elastizado, tiro medio, con detalle de hebilla\n-Color negro\n-Queda por debajo de la cadera\n-Tejido de lúrex\n*El top no está incluido', 2, 22345, 1500, 'L', 'No Disponible');
-INSERT INTO products (name, description, category_id, code, price, size, status) VALUES ('Falda Volados','Falda de tejido de punto elastizado, tiro medio, con volados\n-Color gold\n-Tejido de lúrex', NULL, 22456, 1200, 'M', 'Disponible');
+INSERT INTO products (name, description, category_id, code, price, size, status) VALUES ('Falda Volados','Falda de tejido de punto elastizado, tiro medio, con volados\n-Color gold\n-Tejido de lúrex', null, 22456, 1200, 'M', 'Disponible');
 INSERT INTO products (name, description, category_id, code, price, size, status) VALUES ('Vestido Ola', 'Vestido tejido corto, con aberturas a lo largo de los brazos y en el escote, ideal y cómodo tanto para fiestas a la noche o civiles.\n-Color negro\n-Tejido de lúrex\n-Color negro', 3, 22557, 1800, 'L', 'Disponible');
 INSERT INTO products (name, description, category_id, code, price, size, status) VALUES ('Vestido Denver','Vestido corto confeccionado en lentejuelas, de manga larga y cuello redondo. Cuenta con lazo para ajustar en la cintura, con terminación de flecos.\n-Calce relajado\n-Color negro', 3, 22567, 1000, 'S', 'Disponible');
 INSERT INTO products (name, description, category_id, code, price, size, status) VALUES ('Vestido Saona', 'Vestido corto con breteles que se sujetan al cuello y espalda al descubierto que contiene apertura lateral a través de cierre invisible.\n-Detalle de frunces.\n-Color amarillo', 3, 22678, 1600, 'M', 'Disponible');
@@ -40,7 +38,6 @@ INSERT INTO products (name, description, category_id, code, price, size, status)
 INSERT INTO products (name, description, category_id, code, price, size, status) VALUES ('Cinto Flower', 'Cinturón realizado en piezas metálicas irregulares superpuestas con apliques en strass. Con tres medidas y un tramo elástico para adaptar el ajuste.\n-Medidas 80 cm.\n-Color plata', 5, 28234, 200, 'Talle único', 'Disponible');
 INSERT INTO products (name, description, category_id, code, price, size, status) VALUES ('Vestido Foil', 'Vestido escote en V, confeccionado en tejido elastizado con detalles de estampado foil que aportan brillo. Elástico en cintura y volados en la falda.\n-Largo hasta los tobillos\n-Mangas 3/4\n-Color plateado', 3, 22895, 1400, 'S', 'No Disponible');
 
---Imagenes
 INSERT INTO product_images (image_url, product_id) VALUES('/assets/img/pekin1.png', 1);
 INSERT INTO product_images (image_url, product_id) VALUES('/assets/img/pekin2.png', 1);
 INSERT INTO product_images (image_url, product_id) VALUES('/assets/img/pekin3.png', 1);
