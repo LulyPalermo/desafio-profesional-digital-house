@@ -1815,7 +1815,7 @@ form {
     height: 8rem;
 }
 
-/* .highlights-table-info {
+.highlights-table-info {
     font-weight: 350;
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -1825,44 +1825,44 @@ form {
     background-color: white;
     padding: 0 2rem;
     border-bottom: 1px solid var(--lightGrey);
-} */
+}
 
-/* .highlight-id-cell {
+.highlight-id-cell {
     grid-column: 1 / 2;
-} */
+}
 
-/* .highlight-icon-cell {
+.highlight-icon-cell {
     grid-column: 2 / 3;
     padding: 1.5rem 0;
-} */
+}
 
-/* .highlight-name-cell {
+.highlight-name-cell {
     grid-column: 3 / 5;
-} */
+}
 
-/* .highlight-accions-cell {
+.highlight-accions-cell {
     grid-column: 5 / 7;
     display: flex;
     gap: 2rem;
-} */
+}
 
-/* .highlight-accions-cell div:first-child {
+.highlight-accions-cell div:first-child {
     color: var(--success);
-} */
+}
 
-/* .highlight-accions-cell div:last-child {
+.highlight-accions-cell div:last-child {
     color: var(--error);
-} */
+}
 
-/* .highlights-section-table div:last-child {
+.highlights-section-table div:last-child {
     border-bottom: none;
     border-radius: 1.5rem;
-} */
+}
 
-/* .new-highlights-buttons {
+.new-highlights-buttons {
     width: 30rem;
     padding: 4rem 0;
-} */
+}
 
 
 /* -------------------------------------------------------------------- */
