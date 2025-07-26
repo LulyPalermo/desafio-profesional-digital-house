@@ -13,8 +13,8 @@ public class CaracteristicaServiceImpl implements CaracteristicaService {
 
     @Autowired
     private CaracteristicaRepository caracteristicaRepository;
-    
-     @Override
+
+    @Override
     public List<Caracteristica> findAll() {
         return caracteristicaRepository.findAll();
     }
@@ -22,5 +22,10 @@ public class CaracteristicaServiceImpl implements CaracteristicaService {
     @Override
     public Caracteristica findById(Long id) {
         return caracteristicaRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Caracteristica save(Caracteristica caracteristica) {
+        return caracteristicaRepository.save(caracteristica);
     }
 }

@@ -19,4 +19,10 @@ public class CaracteristicaController {
     public List<Caracteristica> getAllCaracteristicas() {
         return caracteristicaService.findAll();
     }
+
+    // Endpoint para crear una característica nueva
+    @PostMapping
+    public Caracteristica createCaracteristica(@RequestBody Caracteristica caracteristica) {
+        return caracteristicaService.save(caracteristica);
+    }
 }
