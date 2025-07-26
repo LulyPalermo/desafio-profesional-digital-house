@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.lucia.palermo.rentalapp.rent_a_look.models.entities.Caracteristica;
 import com.lucia.palermo.rentalapp.rent_a_look.models.entities.Category;
 import com.lucia.palermo.rentalapp.rent_a_look.models.entities.Product;
 import com.lucia.palermo.rentalapp.rent_a_look.models.entities.ProductImage;
+import com.lucia.palermo.rentalapp.rent_a_look.repositories.CaracteristicaRepository;
 import com.lucia.palermo.rentalapp.rent_a_look.repositories.CategoryRepository;
 import com.lucia.palermo.rentalapp.rent_a_look.repositories.ProductRepository;
 
@@ -76,5 +78,20 @@ public class ProductServiceImpl implements ProductService {
         product.setCategory(category);
         return repository.save(product);
     }
+
+    @Autowired
+private CaracteristicaRepository caracteristicaRepository;
+
+@Override
+@Transactional
+public Product assignCaracteristicas(Long productId, List<Long> caracteristicaIds) {
+    Product product = repository.findById(productId)
+            .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+    List<Caracteristica> caracteristicas = caracteristicaRepository.findAllById(caracteristicaIds);
+    product.setCaracteristicas(caracteristicas);
+
+    return repository.save(product);
+}
 
 }

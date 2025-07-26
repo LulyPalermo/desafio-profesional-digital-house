@@ -101,8 +101,13 @@ public class ProductController {
                 product.setCategory(productDetails.getCategory());
             }
 
+            // Para actualizar características
+            if (productDetails.getCaracteristicas() != null) {
+                product.setCaracteristicas(productDetails.getCaracteristicas());
+            }
+
             // No actualizar imágenes por ahora
-            //product.setImages(productDetails.getImages());
+            // product.setImages(productDetails.getImages());
 
             Product updatedProduct = service.save(product);
             return ResponseEntity.ok(updatedProduct);
@@ -123,6 +128,21 @@ public class ProductController {
             return ResponseEntity.ok(updated);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    // Endpoint para asignar caracteristicas
+    @PutMapping("/products/{id}/caracteristicas")
+    public ResponseEntity<?> assignCaracteristicasToProduct(
+            @PathVariable Long id,
+            @RequestBody List<Long> caracteristicaIds) {
+
+        try {
+            Product updatedProduct = service.assignCaracteristicas(id, caracteristicaIds);
+            return ResponseEntity.ok(updatedProduct);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Collections.singletonMap("message", e.getMessage()));
         }
     }
 

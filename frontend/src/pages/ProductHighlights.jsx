@@ -1,9 +1,25 @@
 import { Link } from "react-router-dom"
 import { AdminNavBar } from "../components/AdminNavBar"
+import { useEffect, useState } from "react";
+import { getCaracteristicas } from "../services/productService";
 
 export const ProductHighlights = () => {
-    return (
 
+    const [caracteristicas, setCaracteristicas] = useState([]);
+
+    // Se cargan las características
+    useEffect(() => {
+        const fetchCaracteristicas = async () => {
+            try {
+                const caract = await getCaracteristicas();
+                setCaracteristicas(caract);
+            } catch (error) {
+                console.error("Error cargando categorías", error);
+            }
+        };
+        fetchCaracteristicas();
+    }, []);
+    return (
         <>
             <AdminNavBar />
             <main className="main-highlights">
@@ -20,44 +36,29 @@ export const ProductHighlights = () => {
                         <p className="header-row-cell highlight-accions-cell">ACCIONES</p>
                     </div>
 
-                    <div className="highlights-table-info">
-                        <p className="header-row-cell highlight-id-cell">1</p>
-                        <div className="header-row-cell highlight-icon-cell">
-                            <img src="/assets/img/prodHigh-fabric.png" alt="" className="highlights-img" />
-                        </div>
-                        <p className="header-row-cell highlight-name-cell">Tela de lino</p>
-                        <div className="header-row-cell highlight-accions-cell">
-                            <div id="edit-product" >
-                                <span className="accions"><i className="ri-pencil-fill"></i></span>
+                    {caracteristicas.map((caract) => (
+                        <div className="highlights-table-info" key={caract.id}>
+                            <p className="header-row-cell highlight-id-cell">{caract.id}</p>
+                            <div className="header-row-cell highlight-icon-cell">
+                                <img src={caract.iconUrl} alt={caract.name} className="highlight-img" />
                             </div>
-                            <div id="delete-product">
-                                <span className="accions"><i className="ri-delete-bin-fill"></i></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="highlights-table-info">
-                        <p className="header-row-cell highlight-id-cell">1</p>
-                        <div className="header-row-cell highlight-icon-cell">
-                            <img src="/assets/img/prodHigh-fabric.png" alt="" className="highlights-img" />
-                        </div>
-                        <p className="header-row-cell highlight-name-cell">Tela de lino</p>
-                        <div className="header-row-cell highlight-accions-cell">
-                            <div id="edit-product" >
-                                <span className="accions"><i className="ri-pencil-fill"></i></span>
-                            </div>
-                            <div id="delete-product">
-                                <span className="accions"><i className="ri-delete-bin-fill"></i></span>
+                            <p className="header-row-cell highlight-name-cell">{caract.name}</p>
+                            <div className="header-row-cell highlight-accions-cell">
+                                <div id="edit-product" >
+                                    <span className="accions"><i className="ri-pencil-fill"></i></span>
+                                </div>
+                                <div id="delete-product">
+                                    <span className="accions"><i className="ri-delete-bin-fill"></i></span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
+                    ))}
                 </section>
 
                 <div className="new-highlights-buttons">
-                <Link to='/addHighlights'>
-                    <button className="primary-button">Añadir nueva</button>
-                </Link>
+                    <Link to='/addHighlights'>
+                        <button className="primary-button">Añadir nueva</button>
+                    </Link>
                 </div>
             </main>
         </>

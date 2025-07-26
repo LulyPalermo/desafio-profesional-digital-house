@@ -125,7 +125,7 @@ export const AdminProducts = () => {
                                     <select
                                         onChange={(e) => handleCategoryChange(product.id, e.target.value)}
                                         defaultValue="">
-                                        <option value="" disabled>Asignar categoría</option>
+                                        <option value="" disabled>Asignar</option>
                                         {categories.map((cat) => (
                                             <option key={cat.id} value={cat.id}>
                                                 {cat.name}

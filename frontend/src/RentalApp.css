@@ -743,6 +743,10 @@ footer {
     gap: 4rem;
 }
 
+.product-highlights-items p{
+font-weight: 300;
+}
+
 .product-highlight-detail {
     display: flex;
     gap: 1rem;
@@ -1208,6 +1212,7 @@ footer {
     outline: none;
     padding: 1rem;
     appearance: none;
+    text-align: center;
     /* Oculta el chevron nativo */
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -1427,7 +1432,6 @@ form {
 .form-info select:hover {
     border: 1.5px solid var(--secondary);
 }
-
 
 
 .upload-picture {
@@ -1751,9 +1755,10 @@ form {
     grid-column: 4 / 6;
     font-weight: 300;
 }
+
 .category-table-header .category-description-cell {
-    font-weight: 500; /
-  }
+    font-weight: 500;/
+}
 
 .category-accions-cell {
     grid-column: 6 / 8;
@@ -1827,18 +1832,29 @@ form {
     border-bottom: 1px solid var(--lightGrey);
 }
 
+.highlight-img {
+    width: 5rem;
+    border-radius: 1.2rem;
+}
+
 .highlight-id-cell {
     grid-column: 1 / 2;
 }
 
 .highlight-icon-cell {
     grid-column: 2 / 3;
-    padding: 1.5rem 0;
+    padding: 1rem 0;
 }
 
 .highlight-name-cell {
     grid-column: 3 / 5;
+    font-weight: 300;
 }
+
+.highlights-table-header .highlight-name-cell {
+    font-weight: 500;
+}
+
 
 .highlight-accions-cell {
     grid-column: 5 / 7;
@@ -1863,6 +1879,25 @@ form {
     width: 30rem;
     padding: 4rem 0;
 }
+
+.form-highlights-section{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+    background-color: white;
+    padding: 4rem;
+    box-shadow: 0px 0px 20px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 1rem;
+}
+
+.highlights-checkbox-group{
+    font-weight: 300;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2rem;
+}
+
 
 
 /* -------------------------------------------------------------------- */

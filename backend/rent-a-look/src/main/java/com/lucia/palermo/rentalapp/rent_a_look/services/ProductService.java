@@ -18,5 +18,6 @@ public interface ProductService {
 
     Product updateCategory(Long productId, Long categoryId); //Endpoint específico para actualizar solo la categoría de un producto.
 
+    Product assignCaracteristicas(Long productId, List<Long> caracteristicaIds); //Método para asignar características a un producto existente.
 
 }

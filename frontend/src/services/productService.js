@@ -1,6 +1,7 @@
-
 const API_URL_PRODUCTS = "http://localhost:8080/products";
 const API_URL_CATEGORIES = "http://localhost:8080/categories";
+const API_URL_CARACTERISTICAS = "http://localhost:8080/caracteristicas";
+
 
 // Obtener todos los productos
 export const getProducts = async () => {
@@ -57,14 +58,17 @@ export const createProduct = async (productData) => {
 
 // Actualizar un producto completo
 export const updateProduct = async (id, productData) => {
-    // Clonamos productData y eliminamos images para testear
     const dataToSend = {
         ...productData,
         category: {
             id: parseInt(productData.categoryId),
         },
+        // Agregamos la propiedad caracteristicas con solo los IDs
+        caracteristicas: productData.caracteristicas 
+          ? productData.caracteristicas.map(c => ({ id: c.id })) 
+          : [],
     };
-    delete dataToSend.images; // evitar enviar imágenes para probar
+    delete dataToSend.images;
 
     const response = await fetch(`${API_URL_PRODUCTS}/${id}`, {
         method: "PUT",
@@ -81,6 +85,7 @@ export const updateProduct = async (id, productData) => {
 
     return await response.json();
 };
+
 
 
 // Método para obtener las categorías desde el backend
@@ -109,17 +114,26 @@ export const updateProductCategory = async (productId, categoryId) => {
 // Crear una nueva categoría
 export const createCategory = async (categoryData) => {
     const response = await fetch(API_URL_CATEGORIES, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(categoryData),
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(categoryData),
     });
-  
+
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || "Error al agregar categoría");
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Error al agregar categoría");
     }
-  
+
     return await response.json();
-  };
+};
+
+// Método para obtener las características desde el backend
+export const getCaracteristicas = async () => {
+    const response = await fetch(API_URL_CARACTERISTICAS);
+    if (!response.ok) {
+        throw new Error("No se pudieron obtener las características");
+    }
+    return await response.json();
+};

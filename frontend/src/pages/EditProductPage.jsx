@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { AdminNavBar } from "../components/AdminNavBar";
-import { getCategories, getProductById, updateProduct } from "../services/productService";
+import { getCaracteristicas, getCategories, getProductById, updateProduct } from "../services/productService";
 import { SuccessModal } from "../components/SuccessModal";
 
 export const EditProductPage = () => {
@@ -17,28 +17,35 @@ export const EditProductPage = () => {
         price: "",
         status: "",
         images: [],
+        caracteristicas: [],
     });
 
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showSuccessModal, setShowSuccessModal] = useState(false); //modal de confirmacion
+    const [caracteristicas, setCaracteristicas] = useState([]);
 
-    // Carga producto y categorías al inicio
+
+    // Carga producto, categorías y características
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const product = await getProductById(id);
                 const cats = await getCategories();
+                const caract = await getCaracteristicas();
 
                 setProductData({
                     ...product,
                     categoryId: product.category?.id || "",
+                    caracteristicas: product.caracteristicas || [],
                 });
 
+
                 setCategories(cats);
+                setCaracteristicas(caract);  // Guarda características en estado
             } catch (error) {
                 console.error(error);
-                alert("Error cargando producto o categorías");
+                alert("Hubo un error al modificar el producto");
             } finally {
                 setLoading(false);
             }
@@ -71,7 +78,16 @@ export const EditProductPage = () => {
         e.preventDefault();
 
         try {
+            // Se llama al updateProduct para actualizar el producto en el backend
             await updateProduct(id, productData);
+
+            // Se trae el producto actualizado del backend
+            const updatedProduct = await getProductById(id);
+
+            // Se guarda el producto actualizado en localStorage para que en el detalle de producto se actualicen los cambios
+            localStorage.setItem("selectedProduct", JSON.stringify(updatedProduct));
+
+            // Se muestra el modal de éxito
             setShowSuccessModal(true); //Aca se muestra el modal que reemplaza el alert de Producto actualizado
             // alert("Producto actualizado correctamente");
             // navigate("/administración"); //esto lo saco para que muestre el modal, de lo contrario al actualizar un producto va a dirigirse directamente al panel, sin mostrar el modal
@@ -207,6 +223,49 @@ export const EditProductPage = () => {
                                     <option value="No disponible">No disponible</option>
                                 </select>
                                 <i className="ri-arrow-down-s-line chevron-select"></i>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    {/* Sección características producto */}
+                    <div className="form-highlights-section">
+                        <div className="form-title">
+                            <h1>Editar las características del producto:</h1>
+                        </div>
+                        <div className="new-product-info">
+                            <div className="highlights-checkbox-group">
+                                {caracteristicas.map((caract) => {
+                                    const isChecked = productData.caracteristicas.some(c => c.id === caract.id);
+
+                                    const handleCheckboxChange = (e) => {
+                                        if (e.target.checked) {
+                                            // Agregar característica
+                                            setProductData(prev => ({
+                                                ...prev,
+                                                caracteristicas: [...prev.caracteristicas, caract]
+                                            }));
+                                        } else {
+                                            // Quitar característica
+                                            setProductData(prev => ({
+                                                ...prev,
+                                                caracteristicas: prev.caracteristicas.filter(c => c.id !== caract.id)
+                                            }));
+                                        }
+                                    };
+
+                                    return (
+                                        <label key={caract.id} style={{ display: "block", marginBottom: "5px" }}>
+                                            <input
+                                                type="checkbox"
+                                                value={caract.id}
+                                                checked={isChecked}
+                                                onChange={handleCheckboxChange}
+                                            />
+                                            {" "}{caract.name}
+                                        </label>
+                                    );
+                                })}
                             </div>
                         </div>
                     </div>

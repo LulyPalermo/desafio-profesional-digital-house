@@ -11,6 +11,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -45,6 +47,19 @@ public class Product {
 
     private String status;
 
+    @ManyToMany
+    @JoinTable(name = "product_caracteristicas", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "caracteristica_id"))
+    @JsonIgnoreProperties("products")
+    private List<Caracteristica> caracteristicas;
+
+    /*
+     * @ManyToOne
+     * 
+     * @JoinColumn(name = "caracteristica")
+     * 
+     * @JsonIgnoreProperties("products")
+     * private Caracteristica caracteristica;
+     */
     // @OneToMany mappedBy = "product": Un producto puede tener varias imágenes.
     // mappedBy = "product": dice que ProductImage ya maneja la relación con
     // Product.
@@ -52,7 +67,10 @@ public class Product {
     // imágenes asociadas.
     // orphanRemoval = true: Si una imagen ya no pertenece a ningún producto, se
     // elimina de la base de datos.
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true) // "product" hace referencia al nombre del atributo en la clase ProductImage que establece la relación con Product.
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true) // "product" hace referencia al
+                                                                                      // nombre del atributo en la clase
+                                                                                      // ProductImage que establece la
+                                                                                      // relación con Product.
     private List<ProductImage> images;
 
     public List<ProductImage> getImages() {
@@ -87,11 +105,10 @@ public class Product {
         this.description = description;
     }
 
-
     public Category getCategory() {
         return category;
     }
-    
+
     public void setCategory(Category category) {
         this.category = category;
     }
@@ -127,5 +144,23 @@ public class Product {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public List<Caracteristica> getCaracteristicas() {
+        return caracteristicas;
+    }
+
+    public void setCaracteristicas(List<Caracteristica> caracteristicas) {
+        this.caracteristicas = caracteristicas;
+    }
+
+    /*
+     * public Caracteristica getCaracteristica() {
+     * return caracteristica;
+     * }
+     * 
+     * public void setCaracteristica(Caracteristica caracteristica) {
+     * this.caracteristica = caracteristica;
+     * }
+     */
 
 }

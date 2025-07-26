@@ -52,10 +52,6 @@ export const ProductDetail = () => {
               {/* <p>{product.description}</p> */}
             </div>
 
-            {/*  <div className="product-detail-price">
-              <p>${product.price}</p>
-            </div> */}
-
             <div className="product-detail-list">
               <div className="product-detail-price">
                 <p>Precio:</p>
@@ -86,32 +82,24 @@ export const ProductDetail = () => {
 
             {/* Característsicas del producto */}
             <div className="product-highlights">
-              {/* <h1>Características</h1> */}
               <h2 className="product-highlights-subtitle">Características</h2>
+
               <div className="product-highlights-items">
-                <div className="product-highlight-detail">
-                  <img src="/assets/img/prodHigh-size.png" alt="" className="highlights-img" />
-                  <p>Talle M</p>
-                </div>
-
-                <div className="product-highlight-detail">
-                <img src="/assets/img/prodHigh-fabric.png" alt="" className="highlights-img" />
-                <p>Tela de lino</p>
-                </div>
-
-                <div className="product-highlight-detail">
-                <img src="/assets/img/prodHigh-fit.png" alt="" className="highlights-img" />
-                <p>Largo de la prenda: Corto</p>
-                </div>
-
-                <div className="product-highlight-detail">
-                <img src="/assets/img/prodHigh-print.png" alt="" className="highlights-img" />
-                <p>Tela con lentejuelas</p>
-                </div>
+                {product.caracteristicas && product.caracteristicas.length > 0 ? (
+                  product.caracteristicas.map((caract) => (
+                    <div className="product-highlight-detail" key={caract.id}>
+                      <img src={caract.iconUrl} alt={caract.name} className="highlights-img" />
+                      <p>{caract.name}</p>
+                    </div>
+                  ))
+                ) : (
+                  <p>No hay características para este producto</p>
+                )}
               </div>
             </div>
-            </div>
+
           </div>
+        </div>
       </main>
 
     </>
