@@ -15,6 +15,7 @@ import { ProductHighlights } from './pages/ProductHighlights'
 import { EditProductPage } from './pages/EditProductPage'
 import { AddCategoryPage } from './pages/AddCategoryPage'
 import { CategoryPage } from './pages/CategoryPage'
+import { EditHighlightPage } from './pages/EditHighlightPage'
 // import { BrowserRouter } from 'react-router-dom'
 
 const router = createBrowserRouter([
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
 {
   path: '/addHighlights',
   element: <AddHighlightPage/>
+},
+{
+  path: '/editHighlight/:id',
+  element: <EditHighlightPage/>
 },
 {
   path: '/editProduct/:id', // Ruta con parámetro id

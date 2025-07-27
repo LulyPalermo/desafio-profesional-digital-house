@@ -11,4 +11,10 @@ public interface CaracteristicaService {
     // Nuevo método para guardar una característica
     Caracteristica save(Caracteristica caracteristica);
 
+    // Método para eliminar la característica
+    void deleteById(Long id);
+
+    // Método para editar la característica
+    Caracteristica update(Long id, Caracteristica caracteristicaActualizada);
+
 }

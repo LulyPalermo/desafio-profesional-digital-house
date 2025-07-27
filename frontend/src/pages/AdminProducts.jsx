@@ -62,7 +62,6 @@ export const AdminProducts = () => {
         }
     };
 
-
     return (
 
         <>
@@ -166,6 +165,7 @@ export const AdminProducts = () => {
             {/* Modal de confirmación */}
             {showDeleteModal && (
                 <ConfirmDeleteModal
+                    message="¿Estás segura/o de que queres eliminar este producto?"
                     onClose={() => setShowDeleteModal(false)}
                     onConfirm={confirmDelete}
                 />

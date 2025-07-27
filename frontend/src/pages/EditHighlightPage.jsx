@@ -1,63 +1,87 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { AdminNavBar } from "../components/AdminNavBar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getCaracteristicaById, updateCaracteristica } from "../services/productService";
 import { SuccessModal } from "../components/SuccessModal";
 
 
+export const EditHighlightPage = () => {
 
-export const AddHighlightPage = () => {
+    const { id } = useParams();
+    const navigate = useNavigate();
 
-    const [highlightData, setHighlightData] = useState({
+    const [caracteristica, setCaracteristica] = useState({
         name: "",
-        image: null,
+        iconUrl: ""
     });
 
-    const [showSuccessModal, setShowSuccessModal] = useState(false);
-    const navigate = useNavigate();
+    const [selectedFile, setSelectedFile] = useState(null);
+
+    const [showSuccessModal, setShowSuccessModal] = useState(false); // Para mostrar el modal de exito
+
+    useEffect(() => {
+        const fetchCaracteristica = async () => {
+            try {
+                const data = await getCaracteristicaById(id);
+                setCaracteristica({
+                    name: data.name,
+                    iconUrl: data.iconUrl || ""
+                });
+            } catch (error) {
+                console.error("Error al obtener característica", error);
+            }
+        };
+        fetchCaracteristica();
+    }, [id]);
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setCaracteristica({ ...caracteristica, [name]: value });
+    };
+
+    const handleFileChange = (e) => {
+        setSelectedFile(e.target.files[0]);
+        // const file = e.target.files[0];
+        // console.log('Archivo seleccionado:', file.name);
+        // setSelectedFile(file);
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!highlightData.name || !highlightData.image) {
-            alert("Debes agregar un nombre e imagen");
-            return;
+        let iconUrl = caracteristica.iconUrl;
+
+        // Si se seleccionó una nueva imagen, se simula una subida
+        if (selectedFile) {
+            // console.log('Selected file:', selectedFile.name);
+            iconUrl = `/assets/img/${selectedFile.name}`;
         }
 
-        const imagePath = `/assets/img/${highlightData.image.name}`;
-
-        const newHighlight = {
-            name: highlightData.name,
-            iconUrl: imagePath,
-        };
+        // console.log('Icon URL que se enviará:', iconUrl);
 
         try {
-            const response = await fetch("http://localhost:8080/caracteristicas", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(newHighlight),
+            await updateCaracteristica(id, {
+                name: caracteristica.name,
+                iconUrl: iconUrl
             });
+            setShowSuccessModal(true); // Se muestra el modal al actualizar con éxito
 
-            if (response.ok) {
-                setShowSuccessModal(true);
-                // alert("Característica agregada con éxito");
-            } else {
-                alert("Error al agregar la característica");
-            }
         } catch (error) {
-            console.error("Error:", error);
-            alert("Ocurrió un error al guardar la característica");
+            console.error("Error al actualizar característica", error);
+            alert("Ocurrió un error al editar la característica.");
         }
     };
-
+    const handleCloseModal = () => {
+        setShowSuccessModal(false);
+        navigate("/administración"); // Se redirige al dashboard al cerrar el modal
+    };
 
     return (
         <>
             <AdminNavBar />
             <main className="mainAdmin">
                 <section className="section-title">
-                    <h1 className="page-title">Agregar nueva característica</h1>
+                    <h1 className="page-title">Editar característica</h1>
                     <Link to='/administración' className="nav-link secondary-button">Volver al dashboard</Link>
                 </section>
 
@@ -72,14 +96,13 @@ export const AddHighlightPage = () => {
                             {/* Nombre producto */}
                             <div className="new-product-info">
                                 <label htmlFor="product-name">Nombre:</label>
-
                                 <input
                                     type="text"
                                     name="name"
                                     id="product-name"
                                     placeholder="Nombre de la característica"
-                                    value={highlightData.name}
-                                    onChange={(e) => setHighlightData({ ...highlightData, name: e.target.value })}
+                                    value={caracteristica.name}
+                                    onChange={handleInputChange}
                                 />
                             </div>
 
@@ -101,8 +124,8 @@ export const AddHighlightPage = () => {
                                     name="images"
                                     id="product-image"
                                     accept="image/*"
+                                    onChange={handleFileChange}
                                     style={{ display: 'none' }}
-                                    onChange={(e) => setHighlightData({ ...highlightData, image: e.target.files[0] })}
                                 />
                             </div>
                         </div>
@@ -111,20 +134,16 @@ export const AddHighlightPage = () => {
                     <div className="new-product-buttons">
                         <Link to="/administración" className="nav-link secondary-button">Cancelar</Link>
                         {/* <input type="button" value="Cancelar" className="secondary-button"></input> */}
-                        <input type="submit" value="Agregar característica" className="primary-button" />
+                        <input type="submit" value="Editar característica" className="primary-button" />
                     </div>
                 </form>
             </main>
             {showSuccessModal && (
                 <SuccessModal
-                    message="La característica se ha creado correctamente."
-                    onClose={() => {
-                        setShowSuccessModal(false);
-                        navigate("/administración");
-                    }}
+                    message="Característica actualizada con éxito"
+                    onClose={handleCloseModal}
                 />
             )}
-
         </>
 
     )

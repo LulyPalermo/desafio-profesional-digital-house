@@ -64,9 +64,9 @@ export const updateProduct = async (id, productData) => {
             id: parseInt(productData.categoryId),
         },
         // Agregamos la propiedad caracteristicas con solo los IDs
-        caracteristicas: productData.caracteristicas 
-          ? productData.caracteristicas.map(c => ({ id: c.id })) 
-          : [],
+        caracteristicas: productData.caracteristicas
+            ? productData.caracteristicas.map(c => ({ id: c.id }))
+            : [],
     };
     delete dataToSend.images;
 
@@ -135,5 +135,44 @@ export const getCaracteristicas = async () => {
     if (!response.ok) {
         throw new Error("No se pudieron obtener las características");
     }
+    return await response.json();
+};
+
+//Función para eliminar características
+export const deleteCaracteristica = async (id) => {
+    const response = await fetch(`${API_URL_CARACTERISTICAS}/${id}`, {
+        method: 'DELETE',
+    });
+
+    if (!response.ok) {
+        throw new Error('Error al eliminar la característica');
+    }
+};
+
+// Función para obtener una característica por ID
+export const getCaracteristicaById = async (id) => {
+    const response = await fetch(`${API_URL_CARACTERISTICAS}/${id}`);
+    if (!response.ok) {
+        throw new Error("No se pudo obtener la característica");
+    }
+    return await response.json();
+};
+
+
+// Función para actualizar una característica existente
+export const updateCaracteristica = async (id, caracteristicaData) => {
+    const response = await fetch(`${API_URL_CARACTERISTICAS}/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(caracteristicaData),
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Error al actualizar característica");
+    }
+
     return await response.json();
 };

@@ -1,11 +1,18 @@
-import { Link } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { AdminNavBar } from "../components/AdminNavBar"
 import { useEffect, useState } from "react";
 import { getCaracteristicas } from "../services/productService";
+import { deleteCaracteristica } from "../services/productService";
+import { ConfirmDeleteModal } from "../components/ConfirmDeleteModal";
 
 export const ProductHighlights = () => {
 
     const [caracteristicas, setCaracteristicas] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [caracteristicaAEliminar, setCaracteristicaAEliminar] = useState(null);
+    const navigate = useNavigate();
+    const location = useLocation();
+
 
     // Se cargan las características
     useEffect(() => {
@@ -18,7 +25,34 @@ export const ProductHighlights = () => {
             }
         };
         fetchCaracteristicas();
-    }, []);
+    }, [location]);
+
+    //Función para abrir el modal
+    const handleDeleteClick = (caract) => {
+        setCaracteristicaAEliminar(caract);
+        setShowModal(true);
+    };
+
+
+    const handleConfirmDelete = async () => {
+        try {
+            await deleteCaracteristica(caracteristicaAEliminar.id);
+            setCaracteristicas(prev => prev.filter(c => c.id !== caracteristicaAEliminar.id));
+            setShowModal(false);
+            setCaracteristicaAEliminar(null);
+        } catch (error) {
+            console.error("Error al eliminar la característica:", error);
+        }
+    };
+
+    //Función para cerrar modal sin eliminar
+    const handleCloseModal = () => {
+        setShowModal(false);
+        setCaracteristicaAEliminar(null);
+    };
+
+
+
     return (
         <>
             <AdminNavBar />
@@ -40,14 +74,16 @@ export const ProductHighlights = () => {
                         <div className="highlights-table-info" key={caract.id}>
                             <p className="header-row-cell highlight-id-cell">{caract.id}</p>
                             <div className="header-row-cell highlight-icon-cell">
-                                <img src={caract.iconUrl} alt={caract.name} className="highlight-img" />
+                                {/* <img src={caract.iconUrl} alt={caract.name} className="highlight-img" /> */}
+                                <img src={`${caract.iconUrl}?t=${new Date().getTime()}`} alt={caract.name} className="highlight-img" />
+
                             </div>
                             <p className="header-row-cell highlight-name-cell">{caract.name}</p>
                             <div className="header-row-cell highlight-accions-cell">
-                                <div id="edit-product" >
+                                <div id="edit-product" onClick={() => navigate(`/editHighlight/${caract.id}`)}>
                                     <span className="accions"><i className="ri-pencil-fill"></i></span>
                                 </div>
-                                <div id="delete-product">
+                                <div id="delete-product" onClick={() => handleDeleteClick(caract)}>
                                     <span className="accions"><i className="ri-delete-bin-fill"></i></span>
                                 </div>
                             </div>
@@ -61,6 +97,14 @@ export const ProductHighlights = () => {
                     </Link>
                 </div>
             </main>
+
+            {showModal && (
+                <ConfirmDeleteModal
+                    message="¿Estás segura/o de que querés eliminar esta característica?"
+                    onClose={handleCloseModal}
+                    onConfirm={handleConfirmDelete}
+                />
+            )}
         </>
     )
 }

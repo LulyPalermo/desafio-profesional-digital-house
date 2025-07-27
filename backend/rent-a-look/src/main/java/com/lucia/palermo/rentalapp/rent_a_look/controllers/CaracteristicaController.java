@@ -25,4 +25,23 @@ public class CaracteristicaController {
     public Caracteristica createCaracteristica(@RequestBody Caracteristica caracteristica) {
         return caracteristicaService.save(caracteristica);
     }
+
+    // Endpoint para eliminar una característica
+    @DeleteMapping("/{id}")
+    public void deleteCaracteristica(@PathVariable Long id) {
+        caracteristicaService.deleteById(id);
+    }
+
+    // Endpoint para traer la característica por id
+    @GetMapping("/{id}")
+    public Caracteristica getCaracteristicaById(@PathVariable Long id) {
+        return caracteristicaService.findById(id);
+    }
+
+    // Endpoint para editar una característica existente
+    @PutMapping("/{id}")
+    public Caracteristica updateCaracteristica(@PathVariable Long id, @RequestBody Caracteristica nuevaCaracteristica) {
+        return caracteristicaService.update(id, nuevaCaracteristica);
+    }
+
 }

@@ -55,8 +55,45 @@ INSERT INTO products (name, description, category_id, code, price, size, status)
 
 -- Asignar características a productos
 INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (1, 2);
-INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (1, 3);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (1, 9);
 INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (2, 1);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (2, 6);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (2, 9);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (3, 3);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (3, 6);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (3, 9);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (4, 2);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (4, 6);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (4, 9);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (5, 3);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (5, 6);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (5, 9);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (6, 1);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (6, 6);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (6, 10);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (7, 2);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (7, 6);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (7, 5);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (8, 3);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (8, 5);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (8, 8);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (9, 1);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (9, 5);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (9, 7);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (10, 1);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (10, 5);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (10, 6);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (11, 2);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (11, 6);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (11, 10);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (12, 1);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (12, 8);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (12, 10);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (13, 2);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (13, 5);
+INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (13, 6);
+
+
 
 -- Productos imagenes
 INSERT INTO product_images (image_url, product_id) VALUES('/assets/img/pekin1.png', 1);
