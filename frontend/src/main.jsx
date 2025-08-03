@@ -16,6 +16,8 @@ import { EditProductPage } from './pages/EditProductPage'
 import { AddCategoryPage } from './pages/AddCategoryPage'
 import { CategoryPage } from './pages/CategoryPage'
 import { EditHighlightPage } from './pages/EditHighlightPage'
+import { UserPage } from './pages/UserPage'
+import { EditUserPage } from './pages/EditUserPage'
 // import { BrowserRouter } from 'react-router-dom'
 
 const router = createBrowserRouter([
@@ -66,6 +68,14 @@ const router = createBrowserRouter([
 {
   path: '/categories',
   element: <CategoryPage/>
+},
+{
+  path: '/users',
+  element: <UserPage/>
+},
+{
+  path: '/editUser/:id', // Ruta con parámetro id
+  element: <EditUserPage />
 },
 
 ])

@@ -743,8 +743,8 @@ footer {
     gap: 4rem;
 }
 
-.product-highlights-items p{
-font-weight: 300;
+.product-highlights-items p {
+    font-weight: 300;
 }
 
 .product-highlight-detail {
@@ -1148,6 +1148,7 @@ font-weight: 300;
     grid-column: 17 / 19;
     display: flex;
     gap: 1rem;
+    cursor: pointer;
 }
 
 .accions {
@@ -1764,6 +1765,7 @@ form {
     grid-column: 6 / 8;
     display: flex;
     gap: 2rem;
+    cursor: pointer;
 }
 
 /* .category-accions-cell div:first-child {
@@ -1787,12 +1789,12 @@ form {
 
 /* -------------------------------------------------------------------- */
 
-
-/* Admin características productos */
+/* Admin características productos - usuarios */
 
 /* Sección tabla */
 
-.main-highlights {
+.main-highlights,
+.main-users {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -1802,13 +1804,15 @@ form {
     padding: 4rem;
 }
 
-.highlights-section-table {
+.highlights-section-table,
+.users-section-table {
     width: 100%;
     border-radius: 1.5rem;
     box-shadow: 0px 0px 20px 0 rgba(0, 0, 0, 0.1);
 }
 
-.highlights-table-header {
+.highlights-table-header,
+.users-table-header {
     font-size: 1.6rem;
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -1820,7 +1824,8 @@ form {
     height: 8rem;
 }
 
-.highlights-table-info {
+.highlights-table-info,
+.users-table-info {
     font-weight: 350;
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -1860,6 +1865,7 @@ form {
     grid-column: 5 / 7;
     display: flex;
     gap: 2rem;
+    cursor: pointer;
 }
 
 .highlight-accions-cell div:first-child {
@@ -1870,7 +1876,8 @@ form {
     color: var(--error);
 }
 
-.highlights-section-table div:last-child {
+.highlights-section-table div:last-child,
+.users-section-table div:last-child {
     border-bottom: none;
     border-radius: 1.5rem;
 }
@@ -1880,7 +1887,7 @@ form {
     padding: 4rem 0;
 }
 
-.form-highlights-section{
+.form-highlights-section {
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -1891,17 +1898,121 @@ form {
     border-radius: 1rem;
 }
 
-.highlights-checkbox-group{
+.highlights-checkbox-group {
     font-weight: 300;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 2rem;
 }
 
+/* -------------------------------------------------------------------- */
+
+/* Admin Usuarios */
+
+/* Sección tabla usuarios */
+.users-table-info {
+    padding: 2rem;
+}
+
+.users-id-cell {
+    grid-column: 1 / 2;
+}
+
+.users-name-cell {
+    grid-column: 2 / 3;
+    padding: 1rem 0;
+    font-weight: 300;
+}
+
+.users-email-cell {
+    grid-column: 3 / 5;
+    font-weight: 300;
+}
+
+.users-table-header .users-name-cell,
+.users-table-header .users-email-cell {
+    font-weight: 500;
+}
+
+.users-accions-cell {
+    grid-column: 5 / 7;
+
+}
+
+#edit-user {
+    color: var(--success);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+}
+
+.admin-user-section {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    width: 100%;
+    background-color: white;
+    padding: 4rem;
+    box-shadow: 0px 0px 20px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 1rem;
+}
+
+/* .edit-user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: relative;
+} */
+
+.admin-user-title {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.admin-user-title h2 {
+    font-size: 2rem;
+}
+
+.admin-user-title p {
+    font-size: 2rem;
+    font-weight: 350;
+}
+
+.toggle-user-group {
+    font-size: 2rem;
+    font-weight: 300;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem 6rem;
+
+}
+
+.icon-toggle-container {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.icon-toggle {
+    font-size: 3rem;
+    transition: color 0.9s ease;
+    
+}
+
+.icon-toggle.on {
+    color:var(--success);
+}
+
+.icon-toggle.off {
+    color: var(--mediumGrey);
+}
+
 
 
 /* -------------------------------------------------------------------- */
-
 
 /* BOTONES */
 

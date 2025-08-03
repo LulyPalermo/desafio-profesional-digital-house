@@ -293,3 +293,7 @@ INSERT INTO product_images (image_url, product_id) VALUES('/assets/img/foil2.png
 INSERT INTO product_images (image_url, product_id) VALUES('/assets/img/foil3.png', 33);
 INSERT INTO product_images (image_url, product_id) VALUES('/assets/img/foil4.png', 33);
 INSERT INTO product_images (image_url, product_id) VALUES('/assets/img/foil5.png', 33);
+
+-- Usuarios Admin
+INSERT INTO admin_users (nombre, apellido, email) VALUES('Lucia', 'Palermo', 'lucia@gmail.com');
+INSERT INTO admin_users (nombre, apellido, email) VALUES('Benjamin', 'Perez', 'benjamin@gmail.com');

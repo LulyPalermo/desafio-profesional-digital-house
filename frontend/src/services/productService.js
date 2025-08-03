@@ -1,6 +1,7 @@
 const API_URL_PRODUCTS = "http://localhost:8080/products";
 const API_URL_CATEGORIES = "http://localhost:8080/categories";
 const API_URL_CARACTERISTICAS = "http://localhost:8080/caracteristicas";
+const API_URL_ADMIN_USERS = "http://localhost:8080/admin_users";
 
 
 // Obtener todos los productos
@@ -174,5 +175,24 @@ export const updateCaracteristica = async (id, caracteristicaData) => {
         throw new Error(errorData.message || "Error al actualizar característica");
     }
 
+    return await response.json();
+};
+
+
+// Método para obtener los usuarios del admin 
+export const getUsers = async () => {
+    const response = await fetch(API_URL_ADMIN_USERS);
+    if (!response.ok) {
+        throw new Error("No se pudieron obtener los usuarios");
+    }
+    return await response.json();
+};
+
+// Función para obtener usuario por ID
+export const getUserById = async (id) => {
+    const response = await fetch(`${API_URL_ADMIN_USERS}/${id}`);
+    if (!response.ok) {
+        throw new Error("No se pudo obtener el usuario");
+    }
     return await response.json();
 };

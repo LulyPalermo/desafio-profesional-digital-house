@@ -11,6 +11,8 @@ import { EditProductPage } from './pages/EditProductPage';
 import { AddCategoryPage } from './pages/AddCategoryPage';
 import { CategoryPage } from './pages/CategoryPage';
 import { EditHighlightPage } from './pages/EditHighlightPage';
+import { UserPage } from './pages/UserPage';
+import { EditUserPage } from './pages/EditUserPage';
 
 
 export const RentalApp = () => {
@@ -28,6 +30,8 @@ export const RentalApp = () => {
                 <Route path='/editProduct/:id' element={<EditProductPage />} />
                 <Route path='/addCategory' element={<AddCategoryPage />}></Route>
                 <Route path='/categories' element={<CategoryPage />}></Route>
+                <Route path='/users' element={<UserPage />}></Route>
+                <Route path='/editUser/:id' element={<EditUserPage />} />
                 <Route path='/*' element={<Navigate to='*' />}></Route>
                 {/* <Route path="*" component={NotFound} /> */}
             </Routes>

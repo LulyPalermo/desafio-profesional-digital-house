@@ -81,6 +81,13 @@ export const AdminPanel = () => {
                             </button>
                         </Link>
 
+                        <Link to='/users'>
+                            <button className="admin-panel-button">
+                                <i className="ri-user-3-line"></i>
+                                Usuarios
+                            </button>
+                        </Link>
+
                         {/* <Link>
                             <button className="admin-panel-button">
                                 <i className="ri-tools-fill"></i>
