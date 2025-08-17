@@ -1,25 +1,32 @@
 import { Link, useNavigate } from "react-router-dom"
 import { AdminNavBar } from "../components/AdminNavBar"
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { deleteProductById, getCategories, getProducts, updateProductCategory } from "../services/productService";
 import { ConfirmDeleteModal } from "../components/ConfirmDeleteModal";
+import { SuccessModal } from "../components/SuccessModal";
+import { UserContext } from "../Context/UserContext";
 
 // import Swal from 'sweetalert2';
 
 export const AdminProducts = () => {
 
+    const { user } = useContext(UserContext); // Se obtiene el usuario logueado
+
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]); // Guardar categorías
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedProductId, setSelectedProductId] = useState(null);
+    const [showPermissionModal, setShowPermissionModal] = useState(false);
 
     const navigate = useNavigate();
 
+    // Se cargan productos
     const showAllProducts = async () => {
         const allProducts = await getProducts();
         setProducts(allProducts);
     };
 
+    // Se cargan las categorías
     const loadCategories = async () => {
         try {
             const cats = await getCategories();
@@ -34,11 +41,29 @@ export const AdminProducts = () => {
         loadCategories();
     }, []);
 
-    // Lógica de confirmación y eliminación dentro del componente:
-    const handleDeleteClick = (id) => {
-        setSelectedProductId(id);
-        setShowDeleteModal(true);
+    // Función para manejar click en editar
+    const handleEditClick = (productId) => {
+        if (user?.editarProducto || user?.isAdmin) {
+            navigate(`/editProduct/${productId}`);
+        } else {
+            setShowPermissionModal(true); // si no tiene permisos, mostramos modal
+        }
     };
+
+    // Función para manejar click en eliminar
+    // Lógica de confirmación y eliminación dentro del componente:
+    const handleDeleteClick = (productId) => {
+        if (user?.eliminarProducto || user?.isAdmin) {
+            setSelectedProductId(productId);
+            setShowDeleteModal(true);
+        } else {
+            setShowPermissionModal(true); // si no tiene permisos, mostramos modal
+        }
+    };
+    /*  const handleDeleteClick = (id) => {
+         setSelectedProductId(id);
+         setShowDeleteModal(true);
+     }; */
 
     const confirmDelete = async () => {
         try {
@@ -142,12 +167,18 @@ export const AdminProducts = () => {
                             <p className={`header-row-cell status-cell ${product.status === "Disponible" ? "available-label" : "unavailable-label"}`}>
                                 {product.status} </p>
                             <div className="header-row-cell accions-cell">
-                                <div id="edit-product" onClick={() => navigate(`/editProduct/${product.id}`)}>
+                                <div id="edit-product" onClick={() => handleEditClick(product.id)}>
                                     <span className="accions"><i className="ri-pencil-fill"></i></span>
                                 </div>
                                 <div id="delete-product" onClick={() => handleDeleteClick(product.id)}>
                                     <span className="accions"><i className="ri-delete-bin-fill"></i></span>
-                                </div>
+                                </div>{/*  */}
+                                {/* <div id="edit-product" onClick={() => navigate(`/editProduct/${product.id}`)}>
+                                    <span className="accions"><i className="ri-pencil-fill"></i></span>
+                                </div> */}
+                                {/* <div id="delete-product" onClick={() => handleDeleteClick(product.id)}>
+                                    <span className="accions"><i className="ri-delete-bin-fill"></i></span>
+                                </div> */}
                             </div>
                         </div>
                     ))}
@@ -168,6 +199,14 @@ export const AdminProducts = () => {
                     message="¿Estás segura/o de que queres eliminar este producto?"
                     onClose={() => setShowDeleteModal(false)}
                     onConfirm={confirmDelete}
+                />
+            )}
+
+            {/* Modal si no tiene permisos para editar o eliminar */}
+            {showPermissionModal && (
+                <SuccessModal
+                    message="No tienes permisos para realizar esta acción"
+                    onClose={() => setShowPermissionModal(false)}
                 />
             )}
         </>

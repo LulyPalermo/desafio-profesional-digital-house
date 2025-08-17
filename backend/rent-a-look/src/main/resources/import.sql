@@ -295,5 +295,14 @@ INSERT INTO product_images (image_url, product_id) VALUES('/assets/img/foil4.png
 INSERT INTO product_images (image_url, product_id) VALUES('/assets/img/foil5.png', 33);
 
 -- Usuarios Admin
-INSERT INTO admin_users (nombre, apellido, email) VALUES('Lucia', 'Palermo', 'lucia@gmail.com');
-INSERT INTO admin_users (nombre, apellido, email) VALUES('Benjamin', 'Perez', 'benjamin@gmail.com');
+ALTER TABLE admin_users
+ADD COLUMN is_admin BOOLEAN DEFAULT false;
+ADD COLUMN editar_producto BOOLEAN DEFAULT false,
+ADD COLUMN eliminar_producto BOOLEAN DEFAULT false;
+ADD COLUMN agregar_producto BOOLEAN DEFAULT false;
+ADD COLUMN editar_caracteristica BOOLEAN DEFAULT false;
+ADD COLUMN eliminar_caracteristica BOOLEAN DEFAULT false;
+ADD COLUMN agregar_categoria BOOLEAN DEFAULT false;
+
+INSERT INTO admin_users (nombre, apellido, email, password,  is_admin, editar_producto, eliminar_producto, agregar_producto, editar_caracteristica, eliminar_caracteristica, agregar_categoria) VALUES('Lucia', 'Palermo', 'lucia@ejemplo.com', '123456', true, true, true, true, true, true, true);
+INSERT INTO admin_users (nombre, apellido, email, password,  is_admin, editar_producto, eliminar_producto, agregar_producto, editar_caracteristica, eliminar_caracteristica, agregar_categoria) VALUES('Benjamin', 'Perez', 'benjamin@ejemplo.com', '678910', false, false, false, false, false, false, false);

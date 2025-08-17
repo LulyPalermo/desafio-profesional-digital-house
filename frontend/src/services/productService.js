@@ -196,3 +196,21 @@ export const getUserById = async (id) => {
     }
     return await response.json();
 };
+
+// Función para actualizar el usuario admin por id
+export const updateUser = async (id, userData) => {
+    const response = await fetch(`${API_URL_ADMIN_USERS}/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Error al actualizar usuario");
+    }
+
+    return await response.json();
+};

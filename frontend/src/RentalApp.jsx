@@ -13,6 +13,7 @@ import { CategoryPage } from './pages/CategoryPage';
 import { EditHighlightPage } from './pages/EditHighlightPage';
 import { UserPage } from './pages/UserPage';
 import { EditUserPage } from './pages/EditUserPage';
+import { AdminLogin } from './pages/AdminLogin';
 
 
 export const RentalApp = () => {
@@ -21,6 +22,7 @@ export const RentalApp = () => {
             <Routes>
                 <Route path='/' element={<HomePage />}></Route>
                 <Route path='/detail' element={<ProductDetail />}></Route>
+                <Route path='/administraciónLogin' element={<AdminLogin />}></Route>
                 <Route path='/administración' element={<AdminPanel />}></Route>
                 <Route path='/adminProducts' element={<AdminProducts />}></Route>
                 <Route path='/addProduct' element={<AddProductPage />}></Route>

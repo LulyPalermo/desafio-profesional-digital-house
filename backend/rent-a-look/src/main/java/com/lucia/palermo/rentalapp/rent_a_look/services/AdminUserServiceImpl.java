@@ -23,4 +23,25 @@ public class AdminUserServiceImpl implements AdminUserService {
     public AdminUser findById(Long id) {
         return adminUserRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     }
+
+    @Override
+    public AdminUser updateUser(Long id, AdminUser updatedAdminUser) {
+        AdminUser existingUser = adminUserRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        existingUser.setEditarProducto(updatedAdminUser.isEditarProducto());
+        existingUser.setEliminarProducto(updatedAdminUser.isEliminarProducto());
+        existingUser.setAgregarProducto(updatedAdminUser.isAgregarProducto());
+        existingUser.setEditarCaracteristica(updatedAdminUser.isEditarCaracteristica());
+        existingUser.setEliminarCaracteristica(updatedAdminUser.isEliminarCaracteristica());
+        existingUser.setAgregarCategoria(updatedAdminUser.isAgregarCategoria());
+
+        return adminUserRepository.save(existingUser);
+    }
+
+    @Override
+    public AdminUser findByEmail(String email) {
+        return adminUserRepository.findByEmail(email).orElse(null);
+    }
+
 }

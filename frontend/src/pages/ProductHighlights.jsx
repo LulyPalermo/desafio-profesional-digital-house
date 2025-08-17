@@ -1,18 +1,23 @@
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { AdminNavBar } from "../components/AdminNavBar"
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getCaracteristicas } from "../services/productService";
 import { deleteCaracteristica } from "../services/productService";
 import { ConfirmDeleteModal } from "../components/ConfirmDeleteModal";
+import { SuccessModal } from "../components/SuccessModal";
+import { UserContext } from "../Context/UserContext";
 
 export const ProductHighlights = () => {
+
+    const { user } = useContext(UserContext); // Usuario logueado
 
     const [caracteristicas, setCaracteristicas] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [caracteristicaAEliminar, setCaracteristicaAEliminar] = useState(null);
+    const [showPermissionModal, setShowPermissionModal] = useState(false);
+
     const navigate = useNavigate();
     const location = useLocation();
-
 
     // Se cargan las características
     useEffect(() => {
@@ -27,13 +32,26 @@ export const ProductHighlights = () => {
         fetchCaracteristicas();
     }, [location]);
 
-    //Función para abrir el modal
-    const handleDeleteClick = (caract) => {
-        setCaracteristicaAEliminar(caract);
-        setShowModal(true);
+    // Función para manejar click en editar
+    const handleEditClick = (caract) => {
+        if (user?.editarCaracteristica || user?.isAdmin) {
+            navigate(`/editHighlight/${caract.id}`);
+        } else {
+            setShowPermissionModal(true);
+        }
     };
 
+    // Función para manejar click en eliminar
+    const handleDeleteClick = (caract) => {
+        if (user?.eliminarCaracteristica || user?.isAdmin) {
+            setCaracteristicaAEliminar(caract);
+             setShowModal(true);
+        } else {
+            setShowPermissionModal(true);
+        }
+    };
 
+    // Confirmar eliminación
     const handleConfirmDelete = async () => {
         try {
             await deleteCaracteristica(caracteristicaAEliminar.id);
@@ -45,12 +63,20 @@ export const ProductHighlights = () => {
         }
     };
 
-    //Función para cerrar modal sin eliminar
+    // Función para cerrar modal sin eliminar
     const handleCloseModal = () => {
         setShowModal(false);
         setCaracteristicaAEliminar(null);
     };
 
+    // Función para manejar click en "Añadir nueva" con control de permisos
+    const handleAddNew = () => {
+        if (user?.agregarCaracteristica || user?.isAdmin) {
+            navigate("/addHighlights");
+        } else {
+            setShowPermissionModal(true);
+        }
+    };
 
 
     return (
@@ -80,29 +106,56 @@ export const ProductHighlights = () => {
                             </div>
                             <p className="header-row-cell highlight-name-cell">{caract.name}</p>
                             <div className="header-row-cell highlight-accions-cell">
-                                <div id="edit-product" onClick={() => navigate(`/editHighlight/${caract.id}`)}>
+                                <div id="edit-highlight" onClick={() => handleEditClick(caract)}>
                                     <span className="accions"><i className="ri-pencil-fill"></i></span>
                                 </div>
-                                <div id="delete-product" onClick={() => handleDeleteClick(caract)}>
+                                <div id="delete-highlight" onClick={() => handleDeleteClick(caract)}>
                                     <span className="accions"><i className="ri-delete-bin-fill"></i></span>
                                 </div>
+                                {/*  <div id="edit-highlight" onClick={() => navigate(`/editHighlight/${caract.id}`)}>
+                                    <span className="accions"><i className="ri-pencil-fill"></i></span>
+                                </div> */}
+                                {/* <div id="delete-highlight" onClick={() => handleDeleteClick(caract)}>
+                                    <span className="accions"><i className="ri-delete-bin-fill"></i></span>
+                                </div> */}
                             </div>
                         </div>
                     ))}
                 </section>
 
                 <div className="new-highlights-buttons">
+                    <button className="primary-button" onClick={handleAddNew}>Añadir nueva</button>
+                </div>
+
+                {/* <div className="new-highlights-buttons">
                     <Link to='/addHighlights'>
                         <button className="primary-button">Añadir nueva</button>
                     </Link>
-                </div>
+                </div> */}
             </main>
+
+            {/* Modal de confirmación de eliminación */}
 
             {showModal && (
                 <ConfirmDeleteModal
                     message="¿Estás segura/o de que querés eliminar esta característica?"
                     onClose={handleCloseModal}
                     onConfirm={handleConfirmDelete}
+                />
+            )}
+
+            {/* Modal de permisos insuficientes */}
+            {showPermissionModal && (
+                <SuccessModal
+                    message="No tienes permisos para realizar esta acción"
+                    onClose={handleCloseModal}
+                />
+            )}
+
+            {showPermissionModal && (
+                <SuccessModal
+                    message="No tienes permisos para realizar esta acción"
+                    onClose={() => setShowPermissionModal(false)}
                 />
             )}
         </>

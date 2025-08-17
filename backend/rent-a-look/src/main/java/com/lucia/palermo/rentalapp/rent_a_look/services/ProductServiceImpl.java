@@ -72,7 +72,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = repository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
 
-        Category category = categoryRepository.findById(categoryId)   // <-- USAR LA INSTANCIA INYECTADA
+        Category category = categoryRepository.findById(categoryId)  
                 .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
 
         product.setCategory(category);

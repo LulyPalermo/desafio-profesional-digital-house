@@ -1,20 +1,39 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AdminNavBar } from "../components/AdminNavBar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../Context/UserContext";
+import { SuccessModal } from "../components/SuccessModal";
 
 export const AdminPanel = () => {
     const [isMobile, setIsMobile] = useState(false);
 
-    useEffect(() => {
-        const checkMobile = () => {
-            setIsMobile(window.innerWidth <= 768);
-        };
+    // Estado para modal de permisos
+    const [showPermissionModal, setShowPermissionModal] = useState(false);
+    const [permissionMessage, setPermissionMessage] = useState("");
 
+    const { user } = useContext(UserContext);
+    const navigate = useNavigate();
+
+
+    // Detecta si es mobile
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth <= 768);
         checkMobile();
         window.addEventListener("resize", checkMobile);
         return () => window.removeEventListener("resize", checkMobile);
     }, []);
 
+    // Redirige al login si no hay usuario
+    useEffect(() => {
+        if (!user) {
+            navigate("/administraciónLogin");
+        }
+    }, [user, navigate]);
+
+    // Se muestra esto mientras se carga user desde localStorage
+    if (!user) return <p>Cargando usuario...</p>;
+
+    // Si está en mobile no se muestra el panel
     if (isMobile) {
         return (
             <>
@@ -30,15 +49,21 @@ export const AdminPanel = () => {
                         <p>El panel de administración no está disponible en dispositivos móviles.</p>
                     </section>
                 </main>
-
-                {/* <div style={{ textAlign: 'center', marginTop: '100px' }}>
-                    <h2>El panel de administración no está disponible en dispositivos móviles.</h2>
-                </div> */}
             </>
-
         );
-
     }
+
+    // Función para manejar CTA con permisos
+    const handleRestrictedNav = (e, hasPermission, message, path) => {
+        e.preventDefault();
+        if (hasPermission) {
+            navigate(path);
+        } else {
+            setPermissionMessage(message);
+            setShowPermissionModal(true);
+        }
+    };
+
 
     return (
         <>
@@ -51,6 +76,8 @@ export const AdminPanel = () => {
 
                 <section className="admin-panel">
                     <nav className="admin-menu">
+
+                        {/* El acceso al listado de productos siempre está visible */}
                         <Link to='/adminProducts'>
                             <button className="admin-panel-button">
                                 <i className="ri-file-list-line"></i>
@@ -58,14 +85,33 @@ export const AdminPanel = () => {
                             </button>
                         </Link>
 
-                        <Link to='/addProduct'>
+
+                        {/* Agregar producto, solo puede acceder si tiene permiso */}
+                        <Link
+                            to="/addProduct"
+                            onClick={(e) =>
+                                handleRestrictedNav(
+                                    e,
+                                    user.isAdmin || user.agregarProducto,
+                                    "No tienes permisos para agregar productos",
+                                    "/addProduct"
+                                )
+                            }
+                        >
                             <button className="admin-panel-button">
                                 <i className="ri-add-fill"></i>
-                                {/* <i className="ri-add-large-fill"></i> */}
                                 Agregar producto
                             </button>
                         </Link>
 
+                        {/* <Link to='/addProduct'>
+                            <button className="admin-panel-button">
+                                <i className="ri-add-fill"></i>
+                                Agregar producto
+                            </button>
+                        </Link> */}
+
+                        {/* El acceso a administrar características siempre está visible */}
                         <Link to='/caracteristicas'>
                             <button className="admin-panel-button">
                                 <i className="ri-menu-search-line"></i>
@@ -73,30 +119,52 @@ export const AdminPanel = () => {
                             </button>
                         </Link>
 
-                        <Link to='/categories'>
+                        {/* Agregar categoría, solo puede acceder si tiene permiso */}
+                        <Link
+                            to="/categories"
+                            onClick={(e) =>
+                                handleRestrictedNav(
+                                    e,
+                                    user.isAdmin || user.agregarCategoria,
+                                    "No tienes permisos para agregar categorías",
+                                    "/categories"
+                                )
+                            }
+                        >
                             <button className="admin-panel-button">
                                 <i className="ri-add-fill"></i>
-                                {/* <i className="ri-add-large-fill"></i> */}
                                 Agregar categoría
                             </button>
                         </Link>
 
-                        <Link to='/users'>
+                        {/* <Link to='/categories'>
                             <button className="admin-panel-button">
-                                <i className="ri-user-3-line"></i>
-                                Usuarios
-                            </button>
-                        </Link>
-
-                        {/* <Link>
-                            <button className="admin-panel-button">
-                                <i className="ri-tools-fill"></i>
-                                Configuración
+                                <i className="ri-add-fill"></i>
+                                Agregar categoría
                             </button>
                         </Link> */}
+
+                        {/* Administrar usuarios → solo admin completo */}
+                        {user.isAdmin && (
+                            <Link to="/users">
+                                <button className="admin-panel-button">
+                                    <i className="ri-user-3-line"></i>
+                                    Usuarios
+                                </button>
+                            </Link>
+                        )}
+
                     </nav>
                 </section>
             </main>
+
+            {/* Modal de permisos */}
+            {showPermissionModal && (
+                <SuccessModal
+                    message={permissionMessage}
+                    onClose={() => setShowPermissionModal(false)}
+                />
+            )}
         </>
     );
 };

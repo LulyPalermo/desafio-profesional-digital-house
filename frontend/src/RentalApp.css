@@ -1909,6 +1909,22 @@ form {
 
 /* Admin Usuarios */
 
+/* Sección admin login */
+
+.main-admin-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-content {
+    display: flex;
+    flex-direction: column;
+    gap: 6rem;
+    width: 80%;
+    max-width: 70rem;
+}
+
 /* Sección tabla usuarios */
 .users-table-info {
     padding: 2rem;
@@ -1999,11 +2015,11 @@ form {
 .icon-toggle {
     font-size: 3rem;
     transition: color 0.9s ease;
-    
+
 }
 
 .icon-toggle.on {
-    color:var(--success);
+    color: var(--success);
 }
 
 .icon-toggle.off {

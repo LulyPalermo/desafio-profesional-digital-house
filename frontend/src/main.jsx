@@ -18,6 +18,7 @@ import { CategoryPage } from './pages/CategoryPage'
 import { EditHighlightPage } from './pages/EditHighlightPage'
 import { UserPage } from './pages/UserPage'
 import { EditUserPage } from './pages/EditUserPage'
+import { AdminLogin } from './pages/AdminLogin'
 // import { BrowserRouter } from 'react-router-dom'
 
 const router = createBrowserRouter([
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
 {
   path: '/',
   element: <HomePage/>
+},
+{
+  path: '/administraciónLogin',
+  element: <AdminLogin/>
 },
 {
   path: '/administración',
