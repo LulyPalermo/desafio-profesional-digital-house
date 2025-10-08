@@ -1,11 +1,15 @@
--- Categorías
+-- =====================================================
+-- CATEGORÍAS
+-- =====================================================
 INSERT INTO categories (name, description, image_url) VALUES('Tops', 'Tanto para looks de noche o para elevar outfits casuales.', '/assets/img/category-tops.png');
 INSERT INTO categories (name, description, image_url) VALUES('Faldas', 'Largas, minis, con transparencia. Combinalas con tops y creá looks únicos.', '/assets/img/category-skirts.png');
 INSERT INTO categories (name, description, image_url) VALUES('Vestidos', 'Largos, minis o midis. Tenemos el perfecto para vos.', '/assets/img/category-dresses.png');
 INSERT INTO categories (name, description, image_url) VALUES('Calzado', 'Completá tu look con pasos llenos de estilo.', '/assets/img/category-shoes.png');
 INSERT INTO categories (name, description, image_url) VALUES('Accesorios', 'El toque final que transforma tu look.', '/assets/img/category-accesories.png');
 
--- Características
+-- =====================================================
+-- CARACTERÍSTICAS
+-- =====================================================
 INSERT INTO caracteristicas (name, icon_url) VALUES('Talle S', '/assets/img/prodHigh-size.png');
 INSERT INTO caracteristicas (name, icon_url) VALUES('Talle M', '/assets/img/prodHigh-size.png');
 INSERT INTO caracteristicas (name, icon_url) VALUES('Talle L', '/assets/img/prodHigh-size.png');
@@ -18,7 +22,9 @@ INSERT INTO caracteristicas (name, icon_url) VALUES('Tela con lurex', '/assets/i
 INSERT INTO caracteristicas (name, icon_url) VALUES('Tela con lentejuelas', '/assets/img/prodHigh-print.png');
 INSERT INTO caracteristicas (name, icon_url) VALUES('Tela suave', '/assets/img/prodHigh-feel.png');
 
--- Productos
+-- =====================================================
+-- PRODUCTOS
+-- =====================================================
 INSERT INTO products (name, description, category_id, code, price, size, status) VALUES ('Top Pekin', 'Tejido de punto apto para agua.\n-Color crema\n-Tela dry fit\n-Tela con protección UV.', 1, 22123, 1000, 'M', 'Disponible');
 INSERT INTO products (name, description, category_id, code, price, size, status) VALUES ('Vestido Latina', 'Vestido corto en tejido de punto, con escote en espalda y corte en laterales frontales.\n-Color gris oscuro\n-Tejido de lúrex', 3, 22234, 800, 'S', 'Disponible');
 INSERT INTO products (name, description, category_id, code, price, size, status) VALUES ('Falda Ibiza', 'Falda de tejido de punto elastizado, tiro medio, con detalle de hebilla\n-Color negro\n-Queda por debajo de la cadera\n-Tejido de lúrex\n*El top no está incluido', 2, 22345, 1500, 'L', 'No Disponible');
@@ -53,7 +59,9 @@ INSERT INTO products (name, description, category_id, code, price, size, status)
 INSERT INTO products (name, description, category_id, code, price, size, status) VALUES ('Cinto Flower', 'Cinturón realizado en piezas metálicas irregulares superpuestas con apliques en strass. Con tres medidas y un tramo elástico para adaptar el ajuste.\n-Medidas 80 cm.\n-Color plata', 5, 28234, 200, 'Talle único', 'Disponible');
 INSERT INTO products (name, description, category_id, code, price, size, status) VALUES ('Vestido Foil', 'Vestido escote en V, confeccionado en tejido elastizado con detalles de estampado foil que aportan brillo. Elástico en cintura y volados en la falda.\n-Largo hasta los tobillos\n-Mangas 3/4\n-Color plateado', 3, 22895, 1400, 'S', 'No Disponible');
 
+-- =====================================================
 -- Asignar características a productos
+-- =====================================================
 INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (1, 2);
 INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (1, 9);
 INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (2, 1);
@@ -94,8 +102,9 @@ INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (13, 
 INSERT INTO product_caracteristicas (product_id, caracteristica_id) VALUES (13, 6);
 
 
-
--- Productos imagenes
+-- =====================================================
+-- IMAGENES DE LOS PRODUCTOS
+-- =====================================================
 INSERT INTO product_images (image_url, product_id) VALUES('/assets/img/pekin1.png', 1);
 INSERT INTO product_images (image_url, product_id) VALUES('/assets/img/pekin2.png', 1);
 INSERT INTO product_images (image_url, product_id) VALUES('/assets/img/pekin3.png', 1);
@@ -294,7 +303,16 @@ INSERT INTO product_images (image_url, product_id) VALUES('/assets/img/foil3.png
 INSERT INTO product_images (image_url, product_id) VALUES('/assets/img/foil4.png', 33);
 INSERT INTO product_images (image_url, product_id) VALUES('/assets/img/foil5.png', 33);
 
+-- =====================================================
+-- RESERVAS
+-- =====================================================
+INSERT INTO reservations (id, start_date, end_date, product_id) VALUES (1, '2025-10-10', '2025-10-12', 1);
+INSERT INTO reservations (id, start_date, end_date, product_id) VALUES (2, '2025-10-18', '2025-10-18', 1);
+INSERT INTO reservations (id, start_date, end_date, product_id) VALUES (3, '2025-11-07', '2025-11-09', 2);
+
+-- =====================================================
 -- Usuarios Admin
+-- =====================================================
 ALTER TABLE admin_users
 ADD COLUMN is_admin BOOLEAN DEFAULT false;
 ADD COLUMN editar_producto BOOLEAN DEFAULT false,
@@ -306,3 +324,24 @@ ADD COLUMN agregar_categoria BOOLEAN DEFAULT false;
 
 INSERT INTO admin_users (nombre, apellido, email, password,  is_admin, editar_producto, eliminar_producto, agregar_producto, editar_caracteristica, eliminar_caracteristica, agregar_categoria) VALUES('Lucia', 'Palermo', 'lucia@ejemplo.com', '123456', true, true, true, true, true, true, true);
 INSERT INTO admin_users (nombre, apellido, email, password,  is_admin, editar_producto, eliminar_producto, agregar_producto, editar_caracteristica, eliminar_caracteristica, agregar_categoria) VALUES('Benjamin', 'Perez', 'benjamin@ejemplo.com', '678910', false, false, false, false, false, false, false);
+
+-- =====================================================
+-- Usuarios sitio publico
+-- =====================================================
+INSERT INTO users (nombre, apellido, email, password) VALUES('Olivia', 'Palermo', 'olivia@ejemplo.com', '123456');
+INSERT INTO users (nombre, apellido, email, password) VALUES('Josefina', 'Perez', 'jose@ejemplo.com', '456789');
+
+-- =====================================================
+-- REVIEWS
+-- =====================================================
+-- Configuración de tabla reviews para que soporte emojis
+ALTER TABLE reviews CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- Asegurar que la columna comment soporte emojis
+ALTER TABLE reviews MODIFY comment TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- Valores de tabla reviews 
+INSERT INTO reviews (rating, comment, created_at, user_id, product_id) VALUES (5, 'El calce del top es muy lindo, y la tela súper fresca 🙂', '2025-07-10', 1, 1);
+INSERT INTO reviews (rating, comment, created_at, user_id, product_id) VALUES (4, 'Muy linda la falda, la caida de la tela, y el detalle del broche', '2025-08-05', 1, 3);
+INSERT INTO reviews (rating, comment, created_at, user_id, product_id) VALUES (4, 'Hermosa la falda, sobre todo el detalle de los volados', '2025-08-05', 1, 4);
+INSERT INTO reviews (rating, comment, created_at, user_id, product_id) VALUES (4, 'Muy lindo el vestido, sobre todo el detalle de los volados', '2025-08-05', 1, 5);

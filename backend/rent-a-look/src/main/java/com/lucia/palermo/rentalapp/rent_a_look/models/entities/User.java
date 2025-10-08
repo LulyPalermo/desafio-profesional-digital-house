@@ -1,5 +1,9 @@
 package com.lucia.palermo.rentalapp.rent_a_look.models.entities;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -10,17 +14,24 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false) //No puede quedar vacío (es obligatorio).
+    @Column(nullable = false) // No puede quedar vacío (es obligatorio).
     private String nombre;
 
     @Column(nullable = false)
     private String apellido;
 
-    @Column(nullable = false, unique = true) //unique = true significa que no puede repetirse en la base de datos (no pueden registrarse dos usuarios con el mismo mail).
+    @Column(nullable = false, unique = true) // unique = true significa que no puede repetirse en la base de datos (no
+                                             // pueden registrarse dos usuarios con el mismo mail).
     private String email;
 
     @Column(nullable = false)
     private String password;
+
+    // Relación ManyToMany con productos favoritos
+    @ManyToMany
+    @JoinTable(name = "user_favorites", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
+    @JsonIgnore 
+    private List<Product> favoriteProducts;
 
     // Getters y Setters
 
@@ -63,4 +74,13 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public List<Product> getFavoriteProducts() {
+        return favoriteProducts;
+    }
+
+    public void setFavoriteProducts(List<Product> favoriteProducts) {
+        this.favoriteProducts = favoriteProducts;
+    }
+
 }

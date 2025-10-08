@@ -19,6 +19,7 @@ import { EditHighlightPage } from './pages/EditHighlightPage'
 import { UserPage } from './pages/UserPage'
 import { EditUserPage } from './pages/EditUserPage'
 import { AdminLogin } from './pages/AdminLogin'
+import { FavoritesPage } from './pages/FavoritesPage'
 // import { BrowserRouter } from 'react-router-dom'
 
 const router = createBrowserRouter([
@@ -81,6 +82,10 @@ const router = createBrowserRouter([
 {
   path: '/editUser/:id', // Ruta con parámetro id
   element: <EditUserPage />
+},
+{
+  path: '/favorites',
+  element: <FavoritesPage/>
 },
 
 ])

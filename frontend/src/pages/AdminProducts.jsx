@@ -157,13 +157,11 @@ export const AdminProducts = () => {
                                         ))}
                                     </select>
                                 )}
-                                {/*  <i className="ri-arrow-down-s-line chevron-category-select"></i> */}
                             </p>
 
                             <p className="header-row-cell size-cell">{product.size}</p>
                             <p className="header-row-cell code-cell">{product.code}</p>
                             <p className="header-row-cell price-cell">{product.price}</p>
-                            {/* <p className="header-row-cell status-cell available-label">{product.status}</p> */}
                             <p className={`header-row-cell status-cell ${product.status === "Disponible" ? "available-label" : "unavailable-label"}`}>
                                 {product.status} </p>
                             <div className="header-row-cell accions-cell">
@@ -172,24 +170,10 @@ export const AdminProducts = () => {
                                 </div>
                                 <div id="delete-product" onClick={() => handleDeleteClick(product.id)}>
                                     <span className="accions"><i className="ri-delete-bin-fill"></i></span>
-                                </div>{/*  */}
-                                {/* <div id="edit-product" onClick={() => navigate(`/editProduct/${product.id}`)}>
-                                    <span className="accions"><i className="ri-pencil-fill"></i></span>
-                                </div> */}
-                                {/* <div id="delete-product" onClick={() => handleDeleteClick(product.id)}>
-                                    <span className="accions"><i className="ri-delete-bin-fill"></i></span>
-                                </div> */}
+                                </div>
                             </div>
                         </div>
                     ))}
-
-                    {/*  <div className="pagination">
-                        <p>Filas por página:</p>
-                        <p>5</p>
-                        <p>1-5 de 6</p>
-                        <span><i className="ri-arrow-left-s-line"></i><i className="ri-arrow-right-s-line"></i></span>
-                    </div> */}
-
                 </section>
 
             </main>

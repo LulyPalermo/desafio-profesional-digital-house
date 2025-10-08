@@ -15,7 +15,6 @@ import com.lucia.palermo.rentalapp.rent_a_look.repositories.CaracteristicaReposi
 import com.lucia.palermo.rentalapp.rent_a_look.repositories.CategoryRepository;
 import com.lucia.palermo.rentalapp.rent_a_look.repositories.ProductRepository;
 
-
 /* Hacemos la anotacion @Service para que quede como componente de spring */
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -34,8 +33,6 @@ public class ProductServiceImpl implements ProductService {
         return (List<Product>) repository.findAll();
     }
 
-
-    
     @Override
     @Transactional
     public void deleteById(Long id) {
@@ -45,7 +42,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public Product save(Product product) {
-        // Establecer la relación inversa: para cada imagen, le decimos a qué producto pertenece
+        // Establecer la relación inversa: para cada imagen, le decimos a qué producto
+        // pertenece
         if (product.getImages() != null) {
             for (ProductImage image : product.getImages()) {
                 image.setProduct(product); // A cada imagen le asigno su "padre"
@@ -72,7 +70,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = repository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
 
-        Category category = categoryRepository.findById(categoryId)  
+        Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
 
         product.setCategory(category);
@@ -80,18 +78,26 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Autowired
-private CaracteristicaRepository caracteristicaRepository;
+    private CaracteristicaRepository caracteristicaRepository;
 
-@Override
-@Transactional
-public Product assignCaracteristicas(Long productId, List<Long> caracteristicaIds) {
-    Product product = repository.findById(productId)
-            .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+    @Override
+    @Transactional
+    public Product assignCaracteristicas(Long productId, List<Long> caracteristicaIds) {
+        Product product = repository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
 
-    List<Caracteristica> caracteristicas = caracteristicaRepository.findAllById(caracteristicaIds);
-    product.setCaracteristicas(caracteristicas);
+        List<Caracteristica> caracteristicas = caracteristicaRepository.findAllById(caracteristicaIds);
+        product.setCaracteristicas(caracteristicas);
 
-    return repository.save(product);
-}
+        return repository.save(product);
+    }
+
+    @Override
+    public List<Product> searchProducts(String query) {
+        if (query == null || query.trim().isEmpty()) {
+            return (List<Product>) repository.findAll(); // si no hay se devuelve todo
+        }
+        return repository.findByNameContainingIgnoreCase(query);
+    }
 
 }

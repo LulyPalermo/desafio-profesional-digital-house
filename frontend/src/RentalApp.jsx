@@ -14,6 +14,7 @@ import { EditHighlightPage } from './pages/EditHighlightPage';
 import { UserPage } from './pages/UserPage';
 import { EditUserPage } from './pages/EditUserPage';
 import { AdminLogin } from './pages/AdminLogin';
+import { FavoritesPage } from './pages/FavoritesPage';
 
 
 export const RentalApp = () => {
@@ -34,6 +35,7 @@ export const RentalApp = () => {
                 <Route path='/categories' element={<CategoryPage />}></Route>
                 <Route path='/users' element={<UserPage />}></Route>
                 <Route path='/editUser/:id' element={<EditUserPage />} />
+                <Route path='/favorites' element={<FavoritesPage />}></Route>
                 <Route path='/*' element={<Navigate to='*' />}></Route>
                 {/* <Route path="*" component={NotFound} /> */}
             </Routes>

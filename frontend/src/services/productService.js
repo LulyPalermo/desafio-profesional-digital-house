@@ -1,7 +1,7 @@
 const API_URL_PRODUCTS = "http://localhost:8080/products";
 const API_URL_CATEGORIES = "http://localhost:8080/categories";
 const API_URL_CARACTERISTICAS = "http://localhost:8080/caracteristicas";
-const API_URL_ADMIN_USERS = "http://localhost:8080/admin_users";
+const API_URL_RESERVATIONS = "http://localhost:8080/reservations";
 
 
 // Obtener todos los productos
@@ -21,6 +21,16 @@ export const getProductById = async (id) => {
     }
     return await response.json();
 };
+
+// Buscar productos por nombre o descripción
+export const searchProducts = async (query) => {
+    const response = await fetch(`${API_URL_PRODUCTS}/search?query=${encodeURIComponent(query)}`);
+    if (!response.ok) {
+        throw new Error("Error buscando productos");
+    }
+    return await response.json();
+};
+
 
 // Acá se elimina producto por ID
 export const deleteProductById = async (id) => {
@@ -88,7 +98,6 @@ export const updateProduct = async (id, productData) => {
 };
 
 
-
 // Método para obtener las categorías desde el backend
 export const getCategories = async () => {
     const response = await fetch(API_URL_CATEGORIES);
@@ -129,6 +138,18 @@ export const createCategory = async (categoryData) => {
 
     return await response.json();
 };
+
+// Eliminar categoría por ID
+export const deleteCategoryById = async (id) => {
+    const response = await fetch(`${API_URL_CATEGORIES}/${id}`, {
+        method: "DELETE",
+    });
+
+    if (!response.ok) {
+        throw new Error("No se pudo eliminar la categoría");
+    }
+};
+
 
 // Método para obtener las características desde el backend
 export const getCaracteristicas = async () => {
@@ -179,38 +200,11 @@ export const updateCaracteristica = async (id, caracteristicaData) => {
 };
 
 
-// Método para obtener los usuarios del admin 
-export const getUsers = async () => {
-    const response = await fetch(API_URL_ADMIN_USERS);
+// Obtener reservas de un producto por su ID
+export const getReservationsByProductId = async (productId) => {
+    const response = await fetch(`${API_URL_RESERVATIONS}/product/${productId}`);
     if (!response.ok) {
-        throw new Error("No se pudieron obtener los usuarios");
+        throw new Error("No se pudieron obtener las reservas del producto");
     }
-    return await response.json();
-};
-
-// Función para obtener usuario por ID
-export const getUserById = async (id) => {
-    const response = await fetch(`${API_URL_ADMIN_USERS}/${id}`);
-    if (!response.ok) {
-        throw new Error("No se pudo obtener el usuario");
-    }
-    return await response.json();
-};
-
-// Función para actualizar el usuario admin por id
-export const updateUser = async (id, userData) => {
-    const response = await fetch(`${API_URL_ADMIN_USERS}/${id}`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-    });
-
-    if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Error al actualizar usuario");
-    }
-
     return await response.json();
 };

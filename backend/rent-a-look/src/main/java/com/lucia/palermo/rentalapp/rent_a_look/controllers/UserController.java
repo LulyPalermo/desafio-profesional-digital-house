@@ -1,5 +1,6 @@
 package com.lucia.palermo.rentalapp.rent_a_look.controllers;
 
+import com.lucia.palermo.rentalapp.rent_a_look.models.entities.Product;
 import com.lucia.palermo.rentalapp.rent_a_look.models.entities.User;
 import com.lucia.palermo.rentalapp.rent_a_look.services.UserService;
 
@@ -10,8 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/users") // Endpoint base para usuarios
-/* @CrossOrigin(origins = "*") // Permite peticiones desde cualquier frontend
+@RequestMapping("/api/users")
+// Endpoint base para usuarios
+/*
+ * @CrossOrigin(origins = "*") // Permite peticiones desde cualquier frontend
  */public class UserController {
 
     @Autowired
@@ -54,4 +57,37 @@ import org.springframework.web.bind.annotation.*;
         // Login exitoso
         return ResponseEntity.ok(existingUser);
     }
+
+    // Obtener favoritos de un usuario
+    @GetMapping("/{userId}/favorites")
+    public ResponseEntity<List<Product>> getFavoriteProducts(@PathVariable Long userId) {
+        User user = userService.findById(userId); // devuelve directamente User
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(user.getFavoriteProducts());
+    }
+
+    // Marcar un producto como favorito
+    @PostMapping("/{userId}/favorites/{productId}")
+    public ResponseEntity<Void> addFavoriteProduct(@PathVariable Long userId, @PathVariable Long productId) {
+        try {
+            userService.addFavorite(userId, productId);
+            return ResponseEntity.ok().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    // Quitar un producto de favoritos
+    @DeleteMapping("/{userId}/favorites/{productId}")
+    public ResponseEntity<Void> removeFavoriteProduct(@PathVariable Long userId, @PathVariable Long productId) {
+        try {
+            userService.removeFavorite(userId, productId);
+            return ResponseEntity.ok().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

@@ -11,6 +11,7 @@
     --black: #2E3644;
     --success: #3C9B94;
     --error: #D03F3F;
+    --review-star: #EABB30;
 
     /* Fuentes */
     /* --fontPrimary: 'Raleway', sans-serif; */
@@ -112,6 +113,7 @@ body {
 
 .account-container-mobile {
     display: flex;
+    flex-direction: column;
     gap: 0.6rem;
     align-items: center;
     padding: 1rem 2rem;
@@ -120,7 +122,14 @@ body {
 /* Ocultar menú hamburguesa en desktop */
 .desktop {
     display: flex;
+    align-items: center;
+    gap: 3rem;
+}
+
+.login-desktop-actions {
+    display: flex;
     align-items: baseline;
+    gap: 1rem;
 }
 
 .mobile {
@@ -130,7 +139,7 @@ body {
 .user-info {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 3rem;
 }
 
 .login-avatar {
@@ -140,16 +149,16 @@ body {
 }
 
 .info-avatar {
-    width: 4rem;
-    height: 4rem;
+    width: 3.5rem;
+    height: 3.5rem;
     background-color: var(--secondary);
     color: var(--white);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    /* font-weight: 300; */
-    font-size: 1.6rem;
+    font-weight: 350;
+    font-size: 1.4rem;
     user-select: none;
     /* esto es para que no se pueda seleccionar el texto */
     text-transform: uppercase;
@@ -159,7 +168,23 @@ body {
 .login-greeting {
     font-size: 1.6rem;
     color: var(--black);
-    font-weight: 350;
+    font-weight: 300;
+}
+
+.favorites-link {
+    font-size: 2.2rem;
+    cursor: pointer;
+    border: none;
+    color: var(--secondary);
+    background-color: var(--taupe);
+}
+
+.favorites-link-mobile {
+    font-size: 2.2rem;
+    cursor: pointer;
+    border: none;
+    color: var(--secondary);
+    background-color: var(--white);
 }
 
 /* Menú hamburguesa */
@@ -257,27 +282,64 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 2rem;
-    padding: 5rem 3rem 3rem 3rem;
+    padding: 3rem;
 }
 
 #search {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    align-items: center;
+    background-color: var(--taupe);
+    padding: 6rem 3rem 3rem 3rem;
 }
 
-#search input {
+.search-title {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.search-title h2 {
+    font-family: var(--fontSeconday);
+    font-weight: 400;
+}
+
+.search-title p {
+    font-weight: 300;
+    font-size: 2rem;
+}
+
+.search-actions {
+    display: flex;
+    align-items: center;
+    /* gap: 1rem; */
+    /* justify-content: center; */
+    /* width: 70%; */
+    /* max-width: 1000px; */
+}
+
+.search-input {
+    width: 100%;
+    position: relative;
+}
+
+.search-input input {
+    flex: 2;
     width: 100%;
     font: var(--font);
     font-size: 1.8rem;
-    text-align: center;
     font-weight: 300;
-    text-align: center;
     color: var(--black);
     border: 1px solid var(--mediumGrey);
-    border-radius: 0.4rem;
+    border-right: none;
+    border-radius: 0.4rem 0 0 0.4rem;
     min-height: 45px;
     letter-spacing: .06rem;
     outline: none;
-    background-color: var(--taupe);
+    background-color: var(--white);
     padding: 0 2rem;
 }
 
@@ -293,6 +355,112 @@ body {
 :focus::-webkit-input-placeholder,
 :hover::-webkit-input-placeholder {
     color: var(--darkGrey);
+}
+
+.date-picker-wrapper {
+    width: 100%;
+    display: flex;
+    /* gap: 0.5rem; */
+    position: relative;
+}
+
+.date-picker-wrapper input {
+    width: 100%;
+    color: var(--darkGrey);
+    text-align: center;
+    font: var(--font);
+    font-size: 1.6rem;
+    font-weight: 350;
+    border: 1px solid var(--mediumGrey);
+    border-right: none;
+    /* border-radius: 0.4rem 0 0 0.4rem; */
+    min-height: 45px;
+    letter-spacing: .06rem;
+    outline: none;
+    background-color: var(--white);
+    padding: 0 2rem;
+    cursor: pointer;
+}
+
+.date-picker-wrapper .rdrDateRangeWrapper {
+    position: absolute;
+    top: 110%;
+    /* debajo de los inputs */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.rdrDateDisplayWrapper {
+    display: none;
+}
+
+/* Botón para buscar */
+.search-actions .search-button {
+    flex: 1;
+    min-height: 45px;
+    /* padding: 0 4rem; */
+    border-radius: 0 0.4rem 0.4rem 0;
+}
+
+/* Calendario desplegado */
+.calendar-container {
+    margin-top: 2rem;
+    /* espacio respecto a la barra */
+    display: flex;
+    justify-content: center;
+    /* centrado horizontal */
+    width: 100%;
+}
+
+#search-results h3 {
+    font-size: 2.5rem;
+    font-family: var(--fontSeconday);
+    font-weight: 400;
+    padding-bottom: 3rem;
+}
+
+/* Contenedor de la lista de sugerencias */
+.suggestions-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--white);
+    border: 1px solid var(--lightGrey);
+    border-top: none;
+    border-bottom: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    /* max-height: 200px;  */
+    overflow-y: auto;
+    /* scrolea si hay muchas sugerencias */
+    list-style: none;
+    /* margin: 0; */
+    /* padding: 0; */
+    border-radius: 0 0 0.4rem 0.4rem;
+}
+
+/* Cada item de la lista */
+.suggestions-list li {
+    font-size: 1.4rem;
+    border-bottom: 1px solid var(--lightGrey);
+    /* font-weight: 350; */
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+/* Hover sobre cada item */
+.suggestions-list li:hover {
+    background-color: var(--lightGrey);
+}
+
+.suggestions-list .no-results {
+    color: var(--mediumGrey);
+    font-style: italic;
+    cursor: default;
+    /* no parece clickeable */
 }
 
 
@@ -501,6 +669,31 @@ body {
     font-weight: 350;
 }
 
+.product-description {
+    position: relative;
+}
+
+.like-button {
+    border: none;
+    font-size: 2rem;
+    position: absolute;
+    right: 1.5rem;
+    top: 1.2rem;
+    color: var(--black);
+    background-color: var(--white);
+    height: 3rem;
+    width: 3rem;
+    border-radius: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all .6s ease;
+    cursor: pointer;
+}
+
+.like-button:hover {
+    color: var(--secondary);
+}
 
 /* Paginación */
 .pagination-controls {
@@ -664,6 +857,10 @@ footer {
     width: 100%;
 }
 
+.product-detail-title {
+    font-family: var(--fontSeconday);
+}
+
 .product-detail-description {
     font-size: 2rem;
     font-weight: 300;
@@ -703,12 +900,6 @@ footer {
     font-weight: 300;
 }
 
-/* .product-detail-price {
-    font-size: 3rem;
-    font-weight: 400;
-    color: var(--black);
-} */
-
 .product-detail-status {
     display: flex;
     flex-direction: row;
@@ -735,6 +926,7 @@ footer {
 
 .product-highlights {
     padding: 3rem 0;
+    border-bottom: 1px solid var(--lightGrey);
 }
 
 .product-highlights-items {
@@ -758,13 +950,43 @@ footer {
     font-weight: 300;
 }
 
-.product-highlights-subtitle {
+.product-highlights-subtitle,
+.product-availability-subtitle {
+    font-family: var(--fontSeconday);
     padding-bottom: 4rem;
 }
 
 .highlights-img {
     border-radius: 5rem;
     width: 6rem;
+}
+
+.product-availability {
+    padding: 3rem 0;
+    border-bottom: 1px solid var(--lightGrey);
+}
+
+/* Calendario en detalle de producto */
+/* Días disponibles (no deshabilitados) */
+/* Fechas disponibles */
+/* .rdrDay:not(.rdrDayDisabled)  {
+  background-color: var(--success) !important;
+  color: white !important;
+} */
+
+/* Fechas ocupadas */
+.rdrDayDisabled {
+    background-color: var(--error) !important;
+    /* pointer-events: none; */
+}
+
+.rdrDayDisabled span {
+    color: var(--white) !important;
+    ;
+}
+
+.availability-error button {
+    margin-top: 2rem;
 }
 
 @media (max-width: 768px) {
@@ -787,6 +1009,8 @@ footer {
     }
 
 }
+
+
 
 /* -------------------------------------------------------------------- */
 
@@ -853,6 +1077,7 @@ footer {
 /* .view-more-button:hover {
     background: #000;
   } */
+
 
 /* Responsivo */
 @media (max-width: 768px) {
@@ -992,6 +1217,212 @@ footer {
 
 .btnSig {
     right: 10px;
+}
+
+
+/* -------------------------------------------------------------------- */
+
+/* FAVORITOS  */
+
+.mainFavorites {
+    display: flex;
+    padding: 6rem 4rem;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.favorites-section-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--lightGrey);
+    padding-bottom: 2rem;
+}
+
+.favorites-section-top h1 {
+    font-family: var(--fontSeconday);
+}
+
+.favorites-section-top p {
+    font-size: 1.6rem;
+    font-weight: 350;
+    color: var(--darkGrey);
+    text-align: right;
+}
+
+/* -------------------------------------------------------------------- */
+
+/* Políticas del producto  */
+
+.product-policies {
+    width: 100%;
+    margin-top: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 3rem 0;
+    border-bottom: 1px solid var(--lightGrey);
+}
+
+.policies-title {
+    font-family: var(--fontSeconday);
+    text-decoration: underline;
+    text-underline-offset: 0.8rem;
+    text-decoration-thickness: 1.2px;
+    /* text-decoration-color: var(--secondary); */
+    margin-bottom: 1rem;
+
+    /* border-bottom: 1.5px solid var(--darkGrey);
+    padding-bottom: 0.5rem;
+    display: inline-block; */
+
+}
+
+.policies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 3rem;
+}
+
+.policy-item h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.policy-item p {
+    font-size: 1.6rem;
+    font-weight: 300;
+    line-height: 1.4;
+}
+
+/* -------------------------------------------------------------------- */
+
+/* Reviews del producto  */
+
+.product-review-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.review-title {
+    font-family: var(--fontSeconday);
+    margin-bottom: 1rem;
+}
+
+.product-review {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 3rem 0;
+    /* width: 100%; */
+    /* border-bottom: 1px solid var(--lightGrey); */
+}
+
+.review-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+    padding-top: 2rem;
+}
+
+.review-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.review-center {
+    display: flex;
+    gap: 1rem;
+}
+
+.review-description {
+    font-weight: 300;
+    line-height: 1.1;
+}
+
+.total-review {
+    background-color: var(--taupe);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    padding: 4rem 2rem;
+}
+
+.total-review-top {
+    display: flex;
+    gap: 1rem;
+    font-size: 1.6rem;
+}
+
+.review-stars {
+    display: flex;
+    gap: 0.5rem;
+    color: var(--review-star);
+}
+
+/* Modal para agregar Review */
+
+.review-modal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--white);
+    padding: 4rem;
+    border-radius: 0.4rem;
+    z-index: 1000;
+    width: 70%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.review-modal-header {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-end;
+}
+
+.review-modal-header h3 {
+    font-size: 3rem;
+    border-bottom: 1px solid var(--lightGrey);
+    padding-bottom: 1rem;
+    width: 100%;
+    font-weight: 500;
+    font-size: 2.4rem;
+}
+
+.review-image {
+    width: 30%;
+}
+
+.review-modal-center {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    border-bottom: 1px solid var(--lightGrey);
+    padding-bottom: 4rem;
+}
+
+.review-modal-center-left {
+    display: flex;
+    gap: 6rem;
+}
+
+.add-review-stars {
+    display: flex;
+    gap: 2rem;
+    font-size: 4rem;
+    color: var(--review-star);
 }
 
 
@@ -1508,7 +1939,8 @@ form {
 /* MODAL LOGIN | REGISTRO */
 
 .login-modal-overlay,
-.register-modal-overlay {
+.register-modal-overlay,
+.revew-modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -2035,7 +2467,7 @@ form {
 .primary-button {
     font: var(--fontPrimary);
     width: 100%;
-    font-size: 1.6rem;
+    font-size: 1.2rem;
     padding: 0 2rem;
     min-height: 45px;
     background-color: var(--secondary);
@@ -2045,7 +2477,7 @@ form {
     cursor: pointer;
     transition: all .6s ease;
     letter-spacing: .18rem;
-    /* text-transform: uppercase; */
+    text-transform: uppercase;
 }
 
 .primary-button-ligth {

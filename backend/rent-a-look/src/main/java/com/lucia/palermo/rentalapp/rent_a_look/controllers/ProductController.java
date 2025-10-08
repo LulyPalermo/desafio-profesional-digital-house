@@ -146,4 +146,10 @@ public class ProductController {
         }
     }
 
+    // Endpoint para buscar productos
+    @GetMapping("/products/search")
+    public List<Product> searchProducts(@RequestParam String query) {
+        return service.searchProducts(query);
+    }
+
 }

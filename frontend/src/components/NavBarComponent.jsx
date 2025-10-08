@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/img/logo.png';
 import { LoginModal } from './LoginModal';
 import { RegisterModal } from './RegisterModal';
 //import { UserContext } from '../Context/UserContext';
 import { useUser } from '../Context/UserContext'; // Igual que en LoginModal, se importa el hook personalizado useUser
+import { IoMdHeartEmpty } from "react-icons/io";
 
 
 export const NavBarComponent = () => {
@@ -13,6 +14,15 @@ export const NavBarComponent = () => {
     const [showRegisterModal, setShowRegisterModal] = useState(false);
 
     const { user, logout } = useUser(); // hook personalizado para obtener user y logout del contexto
+    const navigate = useNavigate();
+
+    const handleFavoritesClick = () => {
+        if (user) {
+            navigate("/favorites");
+        } else {
+            setShowLoginModal(true); // si user no esta logueado abre modal de login
+        }
+    };
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -58,13 +68,17 @@ export const NavBarComponent = () => {
                     {user ? (
                         <div className="user-info">
                             <div className="login-avatar">
-                            <div className="info-avatar">
-                                {/* Iniciales */}
-                                {user.nombre?.charAt(0)}{user.apellido?.charAt(0)}
+                                <div className="info-avatar">
+                                    {/* Iniciales */}
+                                    {user.nombre?.charAt(0)}{user.apellido?.charAt(0)}
+                                </div>
+                                <span className="login-greeting">Hola {user.nombre}</span>
                             </div>
-                            <span className="login-greeting">Hola {user.nombre}</span>
-                            </div>
-                            <span>/</span>
+
+                            <button className="favorites-link" onClick={handleFavoritesClick}>
+                                <IoMdHeartEmpty />
+                            </button>
+
                             <button className="nav-link secondary-button" onClick={logout}>
                                 Cerrar sesión
                             </button>
@@ -72,10 +86,12 @@ export const NavBarComponent = () => {
                     ) : (
                         <>
                             {/* Si el usuario NO está logueado mostramos botones de login y registro */}
-                            <span><i className="ri-user-3-line"></i></span>
-                            <button className="nav-link secondary-button" onClick={openModalLogin}>Iniciar sesión</button>
-                            <span>/</span>
-                            <button className="nav-link secondary-button" onClick={openModalRegister}>Crear cuenta</button>
+                            <div className='login-desktop-actions'>
+                                <span><i className="ri-user-3-line"></i></span>
+                                <button className="nav-link secondary-button" onClick={openModalLogin}>Iniciar sesión</button>
+                                <span>/</span>
+                                <button className="nav-link secondary-button" onClick={openModalRegister}>Crear cuenta</button>
+                            </div>
                         </>
                     )}
 
@@ -101,25 +117,30 @@ export const NavBarComponent = () => {
                     {/* Mismo control para menú mobile: Si está logueado mostramos la info del usuario */}
                     {user ? (
                         <div className="user-info">
-                        <div className="login-avatar">
-                        <div className="info-avatar">
-                            {/* Iniciales */}
-                            {user.nombre?.charAt(0)}{user.apellido?.charAt(0)}
+                            <div className="login-avatar">
+                                <div className="info-avatar">
+                                    {/* Iniciales */}
+                                    {user.nombre?.charAt(0)}{user.apellido?.charAt(0)}
+                                </div>
+                                <span className="login-greeting">Hola {user.nombre}</span>
+                            </div>
+                            <span>/</span>
+                            <button className="nav-link secondary-button" onClick={logout}>
+                                Cerrar sesión
+                            </button>
+                             <button className="favorites-link-mobile" onClick={handleFavoritesClick}>
+                                <IoMdHeartEmpty />
+                            </button>
                         </div>
-                        <span className="login-greeting">Hola {user.nombre}</span>
-                        </div>
-                        <span>/</span>
-                        <button className="nav-link secondary-button" onClick={logout}>
-                            Cerrar sesión
-                        </button>
-                    </div>
                     ) : (
                         <>
-                            {/* Si el usuario NO está logueado mostramos botones de login y registro */}
-                            <span><i className="ri-user-3-line"></i></span>
-                            <button className="nav-link secondary-button" onClick={openModalLogin}>Iniciar sesión</button>
-                            <span>/</span>
-                            <button className="nav-link secondary-button" onClick={openModalRegister}>Crear cuenta</button>
+                            {/* Si el usuario NO está logueado mostramos botones de login y registro*/}
+                            <div className='login-desktop-actions'>
+                                <span><i className="ri-user-3-line"></i></span>
+                                <button className="nav-link secondary-button" onClick={openModalLogin}>Iniciar sesión</button>
+                                <span>/</span>
+                                <button className="nav-link secondary-button" onClick={openModalRegister}>Crear cuenta</button>
+                            </div>
                         </>
                     )}
 

@@ -2,17 +2,55 @@ import { useEffect, useState } from "react";
 import { NavBarComponent } from "../components/navBarComponent"
 import { ProductGallery } from "../components/ProductGallery";
 import { Link } from "react-router-dom";
+import { DateRange } from "react-date-range";
+import { es } from "date-fns/locale";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
+import { getReservationsByProductId } from "../services/productService";
+import { eachDayOfInterval, parseISO } from "date-fns"; // para convertir rangos en días individuales
+import { PoliciesBlock } from "../components/PoliciesBlock";
+import { ReviewsBlock } from "../components/ReviewsBlock";
+
 
 export const ProductDetail = () => {
   const [product, setProduct] = useState(null);
-
-  useEffect(() => {
-    // Intentamos obtener el producto desde localStorage
-    const storedProduct = localStorage.getItem("selectedProduct");
-    if (storedProduct) {
-      setProduct(JSON.parse(storedProduct));
+  const [dateRange, setDateRange] = useState([
+    {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: "selection"
     }
+  ]);
+  const [reservations, setReservations] = useState([]); // Se guardan reservas desde backend
+  const [disabledDates, setDisabledDates] = useState([]); // Fechas bloqueadas
+  const [error, setError] = useState(null); // estado para el error
+  const [loading, setLoading] = useState(true);
+
+  // Carga de producto y reservas
+  useEffect(() => {
+    const storedProduct = localStorage.getItem("selectedProduct");
+    if (!storedProduct) return;
+
+    const parsedProduct = JSON.parse(storedProduct);
+    setProduct(parsedProduct);
+
+    const fetchReservations = async () => {
+      try {
+        setLoading(true);   // empieza a cargar
+        setError(null);     // resetea el error
+        const data = await getReservationsByProductId(parsedProduct.id);
+        setReservations(data);
+      } catch (err) {
+        console.error("Error al cargar las reservas", err);
+        setError("Hubo un problema al cargar la información de reservas. Por favor inténtalo nuevamente más tarde.");
+      } finally {
+        setLoading(false);  // termina de cargar
+      }
+    };
+
+    fetchReservations();
   }, []);
+
 
   // Función para convertir los saltos de línea (\n) en <br />
   const formatDescription = (description) => {
@@ -23,6 +61,20 @@ export const ProductDetail = () => {
       </span>
     ));
   };
+
+  // Función para convertir reservas en días individuales para el calendario
+  useEffect(() => {
+    if (reservations.length > 0) {
+      const allDisabled = reservations.flatMap(res =>
+        eachDayOfInterval({
+          start: parseISO(res.startDate),
+          end: parseISO(res.endDate)
+        })
+      );
+      setDisabledDates(allDisabled);
+    }
+  }, [reservations]);
+
 
   if (!product) {
     return <p>No hay información del producto</p>;
@@ -98,6 +150,50 @@ export const ProductDetail = () => {
               </div>
             </div>
 
+            {/* Calendario con disponibilidad */}
+            <section className="product-availability">
+              <h2 className="product-availability-subtitle">Disponibilidad</h2>
+
+              {loading && <p>Cargando disponibilidad...</p>}
+
+              {error && (
+                <div className="availability-error">
+                  <p>{error}</p>
+                  <button className="secondary-button"
+                    onClick={() => {
+                      setError(null);
+                      setLoading(true);
+                      getReservationsByProductId(product.id)
+                        .then((data) => setReservations(data))
+                        .catch((err) => {
+                          console.error(err);
+                          setError();
+                        })
+                        .finally(() => setLoading(false));
+                    }}>Reintentar</button>
+                </div>
+              )}
+
+              {!error && !loading && (
+                <DateRange
+                  ranges={dateRange}
+                  onChange={(item) => setDateRange([item.selection])}
+                  editableDateInputs={false}
+                  moveRangeOnFirstSelection={false}
+                  locale={es}
+                  months={2}
+                  direction="horizontal"
+                  disabledDates={disabledDates}
+                />
+              )}
+            </section>
+
+            {/* Bloque de políticas */}
+            <PoliciesBlock />
+
+            {/* Bloque de Reviews */}
+            <ReviewsBlock product={product} />
+          
           </div>
         </div>
       </main>

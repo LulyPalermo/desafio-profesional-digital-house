@@ -77,6 +77,10 @@ public class Product {
         return images;
     }
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("product") // evita el bucle infinito
+    private List<Review> reviews;
+
     public void setImages(List<ProductImage> images) {
         this.images = images;
     }
@@ -163,4 +167,11 @@ public class Product {
      * }
      */
 
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
 }

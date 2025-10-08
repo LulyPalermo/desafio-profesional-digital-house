@@ -20,4 +20,6 @@ public interface ProductService {
 
     Product assignCaracteristicas(Long productId, List<Long> caracteristicaIds); //Método para asignar características a un producto existente.
 
+     List<Product> searchProducts(String query); // Método para buscar productos
+
 }

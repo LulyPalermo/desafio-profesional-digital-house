@@ -1,7 +1,7 @@
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { AdminNavBar } from "../components/AdminNavBar"
 import { useEffect, useState } from "react";
-import { getUserById, updateUser } from "../services/productService";
+import { getUserById, updateUser } from "../services/userService";
 import { IconToggle } from "../components/ToggleSwitch";
 
 export const EditUserPage = () => {

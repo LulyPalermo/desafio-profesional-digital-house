@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import { createContext, useContext, useEffect, useState } from 'react';
+import { getFavorites, addFavorite, removeFavorite } from "../services/userService";
+
 
 // Se crea el context para poder compartir la info del usuario en toda la app
 const UserContext = createContext();
@@ -13,16 +15,24 @@ export const UserProvider = ({ children }) => {
         return storedUser ? JSON.parse(storedUser) : null; // Si existe, devuelve el objeto
     });
 
-     // Para asegurar sincronización si otro tab cambia el localStorage
-    useEffect(() => {
-        const handleStorageChange = () => {
-            const storedUser = localStorage.getItem("user");
-            setUser(storedUser ? JSON.parse(storedUser) : null);
-        };
+    const [userFavorites, setUserFavorites] = useState([]);
 
-        window.addEventListener("storage", handleStorageChange);
-        return () => window.removeEventListener("storage", handleStorageChange);
-    }, []);
+    // Si hay usuario logueado se cargan sus favoritos
+    useEffect(() => {
+        const fetchFavorites = async () => {
+            if (!user) {
+                setUserFavorites([]);
+                return;
+            }
+            try {
+                const favs = await getFavorites(user.id);
+                setUserFavorites(favs);
+            } catch (error) {
+                console.error("Error cargando favoritos:", error);
+            }
+        };
+        fetchFavorites();
+    }, [user]);
 
     /*    Función de login: Guarda los datos en el estado(setUser).
     También los guarda en localStorage para que no se pierdan al refrescar*/
@@ -36,10 +46,32 @@ export const UserProvider = ({ children }) => {
     const logout = () => {
         setUser(null); // Borra el usuario del estado
         localStorage.removeItem("user"); // Borra del localStorage
+        setUserFavorites([]); // se limpian favoritos al desloguear
+    };
+
+    // Toggle favoritos (agregar/quitar)
+    const toggleFavorite = async (product) => {
+        if (!user) return; // acá podrías abrir modal de login si querés
+
+        try {
+            const isFavorite = userFavorites.some((p) => p.id === product.id);
+
+            if (isFavorite) {
+                await removeFavorite(user.id, product.id);
+            } else {
+                await addFavorite(user.id, product.id);
+            }
+
+            // se refresca la lista desde el backend
+            const updatedFavorites = await getFavorites(user.id);
+            setUserFavorites(updatedFavorites);
+        } catch (error) {
+            console.error("Error al actualizar favorito:", error);
+        }
     };
 
     return (
-        <UserContext.Provider value={{ user, login, logout }}>
+        <UserContext.Provider value={{ user, login, logout, userFavorites, toggleFavorite }}>
             {children}
         </UserContext.Provider>
     );

@@ -11,7 +11,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/categories")
-/* @CrossOrigin(origins = "*")
+/*
+ * @CrossOrigin(origins = "*")
  */public class CategoryController {
 
     @Autowired
@@ -22,10 +23,18 @@ import java.util.List;
         return categoryService.findAll();
     }
 
-     // Nuevo endpoint para agregar una categoría
+    // Nuevo endpoint para agregar una categoría
     @PostMapping
     public ResponseEntity<Category> createCategory(@RequestBody Category category) {
         Category savedCategory = categoryService.save(category);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedCategory);
     }
+
+    // endpoint para eliminar una categoría
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
+        categoryService.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

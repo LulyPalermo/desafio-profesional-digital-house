@@ -1,11 +1,16 @@
 import { Link } from "react-router-dom";
 import { AdminNavBar } from "../components/AdminNavBar"
 import { useEffect, useState } from "react";
-import { getCategories } from "../services/productService";
+import { deleteCategoryById, getCategories } from "../services/productService";
+import { SuccessModal } from "../components/SuccessModal";
+import { ConfirmDeleteModal } from "../components/ConfirmDeleteModal";
 
 export const CategoryPage = () => {
 
     const [categories, setCategories] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [categoryToDelete, setCategoryToDelete] = useState(null);
+    const [errorModal, setErrorModal] = useState(null);
 
     // Se cargan las categorías
     useEffect(() => {
@@ -19,6 +24,31 @@ export const CategoryPage = () => {
         };
         fetchCategories();
     }, []);
+
+    // Manejar click en eliminar
+    const handleDeleteClick = (cat) => {
+        setCategoryToDelete(cat);
+        setShowModal(true);
+    };
+
+    // Confirmar eliminación
+    const handleConfirmDelete = async () => {
+        try {
+            await deleteCategoryById(categoryToDelete.id);
+            setCategories(prev => prev.filter(c => c.id !== categoryToDelete.id));
+            setShowModal(false);
+            setCategoryToDelete(null);
+        } catch (error) {
+            console.error("Error al eliminar la categoría:", error);
+            setErrorModal("No se pudo eliminar la categoría. Es posible que tenga productos asociados.");
+        }
+    };
+
+    // Cancelar eliminación
+    const handleCloseModal = () => {
+        setShowModal(false);
+        setCategoryToDelete(null);
+    };
 
     return (
         <>
@@ -47,8 +77,7 @@ export const CategoryPage = () => {
                             <p className="header-row-cell category-name-cell">{cat.name}</p>
                             <p className="header-row-cell category-description-cell">{cat.description}</p>
                             <div className="header-row-cell category-accions-cell">
-                                {/*  <div id="edit-product" > <span className="accions"><i className="ri-pencil-fill"></i></span></div> */}
-                                <div id="delete-product">
+                                <div id="delete-category" onClick={() => handleDeleteClick(cat)}>
                                     <span className="accions"><i className="ri-delete-bin-fill"></i></span>
                                 </div>
                             </div>
@@ -62,6 +91,24 @@ export const CategoryPage = () => {
                     </Link>
                 </div>
             </main>
+
+            {/* Modal de confirmación */}
+            {showModal && (
+                <ConfirmDeleteModal
+                    message={`¿Estás segura/o de que querés eliminar la categoría "${categoryToDelete.name}"?
+                    Ten en cuenta que todos los productos asociados también podrían verse afectados.`}
+                    onClose={handleCloseModal}
+                    onConfirm={handleConfirmDelete}
+                />
+            )}
+
+            {/* Modal de error */}
+            {errorModal && (
+                <SuccessModal
+                    message={errorModal}
+                    onClose={() => setErrorModal(null)}
+                />
+            )}
         </>
     )
 }

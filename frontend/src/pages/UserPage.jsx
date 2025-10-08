@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom"
 import { AdminNavBar } from "../components/AdminNavBar"
 import { useEffect, useState } from "react";
-import { getUsers } from "../services/productService";
+import { getUsers } from "../services/userService";
 
 export const UserPage = () => {
 
