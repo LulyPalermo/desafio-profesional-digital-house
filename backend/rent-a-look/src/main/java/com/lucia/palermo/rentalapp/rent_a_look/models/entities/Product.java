@@ -157,16 +157,6 @@ public class Product {
         this.caracteristicas = caracteristicas;
     }
 
-    /*
-     * public Caracteristica getCaracteristica() {
-     * return caracteristica;
-     * }
-     * 
-     * public void setCaracteristica(Caracteristica caracteristica) {
-     * this.caracteristica = caracteristica;
-     * }
-     */
-
     public List<Review> getReviews() {
         return reviews;
     }
