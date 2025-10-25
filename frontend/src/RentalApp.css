@@ -989,6 +989,23 @@ footer {
     margin-top: 2rem;
 }
 
+.header-links {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+}
+
+.share-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.share-icon {
+    font-size: 1.8rem;
+}
+
+
 @media (max-width: 768px) {
     .mainDetailProduct {
         padding: 6rem 3rem;
@@ -1057,12 +1074,9 @@ footer {
 .view-more-container {
     display: flex;
     justify-content: flex-end;
-    margin-top: 1rem;
+    margin-top: 2rem;
 }
 
-.view-more-container button {
-    width: 50%;
-}
 
 /*   .view-more-button {
     background: var(--secondary);
@@ -1367,7 +1381,8 @@ footer {
 
 /* Modal para agregar Review */
 
-.review-modal-content {
+.review-modal-content,
+.share-modal-content {
     display: flex;
     flex-direction: column;
     gap: 4rem;
@@ -1385,14 +1400,16 @@ footer {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-.review-modal-header {
+.review-modal-header,
+.share-modal-header {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     align-items: flex-end;
 }
 
-.review-modal-header h3 {
+.review-modal-header h3,
+.share-modal-header h3 {
     font-size: 3rem;
     border-bottom: 1px solid var(--lightGrey);
     padding-bottom: 1rem;
@@ -1425,6 +1442,75 @@ footer {
     color: var(--review-star);
 }
 
+/* -------------------------------------------------------------------- */
+
+/* Compartir producto  */
+
+.share-image {
+    width: 10rem;
+}
+
+.share-product-info {
+    display: flex;
+    gap: 4rem;
+}
+
+.share-button-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.share-product-info p {
+    font-weight: 300;
+}
+
+.share-button-link span {
+    font-size: 1.8rem;
+}
+
+.share-button-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+
+    font: var(--fontPrimary);
+    width: 100%;
+    font-size: 1.2rem;
+    padding: 0 2rem;
+    min-height: 45px;
+    background-color: var(--taupe);
+    border: 1px solid var(--lightGrey);
+    border-radius: 0.4rem;
+    color: var(--black);
+    cursor: pointer;
+    transition: all .5s ease;
+    letter-spacing: .18rem;
+    text-transform: uppercase;
+}
+
+.share-button-link:hover {
+    border: 0.1rem solid var(--secondary);
+    color: var(--secondary);
+}
+
+.share-button-list a {
+    text-decoration: none;
+}
+
+.share-custom-message textarea {
+    font: var(--font);
+    font-size: 1.8rem;
+    font-weight: 300;
+    border: 1px solid var(--mediumGrey);
+    border-radius: 0.5rem;
+    /* min-height: 120px; */
+    letter-spacing: .06rem;
+    outline: none;
+    padding: 2rem;
+    width: 100%;
+}
 
 /* -------------------------------------------------------------------- */
 
@@ -1940,7 +2026,8 @@ form {
 
 .login-modal-overlay,
 .register-modal-overlay,
-.revew-modal-overlay {
+.revew-modal-overlay,
+.share-modal-overlay {
     position: fixed;
     top: 0;
     left: 0;

@@ -32,7 +32,7 @@ export const ProductGallery = ({ images }) => {
 
       {/* Botón Ver más */}
       <div className="view-more-container">
-        <button className="primary-button" onClick={() => setIsModalOpen(true)}>Ver más</button>
+        <button className="secondary-button" onClick={() => setIsModalOpen(true)}>Ver en galería</button>
       </div>
 
       {/* Modal de imágenes */}

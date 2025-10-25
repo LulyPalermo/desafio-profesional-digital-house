@@ -10,6 +10,8 @@ import { getReservationsByProductId } from "../services/productService";
 import { eachDayOfInterval, parseISO } from "date-fns"; // para convertir rangos en días individuales
 import { PoliciesBlock } from "../components/PoliciesBlock";
 import { ReviewsBlock } from "../components/ReviewsBlock";
+import { RiShare2Line } from "react-icons/ri";
+import { ShareProductModal } from "../components/ShareProductModal";
 
 
 export const ProductDetail = () => {
@@ -25,6 +27,8 @@ export const ProductDetail = () => {
   const [disabledDates, setDisabledDates] = useState([]); // Fechas bloqueadas
   const [error, setError] = useState(null); // estado para el error
   const [loading, setLoading] = useState(true);
+  const [showShareModal, setShowShareModal] = useState(false);
+
 
   // Carga de producto y reservas
   useEffect(() => {
@@ -80,13 +84,25 @@ export const ProductDetail = () => {
     return <p>No hay información del producto</p>;
   }
 
+  //Modal para compartir producto
+  const openShareModal = () => {
+    setShowShareModal(true);
+  };
+
+  const closeShareModal = () => {
+    setShowShareModal(false);
+  };
+
   return (
     <>
       <NavBarComponent />
       <main className="mainDetailProduct">
         <section className="detailHeader">
           <h1 className="product-detail-title">{product.name}</h1>
-          <Link to="/" className="nav-link secondary-button">Volver</Link>
+          <div className="header-links">
+            <button className="nav-link secondary-button share-button" onClick={openShareModal}><span className="share-icon"><RiShare2Line /></span>Compartir</button>
+            <Link to="/" className="nav-link secondary-button">Volver</Link>
+          </div>
         </section>
 
         <div className="product-detail-container">
@@ -193,10 +209,13 @@ export const ProductDetail = () => {
 
             {/* Bloque de Reviews */}
             <ReviewsBlock product={product} />
-          
+
           </div>
         </div>
       </main>
+
+      {/* Modal compartir producto*/}
+      <ShareProductModal isOpen={showShareModal} onClose={closeShareModal} product={product} />
 
     </>
   );
