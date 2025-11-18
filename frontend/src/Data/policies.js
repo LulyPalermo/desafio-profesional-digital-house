@@ -1,11 +1,11 @@
  export const policies = [
     {
       title: "Cómo alquilar",
-      description: "La tienda está abierta de lunes a viernes de 11 a 20hs, sin agenda previa. Las reservas se realizan dejando una seña de la mitad del alquiler. Se retira la prenda un día antes del evento y se devuelve al siguiente día hábil."
+      description: "La tienda está abierta de lunes a viernes de 10 a 20hs, y sábados de 10 a 17hs, sin agenda previa. Las reservas se realizan dejando una seña de la mitad del alquiler. Se retira y devuelve la prenda los días elegidos en el calendario."
     },
     {
       title: "Requisitos para el retiro",
-      description: "Debes presentar cédula de identidad, comprobante de domicilio y un depósito de garantía de $500 en efectivo que se devuelve si la prenda regresa en óptimas condiciones."
+      description: "Debes presentar cédula de identidad, y un depósito de garantía de $500 en efectivo que se devuelve si la prenda regresa en óptimas condiciones."
     },
     {
       title: "Depósito de garantía",

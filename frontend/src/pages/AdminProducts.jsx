@@ -6,8 +6,6 @@ import { ConfirmDeleteModal } from "../components/ConfirmDeleteModal";
 import { SuccessModal } from "../components/SuccessModal";
 import { UserContext } from "../Context/UserContext";
 
-// import Swal from 'sweetalert2';
-
 export const AdminProducts = () => {
 
     const { user } = useContext(UserContext); // Se obtiene el usuario logueado
@@ -46,7 +44,7 @@ export const AdminProducts = () => {
         if (user?.editarProducto || user?.isAdmin) {
             navigate(`/editProduct/${productId}`);
         } else {
-            setShowPermissionModal(true); // si no tiene permisos, mostramos modal
+            setShowPermissionModal(true); // si no tiene permisos, se muestra modal
         }
     };
 
@@ -57,13 +55,9 @@ export const AdminProducts = () => {
             setSelectedProductId(productId);
             setShowDeleteModal(true);
         } else {
-            setShowPermissionModal(true); // si no tiene permisos, mostramos modal
+            setShowPermissionModal(true); // si no tiene permisos, se muestra modal
         }
     };
-    /*  const handleDeleteClick = (id) => {
-         setSelectedProductId(id);
-         setShowDeleteModal(true);
-     }; */
 
     const confirmDelete = async () => {
         try {
@@ -88,19 +82,13 @@ export const AdminProducts = () => {
     };
 
     return (
-
         <>
             <AdminNavBar />
             <main className="mainAdmin">
                 <section className="section-title">
                     <h1 className="page-title">Productos</h1>
                     <Link to='/administración' className="nav-link secondary-button">Volver al dashboard</Link>
-
                 </section>
-
-                {/* <Link to='/addProduct'>
-                    <button className="primary-button">Nuevo producto</button>
-                </Link> */}
 
                 <section className="section-table">
                     <div className="table-header">
@@ -111,21 +99,12 @@ export const AdminProducts = () => {
                         <p className="header-row-cell size-cell">TALLE</p>
                         <p className="header-row-cell code-cell">CÓDIGO</p>
                         <p className="header-row-cell price-cell">PRECIO</p>
-                        <p className="header-row-cell status-cell">DISPONIBILIDAD</p>
                         <p className="header-row-cell accions-cell">ACCIONES</p>
                     </div>
 
                     {products.map(product => (
                         <div className="table-info" key={product.id}>
                             <p className="header-row-cell id-cell">{product.id}</p>
-
-                            {/* {console.log("Imagen URL:", product.images[0])}
-                            <img
-                                src={product.images[0].imageUrl}
-                                // src={product.images[0]}
-                                alt="imagen del producto"
-                                className="header-row-cell img-cell"
-                            /> */}
 
                             <div className="header-row-cell img-cell">
                                 {product.images && product.images.length > 0 && product.images[0].imageUrl ? (
@@ -138,10 +117,7 @@ export const AdminProducts = () => {
                                     <span className="no-image">Sin imagen</span>
                                 )}
                             </div>
-
-                            {/* <img src={product.images[0]} alt="imagen del producto" className="header-row-cell img-cell" /> */}
                             <p className="header-row-cell name-cell">{product.name}</p>
-                            {/*  <p className="header-row-cell category-cell">{product.category?.name || "Asignar categoría"}</p>  */}{/* Esto: ?. es para evitar errores si aún no tiene categoría cargada */}
                             <p className="header-row-cell category-cell">
                                 {product.category ? (
                                     product.category.name
@@ -158,12 +134,9 @@ export const AdminProducts = () => {
                                     </select>
                                 )}
                             </p>
-
                             <p className="header-row-cell size-cell">{product.size}</p>
                             <p className="header-row-cell code-cell">{product.code}</p>
                             <p className="header-row-cell price-cell">{product.price}</p>
-                            <p className={`header-row-cell status-cell ${product.status === "Disponible" ? "available-label" : "unavailable-label"}`}>
-                                {product.status} </p>
                             <div className="header-row-cell accions-cell">
                                 <div id="edit-product" onClick={() => handleEditClick(product.id)}>
                                     <span className="accions"><i className="ri-pencil-fill"></i></span>

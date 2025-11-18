@@ -6,6 +6,10 @@ import { RegisterModal } from './RegisterModal';
 //import { UserContext } from '../Context/UserContext';
 import { useUser } from '../Context/UserContext'; // Igual que en LoginModal, se importa el hook personalizado useUser
 import { IoMdHeartEmpty } from "react-icons/io";
+import { BsCalendarCheck } from "react-icons/bs";
+import { FiLogOut } from "react-icons/fi";
+import { FiUser } from "react-icons/fi";
+import { FiUserPlus } from "react-icons/fi";
 
 
 export const NavBarComponent = () => {
@@ -21,6 +25,12 @@ export const NavBarComponent = () => {
             navigate("/favorites");
         } else {
             setShowLoginModal(true); // si user no esta logueado abre modal de login
+        }
+    };
+
+    const bookingHistoryClick = () => {
+        if (user) {
+            navigate("/historial");
         }
     };
 
@@ -79,6 +89,10 @@ export const NavBarComponent = () => {
                                 <IoMdHeartEmpty />
                             </button>
 
+                            <button className="history-link" onClick={bookingHistoryClick}>
+                                <BsCalendarCheck />
+                            </button>
+
                             <button className="nav-link secondary-button" onClick={logout}>
                                 Cerrar sesión
                             </button>
@@ -108,38 +122,61 @@ export const NavBarComponent = () => {
 
             {/* Menú mobile con ícono para cerrar */}
             <div className={`mobile-menu ${isMenuOpen ? 'open' : ''}`}>
+
                 <div className="close-icon" onClick={toggleMenu}>
+                    {user && (
+                        <div className="login-avatar">
+                            <div className="info-avatar">
+                                {/* Iniciales */}
+                                {user.nombre?.charAt(0)}{user.apellido?.charAt(0)}
+                            </div>
+                            <span className="login-greeting">Hola {user.nombre}</span>
+                        </div>
+                    )}
                     <i className="ri-close-large-line"></i>
                 </div>
+
                 <div className='account-container-mobile'>
                     {/* <span><i className="ri-user-3-line"></i></span> */}
 
                     {/* Mismo control para menú mobile: Si está logueado mostramos la info del usuario */}
                     {user ? (
-                        <div className="user-info">
-                            <div className="login-avatar">
-                                <div className="info-avatar">
-                                    {/* Iniciales */}
-                                    {user.nombre?.charAt(0)}{user.apellido?.charAt(0)}
-                                </div>
-                                <span className="login-greeting">Hola {user.nombre}</span>
-                            </div>
-                            <span>/</span>
-                            <button className="nav-link secondary-button" onClick={logout}>
-                                Cerrar sesión
-                            </button>
-                             <button className="favorites-link-mobile" onClick={handleFavoritesClick}>
-                                <IoMdHeartEmpty />
-                            </button>
+                        <div className="user-info-mobile">
+                            <ul className="menu-mobile-list">
+                                <li className="nav-link ">
+                                    <button className="favorites-link-mobile" onClick={handleFavoritesClick}>
+                                        <span><IoMdHeartEmpty /></span> Mis favoritos
+                                    </button>
+                                </li>
+                                <li className="nav-link ">
+                                    <button className="history-link-mobile" onClick={bookingHistoryClick}>
+                                        <span><BsCalendarCheck /></span> Mis reservas
+                                    </button>
+                                </li>
+                                <li>
+                                    <button className="nav-link-mobile" onClick={logout}>
+                                        <span><FiLogOut /></span>Cerrar sesión
+                                    </button>
+                                </li>
+                            </ul>
+
                         </div>
                     ) : (
                         <>
                             {/* Si el usuario NO está logueado mostramos botones de login y registro*/}
-                            <div className='login-desktop-actions'>
-                                <span><i className="ri-user-3-line"></i></span>
-                                <button className="nav-link secondary-button" onClick={openModalLogin}>Iniciar sesión</button>
-                                <span>/</span>
-                                <button className="nav-link secondary-button" onClick={openModalRegister}>Crear cuenta</button>
+                            <div className='login-mobile-actions'>
+                                <ul className="menu-mobile-list">
+                                    <li>
+                                        <button className="nav-link-mobile" onClick={openModalLogin}>
+                                            <span><FiUser /></span> Iniciar sesión
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button className="nav-link-mobile" onClick={openModalRegister}>
+                                            <span><FiUserPlus /></span>Crear cuenta
+                                        </button>
+                                    </li>
+                                </ul>
                             </div>
                         </>
                     )}

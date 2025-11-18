@@ -45,8 +45,6 @@ public class Product {
 
     private String size;
 
-    private String status;
-
     @ManyToMany
     @JoinTable(name = "product_caracteristicas", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "caracteristica_id"))
     @JsonIgnoreProperties("products")
@@ -139,14 +137,6 @@ public class Product {
 
     public void setSize(String size) {
         this.size = size;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public List<Caracteristica> getCaracteristicas() {

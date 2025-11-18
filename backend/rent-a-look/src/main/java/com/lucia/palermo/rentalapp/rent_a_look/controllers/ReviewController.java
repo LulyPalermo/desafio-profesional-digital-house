@@ -9,6 +9,7 @@ import com.lucia.palermo.rentalapp.rent_a_look.models.entities.Review;
 import com.lucia.palermo.rentalapp.rent_a_look.models.entities.User;
 import com.lucia.palermo.rentalapp.rent_a_look.services.ReviewService;
 import com.lucia.palermo.rentalapp.rent_a_look.repositories.ProductRepository;
+import com.lucia.palermo.rentalapp.rent_a_look.repositories.ReservationRepository;
 import com.lucia.palermo.rentalapp.rent_a_look.repositories.ReviewRepository;
 import com.lucia.palermo.rentalapp.rent_a_look.repositories.UserRepository;
 
@@ -30,6 +31,9 @@ public class ReviewController {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private ReservationRepository reservationRepository;
+
     // Crear reseña
     @PostMapping
     public ResponseEntity<?> createReview(@RequestBody Review review) {
@@ -38,6 +42,14 @@ public class ReviewController {
                 review.getUser().getId(),
                 review.getProduct().getId())) {
             return ResponseEntity.badRequest().body("Ya has reseñado este producto");
+        }
+
+        // Validar que el usuario haya reservado el producto
+        if (!reservationRepository.existsByUserIdAndProductId(
+                review.getUser().getId(),
+                review.getProduct().getId())) {
+            return ResponseEntity.status(403)
+                    .body("Solo puedes reseñar productos que hayas reservado.");
         }
 
         // Buscar usuario y producto existentes
@@ -50,6 +62,7 @@ public class ReviewController {
         review.setUser(user);
         review.setProduct(product);
 
+        // Se guarda la reseña
         Review saved = reviewService.save(review);
         return ResponseEntity.ok(saved);
     }
@@ -71,4 +84,5 @@ public class ReviewController {
     public ResponseEntity<List<Review>> getReviewsByUser(@PathVariable Long userId) {
         return ResponseEntity.ok(reviewService.findByUser(userId));
     }
+
 }

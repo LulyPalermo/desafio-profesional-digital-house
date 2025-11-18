@@ -3,6 +3,7 @@ import { AdminNavBar } from "../components/AdminNavBar";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../Context/UserContext";
 import { SuccessModal } from "../components/SuccessModal";
+// import { GiClothes } from "react-icons/gi";
 
 export const AdminPanel = () => {
     const [isMobile, setIsMobile] = useState(false);
@@ -104,12 +105,6 @@ export const AdminPanel = () => {
                             </button>
                         </Link>
 
-                        {/* <Link to='/addProduct'>
-                            <button className="admin-panel-button">
-                                <i className="ri-add-fill"></i>
-                                Agregar producto
-                            </button>
-                        </Link> */}
 
                         {/* El acceso a administrar características siempre está visible */}
                         <Link to='/caracteristicas'>
@@ -133,7 +128,8 @@ export const AdminPanel = () => {
                         >
                             <button className="admin-panel-button">
                                 <i className="ri-add-fill"></i>
-                                Agregar categoría
+                                {/* <GiClothes /> */}
+                                Categorías
                             </button>
                         </Link>
 

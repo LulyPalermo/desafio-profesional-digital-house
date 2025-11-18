@@ -15,6 +15,10 @@ import { UserPage } from './pages/UserPage';
 import { EditUserPage } from './pages/EditUserPage';
 import { AdminLogin } from './pages/AdminLogin';
 import { FavoritesPage } from './pages/FavoritesPage';
+import { BookingPage } from './pages/BookingPage';
+import { BookingConfirmationPage } from './pages/BookingConfirmationPage';
+import { BookingHistoryPage } from './pages/BookingHistoryPage';
+import { LegalPage } from './pages/LegalPage';
 
 
 export const RentalApp = () => {
@@ -37,6 +41,10 @@ export const RentalApp = () => {
                 <Route path='/editUser/:id' element={<EditUserPage />} />
                 <Route path='/favorites' element={<FavoritesPage />}></Route>
                 <Route path='/*' element={<Navigate to='*' />}></Route>
+                <Route path="/reservas/:id" element={<BookingPage />} />
+                <Route path="/confirmation" element={<BookingConfirmationPage />} />
+                <Route path="/historial" element={<BookingHistoryPage />} />
+                <Route path="/legales" element={<LegalPage />} />
                 {/* <Route path="*" component={NotFound} /> */}
             </Routes>
         </>

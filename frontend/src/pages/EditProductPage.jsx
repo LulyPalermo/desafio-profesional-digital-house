@@ -208,23 +208,7 @@ export const EditProductPage = () => {
                                     placeholder="El código solo contiene números"
                                     value={productData.code}
                                     onChange={handleChange} />
-                            </div>
-
-                            {/* Status producto */}
-                            <div className="new-product-info">
-                                <label htmlFor="product-status">Disponibilidad:</label>
-                                <select
-                                    name="status"
-                                    id="product-status"
-                                    value={productData.status}
-                                    onChange={handleChange}>
-                                    <option value="">Elegir una opción</option>
-                                    <option value="Disponible">Disponible</option>
-                                    <option value="No disponible">No disponible</option>
-                                </select>
-                                <i className="ri-arrow-down-s-line chevron-select"></i>
-                            </div>
-
+                            </div>                          
                         </div>
                     </div>
 

@@ -18,37 +18,40 @@ export const FavoritesPage = () => {
 
     return (
         <>
-            <NavBarComponent />
-            <main className="mainFavorites">
-                <section className="favorites-section-top">
-                    <h1>Tus favoritos</h1>
-                    <p>Mostrando {userFavorites.length} {userFavorites.length === 1 ? "producto" : "productos"}</p>
-                </section>
+            <div className="app-container">
+                <NavBarComponent />
 
-                <ul id="products-grid">
-                    {userFavorites.map((product) => (
-                        <li key={product.id} className="product-description">
-                            <button className="like-button" onClick={() => toggleFavorite(product)}>
-                                {userFavorites.some((p) => p.id === product.id) ? <IoMdHeart /> : <IoMdHeartEmpty />}
-                            </button>
-                            <img
-                                src={product.images?.[0]?.imageUrl || "URL_DE_IMAGEN_POR_DEFECTO"}
-                                alt={product.name}
-                                className="product-image"
-                            />
-                            <div className="product-info">
-                                <p className="product-name">{product.name}</p>
-                                <p className="product-price">$ {product.price}</p>
-                            </div>
-                            <Link to="/detail">
-                                <button className="primary-button" onClick={() => showProductDetail(product)}>Ver producto</button>
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
-            </main>
+                <main className="mainFavorites main-content">
+                    <section className="favorites-section-top">
+                        <h1>Tus favoritos</h1>
+                        <p>Mostrando {userFavorites.length} {userFavorites.length === 1 ? "producto" : "productos"}</p>
+                    </section>
 
-            <FooterComponent />
+                    <ul id="products-grid">
+                        {userFavorites.map((product) => (
+                            <li key={product.id} className="product-description">
+                                <button className="like-button" onClick={() => toggleFavorite(product)}>
+                                    {userFavorites.some((p) => p.id === product.id) ? <IoMdHeart /> : <IoMdHeartEmpty />}
+                                </button>
+                                <img
+                                    src={product.images?.[0]?.imageUrl || "URL_DE_IMAGEN_POR_DEFECTO"}
+                                    alt={product.name}
+                                    className="product-image"
+                                />
+                                <div className="product-info">
+                                    <p className="product-name">{product.name}</p>
+                                    <p className="product-price">$ {product.price}</p>
+                                </div>
+                                <Link to="/detail">
+                                    <button className="primary-button" onClick={() => showProductDetail(product)}>Ver producto</button>
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                </main>
+
+                <FooterComponent />
+            </div>
         </>
     )
 }

@@ -1,5 +1,6 @@
 package com.lucia.palermo.rentalapp.rent_a_look.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,12 +15,16 @@ public interface ProductService {
 
     Product save(Product product); // Método para guardar un producto
 
-    Product findByName (String name); // Método para buscar por nombre
+    Product findByName(String name); // Método para buscar por nombre
 
-    Product updateCategory(Long productId, Long categoryId); //Endpoint específico para actualizar solo la categoría de un producto.
+    Product updateCategory(Long productId, Long categoryId); // Endpoint específico para actualizar solo la categoría de
+                                                             // un producto.
 
-    Product assignCaracteristicas(Long productId, List<Long> caracteristicaIds); //Método para asignar características a un producto existente.
+    Product assignCaracteristicas(Long productId, List<Long> caracteristicaIds); // Método para asignar características
+                                                                                 // a un producto existente.
 
-     List<Product> searchProducts(String query); // Método para buscar productos
+    List<Product> searchProducts(String query); // Método para buscar productos
+
+    List <Product> findAvailableProducts(LocalDate startDate, LocalDate endDate); // Método para recibir rango de fechas
 
 }

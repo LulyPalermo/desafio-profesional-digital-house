@@ -1,5 +1,6 @@
 package com.lucia.palermo.rentalapp.rent_a_look.controllers;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -95,7 +96,6 @@ public class ProductController {
             product.setPrice(productDetails.getPrice());
             product.setCode(productDetails.getCode());
             product.setSize(productDetails.getSize());
-            product.setStatus(productDetails.getStatus());
 
             if (productDetails.getCategory() != null) {
                 product.setCategory(productDetails.getCategory());
@@ -146,10 +146,47 @@ public class ProductController {
         }
     }
 
-    // Endpoint para buscar productos
+    // Endpoint para buscar productos por query y por fechas
     @GetMapping("/products/search")
-    public List<Product> searchProducts(@RequestParam String query) {
-        return service.searchProducts(query);
+    public ResponseEntity<List<Product>> searchProducts(
+            @RequestParam String query,
+            @RequestParam(required = false) String startDate,
+            @RequestParam(required = false) String endDate) {
+        try {
+            if (startDate != null && endDate != null) {
+                LocalDate start = LocalDate.parse(startDate);
+                LocalDate end = LocalDate.parse(endDate);
+                List<Product> products = service.findAvailableProducts(start, end)
+                        .stream()
+                        .filter(p -> p.getName().toLowerCase().contains(query.toLowerCase()))
+                        .toList();
+                return ResponseEntity.ok(products);
+            } else {
+                return ResponseEntity.ok(service.searchProducts(query));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.emptyList());
+        }
+    }
+
+    // Endpoint para obtener productos disponibles en determinado rango de fechas
+    @GetMapping("/products/available")
+    public ResponseEntity<List<Product>> getAvailableProducts(
+            @RequestParam("startDate") String startDateStr,
+            @RequestParam("endDate") String endDateStr) { // para que desde el front se pasen las fechas como parámetros
+        try {
+            LocalDate startDate = LocalDate.parse(startDateStr); // convierte la fecha en String a LocalDate
+            LocalDate endDate = LocalDate.parse(endDateStr);
+            List<Product> availableProducts = service.findAvailableProducts(startDate, endDate); // hace la lógica de
+                                                                                                 // filtrar productos
+                                                                                                 // que no tengan
+                                                                                                 // reservas en ese
+                                                                                                 // rango
+            return ResponseEntity.ok(availableProducts); // devuelve la lista de productos disponibles
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Collections.emptyList());
+        }
     }
 
 }

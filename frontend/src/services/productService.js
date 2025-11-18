@@ -22,9 +22,18 @@ export const getProductById = async (id) => {
     return await response.json();
 };
 
-// Buscar productos por nombre o descripción
-export const searchProducts = async (query) => {
-    const response = await fetch(`${API_URL_PRODUCTS}/search?query=${encodeURIComponent(query)}`);
+// Buscar productos por nombre o descripción y fechas
+export const searchProducts = async (query, startDate = null, endDate = null) => {
+    let url = `${API_URL_PRODUCTS}/search?query=${encodeURIComponent(query)}`;
+
+    if (startDate && endDate) {
+        //aca se formatean las fechas como yyyy-mm-dd
+        const start = startDate.toISOString().split('T')[0];
+        const end = endDate.toISOString().split('T')[0];
+        url += `&startDate=${start}&endDate=${end}`;
+    }
+
+    const response = await fetch(url);
     if (!response.ok) {
         throw new Error("Error buscando productos");
     }
@@ -74,7 +83,7 @@ export const updateProduct = async (id, productData) => {
         category: {
             id: parseInt(productData.categoryId),
         },
-        // Agregamos la propiedad caracteristicas con solo los IDs
+        // Se agrega la propiedad caracteristicas con solo los IDs
         caracteristicas: productData.caracteristicas
             ? productData.caracteristicas.map(c => ({ id: c.id }))
             : [],
@@ -207,4 +216,47 @@ export const getReservationsByProductId = async (productId) => {
         throw new Error("No se pudieron obtener las reservas del producto");
     }
     return await response.json();
+};
+
+// Crear una reserva
+export const createReservation = async (reservation) => {
+
+    const reservationToSend = {
+        ...reservation,
+        startDate: new Date(reservation.startDate).toISOString().split("T")[0],
+        endDate: new Date(reservation.endDate).toISOString().split("T")[0],
+        product: { id: reservation.product.id } // me aseguro que solo se envia el id
+    };
+
+    const response = await fetch(API_URL_RESERVATIONS, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(reservationToSend)
+    });
+
+    if (!response.ok) {
+        // Si el backend devuelve error, se obtiene el texto y se muestra como mensaje
+        const errorText = await response.text();
+        throw new Error(errorText);
+    }
+
+    // Si todo va bien, respuesta JSON
+    return await response.json();
+};
+
+
+export const getReservationsByUser = async (userId) => {
+    try {
+        const response = await fetch(API_URL_RESERVATIONS);
+        if (!response.ok) {
+            throw new Error("Error al traer reservas");
+        }
+        const data = await response.json();
+        return data.filter(r => r.user?.id === userId);
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
 };

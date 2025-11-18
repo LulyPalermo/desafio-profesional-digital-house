@@ -2,14 +2,14 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useUser } from '../Context/UserContext';
 
-export const LoginModal = ({ isOpen, onClose }) => {
+export const LoginModal = ({ isOpen, onClose, isMandatory = false }) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [apiError, setApiError] = useState('');
     const [loading, setLoading] = useState(false);
     const { login } = useUser();// Hook useUser para obtener login, logout y user
-    
+
 
     if (!isOpen) return null; // Si no debe mostrarse, no renderiza nada
 
@@ -57,7 +57,10 @@ export const LoginModal = ({ isOpen, onClose }) => {
                     <button className="login-close-button" onClick={onClose}><i className="ri-close-large-line"></i></button>
                     <h1>Inicia sesión</h1>
                     <p className="login-modal-description">
-                        ¡Inicia sesión para poder guardar artículos en tus favoritos, hacer un seguimiento de tus pedidos y pagar más rápido!
+                        {isMandatory
+                            ? "El inicio de sesión es obligatorio para continuar. Si aún no tienes una cuenta, debes registrarte para poder realizar tu reserva."
+                            : "¡Inicia sesión para poder guardar artículos en tus favoritos, hacer un seguimiento de tus pedidos y pagar más rápido!"
+                        }
                     </p>
                 </div>
 
@@ -118,5 +121,6 @@ export const LoginModal = ({ isOpen, onClose }) => {
 //Validación de props:
 LoginModal.propTypes = {
     isOpen: PropTypes.bool.isRequired,
-    onClose: PropTypes.func.isRequired
+    onClose: PropTypes.func.isRequired,
+    isMandatory: PropTypes.bool
 };

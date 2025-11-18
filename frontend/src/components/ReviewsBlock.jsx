@@ -7,6 +7,7 @@ import { LoginModal } from "./LoginModal";
 import { getReviewsByProduct } from "../services/reviewService";
 import PropTypes from "prop-types";
 import { SuccessModal } from "./SuccessModal";
+import { getReservationsByUser } from "../services/productService";
 
 
 export const ReviewsBlock = ({ product }) => {
@@ -16,7 +17,8 @@ export const ReviewsBlock = ({ product }) => {
     const [reviews, setReviews] = useState([]);
     const [averageRating, setAverageRating] = useState(0);
     const [showExistModal, setShowExistModal] = useState(false);
-
+    const [userHasReservation, setUserHasReservation] = useState(false);
+    const [showNoReservationModal, setShowNoReservationModal] = useState(false);
 
     const productId = product.id;
 
@@ -45,16 +47,43 @@ export const ReviewsBlock = ({ product }) => {
         fetchData();
     }, [productId]);
 
+    // Se verifica si el usuario reservó determinado producto
+    useEffect(() => {
+        if (!user) return;
+
+        const fetchUserReservations = async () => {
+            try {
+                const data = await getReservationsByUser(user.id);
+
+                // Verifica si hay una reserva para este producto
+                const hasReserved = data.some(res => res.product?.id === product.id);
+
+                setUserHasReservation(hasReserved);
+            } catch (error) {
+                console.error("Error obteniendo reservas del usuario:", error);
+                setUserHasReservation(false);
+            }
+        };
+
+        fetchUserReservations();
+    }, [user, product.id]);
+
 
     //Cuando se hace click en "Escribir reseña"
     const openReviewModal = () => {
         if (!user) {
-            // si NO hay usuario autenticado abre el modal de login
+            // si no hay usuario autenticado abre el modal de login
             setShowLoginModal(true);
             return;
         }
 
-        // Se verifica si el usuario ya tiene una reseña
+        // Si el usuario no reservó ese producto se le avisa
+        if (!userHasReservation) {
+            setShowNoReservationModal(true);
+            return;
+        }
+
+        // Si el usuario ya reseñó ese producto se le avisa
         const hasReview = reviews.some((r) => r.user?.id === user.id);
         if (hasReview) {
             // alert("Ya has reseñado este producto");
@@ -62,7 +91,7 @@ export const ReviewsBlock = ({ product }) => {
             return;
         }
 
-        // Si no tiene reseña en ese producto abre modal para agregar una
+        // Si no tiene reseña en ese producto y puede hacerla se le abre modal para agregar una
         setShowReviewModal(true);
     };
 
@@ -90,7 +119,11 @@ export const ReviewsBlock = ({ product }) => {
             <div className="product-review">
                 <div className="product-review-header">
                     <h3 className="review-title">Reseñas y Calificaciones</h3>
-                    <button className="nav-link secondary-button" onClick={openReviewModal}>Escribir una reseña</button>
+
+                    <button
+                        className={`nav-link secondary-button ${!userHasReservation ? "disabled-review-button" : ""}`}
+                        onClick={openReviewModal}>Escribir una reseña</button>
+                    {/* <button className="nav-link secondary-button" onClick={openReviewModal}>Escribir una reseña</button> */}
                 </div>
 
                 {/* Puntuación general */}
@@ -131,7 +164,8 @@ export const ReviewsBlock = ({ product }) => {
                                     <p className="review-date">
                                         {review.createdAt
                                             ? new Date(review.createdAt).toLocaleDateString("es-ES", {
-                                                month: "long",
+                                                day: "2-digit",
+                                                month: "2-digit",
                                                 year: "numeric",
                                             })
                                             : ""}
@@ -164,11 +198,25 @@ export const ReviewsBlock = ({ product }) => {
                 <SuccessModal message="Ya has reseñado este producto" onClose={() => setShowExistModal(false)} />
             )}
 
+            {showNoReservationModal && (
+                <SuccessModal
+                    message="Solo puedes reseñar un producto que hayas reservado."
+                    onClose={() => setShowNoReservationModal(false)}
+                />
+            )}
+
+
         </>
     )
 }
 
-
 ReviewsBlock.propTypes = {
-    product: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    product: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        nombre: PropTypes.string,
+    }).isRequired
 };
+
+/* ReviewsBlock.propTypes = {
+    product: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+}; */

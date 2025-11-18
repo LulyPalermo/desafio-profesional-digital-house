@@ -1,7 +1,10 @@
 package com.lucia.palermo.rentalapp.rent_a_look.services;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,7 @@ import com.lucia.palermo.rentalapp.rent_a_look.models.entities.ProductImage;
 import com.lucia.palermo.rentalapp.rent_a_look.repositories.CaracteristicaRepository;
 import com.lucia.palermo.rentalapp.rent_a_look.repositories.CategoryRepository;
 import com.lucia.palermo.rentalapp.rent_a_look.repositories.ProductRepository;
+import com.lucia.palermo.rentalapp.rent_a_look.repositories.ReservationRepository;
 
 /* Hacemos la anotacion @Service para que quede como componente de spring */
 @Service
@@ -24,12 +28,17 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private CaracteristicaRepository caracteristicaRepository;
+
+    @Autowired
+    private ReservationRepository reservationRepository;
+
     @Override
     @Transactional(readOnly = true) // Esto es para hacer una sincronizacion con la base de datos. Todos métodos que
                                     // sean consultas deben llevar el @Transactional (readOnly = true),readOnly =
                                     // true significa que es solo de lectura
     public List<Product> findAll() {
-
         return (List<Product>) repository.findAll();
     }
 
@@ -42,8 +51,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public Product save(Product product) {
-        // Establecer la relación inversa: para cada imagen, le decimos a qué producto
-        // pertenece
+        // Establecer la relación inversa: para cada imagen, le decimos a qué producto pertenece
         if (product.getImages() != null) {
             for (ProductImage image : product.getImages()) {
                 image.setProduct(product); // A cada imagen le asigno su "padre"
@@ -77,9 +85,6 @@ public class ProductServiceImpl implements ProductService {
         return repository.save(product);
     }
 
-    @Autowired
-    private CaracteristicaRepository caracteristicaRepository;
-
     @Override
     @Transactional
     public Product assignCaracteristicas(Long productId, List<Long> caracteristicaIds) {
@@ -98,6 +103,21 @@ public class ProductServiceImpl implements ProductService {
             return (List<Product>) repository.findAll(); // si no hay se devuelve todo
         }
         return repository.findByNameContainingIgnoreCase(query);
+    }
+
+    // Este método devuelve solo productos disponibles en un rango de fechas
+    @Override
+    @Transactional(readOnly = true)
+    public List<Product> findAvailableProducts(LocalDate startDate, LocalDate endDate) {
+        Iterable<Product> iterable = repository.findAll();
+        List<Product> allProducts = new ArrayList<>();
+        iterable.forEach(allProducts::add);
+
+        List<Long> reservedProductIds = reservationRepository.findReservedProductIdsBetween(startDate, endDate);
+
+        return allProducts.stream()
+                .filter(p -> !reservedProductIds.contains(p.getId()))
+                .collect(Collectors.toList());
     }
 
 }

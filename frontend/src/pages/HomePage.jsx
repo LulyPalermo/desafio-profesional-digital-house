@@ -13,6 +13,8 @@ import { IoMdHeartEmpty } from "react-icons/io";
 import { IoMdHeart } from "react-icons/io";
 import { useUser } from "../Context/UserContext";
 import { LoginModal } from "../components/LoginModal";
+import { format } from "date-fns";
+import { WhatsappButton } from "../components/WhatsappButton";
 
 
 export const HomePage = () => {
@@ -137,7 +139,10 @@ export const HomePage = () => {
             return;
         }
         try {
-            const results = await searchProducts(searchQuery);
+            const start = dateRange[0].startDate;
+            const end = dateRange[0].endDate;
+
+            const results = await searchProducts(searchQuery, start, end);
             setSearchResults(results);
             setSuggestions([]); //oculta dropdown
         } catch (error) {
@@ -178,99 +183,176 @@ export const HomePage = () => {
 
     return (
         <>
-            <NavBarComponent />
+            <div className="app-container">
+                <NavBarComponent />
 
-            {/* Sección buscador */}
-            <section id="search">
-                <div className="search-title">
-                    <h2>Descubre tu próximo look</h2>
-                    <p>Encuentra tu look perfecto por tipo de prenda, accesorio o calzado</p>
-                </div>
-                <div className="search-actions">
-                    <div className="search-input">
-                        <input
-                            type="text"
-                            name="form"
-                            id="searchInput"
-                            placeholder="¿Qué estás buscando?"
-                            value={searchQuery}
-                            onChange={(e) => {
-                                const value = e.target.value;
-                                setSearchQuery(value);
-                                fetchSuggestions(value); // Aca se obtienen las sugerencias en tiempo real
-                            }}
-                        />
-                        {/* Dropdown que muestra las sugerencias */}
-                        {suggestions.length > 0 && (
-                            <ul className="suggestions-list">
-                                {suggestions.map((product) => (
-                                    <li
-                                        key={product.id}
-                                        onClick={() => {
-                                            setSearchQuery(product.name); // completa el input
-                                            setSuggestions([]);
-                                            setNoResults(false); // oculta mensaje al elegir una sugerencia
-                                        }}
-                                    >
-                                        {product.name}
+                {/* Sección buscador */}
+                <section id="search" className="main-content">
+                    <div className="search-title">
+                        <h2>Descubre tu próximo look</h2>
+                        <p>Encuentra tu look perfecto por tipo de prenda, accesorio o calzado</p>
+                    </div>
+                    <div className="search-actions">
+                        <div className="search-input">
+                            <input
+                                type="text"
+                                name="form"
+                                id="searchInput"
+                                placeholder="¿Qué estás buscando?"
+                                value={searchQuery}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    setSearchQuery(value);
+                                    fetchSuggestions(value); // Aca se obtienen las sugerencias en tiempo real
+                                }}
+                            />
+                            {/* Dropdown que muestra las sugerencias */}
+                            {suggestions.length > 0 && (
+                                <ul className="suggestions-list">
+                                    {suggestions.map((product) => (
+                                        <li
+                                            key={product.id}
+                                            onClick={() => {
+                                                setSearchQuery(product.name); // completa el input
+                                                setSuggestions([]);
+                                                setNoResults(false); // oculta mensaje al elegir una sugerencia
+                                            }}
+                                        >
+                                            {product.name}
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+
+                            {/* Si no hay sugerencias pero el usuario escribió algo */}
+                            {/* Mensaje "no se encontraron" */}
+                            {noResults && (
+                                <ul className="suggestions-list">
+                                    <li className="no-results">No se encontraron productos</li>
+                                </ul>
+                            )}
+                        </div>
+
+                        <div className="date-picker-wrapper">
+                            {/* Inputs que muestran el rango de fecha seleccionado y alterna el calendario */}
+
+                            <input
+                                type="text"
+                                readOnly
+                                placeholder="Agregar fecha inicio"
+                                value={dateRange[0].startDate ? format(dateRange[0].startDate, "dd/MM/yyyy") : ""}
+                                onClick={() => setShowCalendar(prev => !prev)}
+                            />
+
+                            <input
+                                type="text"
+                                readOnly
+                                placeholder="Agregar fecha fin"
+                                value={dateRange[0].endDate ? format(dateRange[0].endDate, "dd/MM/yyyy") : ""}
+                                onClick={() => setShowCalendar(prev => !prev)}
+                            />
+
+                            {/* Calendario visible solo cuando showCalendar es true */}
+                            {showCalendar && (
+                                <DateRange
+                                    ranges={dateRange}
+                                    onChange={item => setDateRange([item.selection])}
+                                    editableDateInputs={false} // para apagar el input que viene con el calendario y usar los propios
+                                    moveRangeOnFirstSelection={false}
+                                    locale={es}
+                                // direction="horizontal" // esto hace que el calendario aparezca en línea
+                                />
+                            )}
+                        </div>
+                        <button className="primary-button search-button" onClick={handleSearch}>Buscar</button>
+                    </div>
+                </section>
+
+                <main className="mainHome">
+
+                    {/* Sección resultados de búsqueda */}
+                    {searchResults.length > 0 && (
+                        <section id="search-results">
+                            <div className="search-results-title">
+                                <h3>Resultados de la búsqueda:</h3>
+                                <p className="results-count">
+                                    Mostrando {searchResults.length} {searchResults.length === 1 ? "producto" : "productos"}
+                                </p>
+                            </div>
+                            <ul id="products-grid">
+                                {searchResults.map((product) => (
+                                    <li className="product-description" key={product.id}>
+                                        <img
+                                            src={product.images.length > 0 ? product.images[0].imageUrl : 'URL_DE_IMAGEN_POR_DEFECTO'}
+                                            alt={product.name}
+                                            className="product-image"
+                                        />
+                                        <div className="product-info">
+                                            <p className="product-name">{product.name}</p>
+                                            <p className="product-price">$ {product.price}</p>
+                                        </div>
+                                        <Link to="/detail">
+                                            <button className="primary-button" onClick={() => showProductDetail(product)}>Ver producto</button>
+                                        </Link>
                                     </li>
                                 ))}
                             </ul>
+                        </section>
+                    )}
+
+                    {/* Sección filtros de productos */}
+                    <section id="categoriesSection">
+                        <h1>Filtrar por tipo de producto</h1>
+                        <div id="categoriesGrid">
+                            {categories.map((cat) => (
+                                <div
+                                    key={cat.id}
+                                    className={`category-card ${selectedCategories.includes(cat.id) ? "active" : ""}`}
+                                    onClick={() => toggleCategory(cat.id)}>
+                                    {/* <i className="ri-price-tag-3-line"></i> */}
+                                    <img src={cat.imageUrl} alt={cat.name} className="category-image" />
+                                    <div className="category-description">
+                                        <p>{cat.description}</p>
+                                    </div>
+                                    <div className="category-title">
+                                        <p>{cat.name}</p>
+                                    </div>
+
+                                </div>
+                            ))}
+                        </div>
+
+                        {selectedCategories.length > 0 && (
+                            <div className="filter-results">
+                                <p className="filter-results-title">Estás filtrando por:</p>
+                                <div className="filter-results-list">
+                                    {selectedCategories.map((catId) => {
+                                        const cat = categories.find((c) => c.id === catId);
+                                        return (
+                                            <div key={catId} className="filter-results-pills">
+                                                <p>{cat?.name}</p>
+                                                <i className="ri-close-line" onClick={() => removeFilter(catId)}></i>
+                                            </div>
+                                        );
+                                    })}
+                                    <button className="filter-button" onClick={clearAllFilters}>Quitar filtros</button>
+                                </div>
+                            </div>
                         )}
+                    </section>
 
-                        {/* Si no hay sugerencias pero el usuario escribió algo */}
-                        {/* Mensaje "no se encontraron" */}
-                        {noResults && (
-                            <ul className="suggestions-list">
-                                <li className="no-results">No se encontraron productos</li>
-                            </ul>
-                        )}
-                    </div>
+                    <section id="recommendationsSection">
+                        <h1>¡Nuestros preferidos!</h1>
+                        <p className="results-count"> Mostrando {products.length} producto(s){selectedCategories.length > 0 ? " filtrado(s)" : ""}</p>
 
-                    <div className="date-picker-wrapper">
-                        {/* Inputs que muestran el rango de fecha seleccionado y alterna el calendario */}
-                        <input
-                            type="text"
-                            readOnly
-                            placeholder="Agregar fecha inicio"
-                            value={dateRange[0].startDate ? dateRange[0].startDate.toLocaleDateString() : ""}
-                            // onClick={() => setShowCalendar(true)}
-                            onClick={() => setShowCalendar(prev => !prev)} //esto asi hace toggle, como esta en la linea anterior solo lo abre
-                        />
-                        <input
-                            type="text"
-                            readOnly
-                            placeholder="Agregar fecha fin"
-                            value={dateRange[0].endDate ? dateRange[0].endDate.toLocaleDateString() : ""}
-                            onClick={() => setShowCalendar(prev => !prev)}
-                        />
-
-                        {/* Calendario visible solo cuando showCalendar es true */}
-                        {showCalendar && (
-                            <DateRange
-                                ranges={dateRange}
-                                onChange={item => setDateRange([item.selection])}
-                                editableDateInputs={false} // para apagar el input que viene con el calendario y usar los propios
-                                moveRangeOnFirstSelection={false}
-                                locale={es}
-                            // direction="horizontal" // esto hace que el calendario aparezca en línea
-                            />
-                        )}
-                    </div>
-                    <button className="primary-button search-button" onClick={handleSearch}>Buscar</button>
-                </div>
-            </section>
-
-            <main className="mainHome">
-
-                {/* Sección resultados de búsqueda */}
-                {searchResults.length > 0 && (
-                    <section id="search-results">
-                        <h3>Resultados de la búsqueda:</h3>
-                        <p></p>
+                        {/* Productos */}
                         <ul id="products-grid">
-                            {searchResults.map((product) => (
+                            {paginatedProducts.map((product) => (
                                 <li className="product-description" key={product.id}>
+                                    <button className="like-button" onClick={() => handleFavoriteClick(product)}>
+                                        {userFavorites.some((p) => p.id === product.id) ? <IoMdHeart /> : <IoMdHeartEmpty />}
+                                    </button>
+
                                     <img
                                         src={product.images.length > 0 ? product.images[0].imageUrl : 'URL_DE_IMAGEN_POR_DEFECTO'}
                                         alt={product.name}
@@ -286,92 +368,26 @@ export const HomePage = () => {
                                 </li>
                             ))}
                         </ul>
-                    </section>
-                )}
 
-                {/* Sección filtros de productos */}
-                <section id="categoriesSection">
-                    <h1>Filtrar por tipo de producto</h1>
-                    <div id="categoriesGrid">
-                        {categories.map((cat) => (
-                            <div
-                                key={cat.id}
-                                className={`category-card ${selectedCategories.includes(cat.id) ? "active" : ""}`}
-                                onClick={() => toggleCategory(cat.id)}>
-                                {/* <i className="ri-price-tag-3-line"></i> */}
-                                <img src={cat.imageUrl} alt={cat.name} className="category-image" />
-                                <div className="category-description">
-                                    <p>{cat.description}</p>
-                                </div>
-                                <div className="category-title">
-                                    <p>{cat.name}</p>
-                                </div>
-
-                            </div>
-                        ))}
-                    </div>
-
-                    {selectedCategories.length > 0 && (
-                        <div className="filter-results">
-                            <p className="filter-results-title">Estás filtrando por:</p>
-                            <div className="filter-results-list">
-                                {selectedCategories.map((catId) => {
-                                    const cat = categories.find((c) => c.id === catId);
-                                    return (
-                                        <div key={catId} className="filter-results-pills">
-                                            <p>{cat?.name}</p>
-                                            <i className="ri-close-line" onClick={() => removeFilter(catId)}></i>
-                                        </div>
-                                    );
-                                })}
-                                <button className="filter-button" onClick={clearAllFilters}>Quitar filtros</button>
-                            </div>
+                        <div className="pagination-controls">
+                            <button onClick={goToFirstPage} disabled={currentPage === 1}>« Inicio</button>
+                            <button onClick={goToPrevPage} disabled={currentPage === 1}>‹ Anterior</button>
+                            <span>Página {currentPage} de {totalPages}</span>
+                            <button onClick={goToNextPage} disabled={currentPage === totalPages}>Siguiente ›</button>
                         </div>
-                    )}
-                </section>
+                    </section>
+                </main>
 
-                <section id="recommendationsSection">
-                    <h1>¡Nuestros preferidos!</h1>
-                    <p className="results-count"> Mostrando {products.length} producto(s){selectedCategories.length > 0 ? " filtrado(s)" : ""}</p>
+                {/* Botón Whatsapp */}
+                <WhatsappButton />
 
-                    {/* Productos */}
-                    <ul id="products-grid">
-                        {paginatedProducts.map((product) => (
-                            <li className="product-description" key={product.id}>
-                                <button className="like-button" onClick={() => handleFavoriteClick(product)}>
-                                    {userFavorites.some((p) => p.id === product.id) ? <IoMdHeart /> : <IoMdHeartEmpty />}
-                                </button>
+                {/* Modal Inicio de sesión y Registro*/}
+                <LoginModal
+                    isOpen={showLoginModal}
+                    onClose={() => setShowLoginModal(false)} />
 
-                                <img
-                                    src={product.images.length > 0 ? product.images[0].imageUrl : 'URL_DE_IMAGEN_POR_DEFECTO'}
-                                    alt={product.name}
-                                    className="product-image"
-                                />
-                                <div className="product-info">
-                                    <p className="product-name">{product.name}</p>
-                                    <p className="product-price">$ {product.price}</p>
-                                </div>
-                                <Link to="/detail">
-                                    <button className="primary-button" onClick={() => showProductDetail(product)}>Ver producto</button>
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
-
-                    <div className="pagination-controls">
-                        <button onClick={goToFirstPage} disabled={currentPage === 1}>« Inicio</button>
-                        <button onClick={goToPrevPage} disabled={currentPage === 1}>‹ Anterior</button>
-                        <span>Página {currentPage} de {totalPages}</span>
-                        <button onClick={goToNextPage} disabled={currentPage === totalPages}>Siguiente ›</button>
-                    </div>
-                </section>
-            </main>
-
-            {/* Modal Inicio de sesión y Registro*/}
-            <LoginModal
-                isOpen={showLoginModal}
-                onClose={() => setShowLoginModal(false)} />
-            <FooterComponent />
+                <FooterComponent />
+            </div>
         </>
     );
 };
