@@ -15,6 +15,7 @@ logging.level.org.hibernate.SQL=debug
 # Opcional: cambiar el puerto del servidor si se desea
 # server.port=8081
 
-# SendGrid (reemplazar con tus valores locales)
-sendgrid.api.key=TU_API_KEY_DE_SENDGRID
+# SendGrid
+# La API key real NO debe ir aquí. Se reemplaza localmente mediante variables de entorno
+sendgrid.api.key=${SENDGRID_API_KEY}
 sendgrid.from.email=TU_EMAIL
