@@ -31,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+
+backend/rent-a-look/src/main/resources/application.properties
