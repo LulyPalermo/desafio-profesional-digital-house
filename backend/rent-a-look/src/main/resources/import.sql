@@ -322,7 +322,7 @@ INSERT INTO admin_users (nombre, apellido, email, password,  is_admin, editar_pr
 -- Usuarios sitio publico
 -- =====================================================
 INSERT INTO users (nombre, apellido, email, password) VALUES('Olivia', 'Palermo', 'olivia@ejemplo.com', '123456o&');
-INSERT INTO users (nombre, apellido, email, password) VALUES('Josefina', 'Perez', 'jose@ejemplo.com', '456789j&');
+INSERT INTO users (nombre, apellido, email, password) VALUES('Josefina', 'Perez', 'jose@ejemplo.com', '123456j&');
 -- =====================================================
 -- REVIEWS
 -- =====================================================
