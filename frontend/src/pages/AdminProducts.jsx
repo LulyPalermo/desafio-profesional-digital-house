@@ -1,5 +1,4 @@
 import { Link, useNavigate } from "react-router-dom"
-import { AdminNavBar } from "../components/AdminNavBar"
 import { useContext, useEffect, useState } from "react";
 import { deleteProductById, getCategories, getProducts, updateProductCategory } from "../services/productService";
 import { ConfirmDeleteModal } from "../components/ConfirmDeleteModal";
@@ -42,7 +41,7 @@ export const AdminProducts = () => {
     // Función para manejar click en editar
     const handleEditClick = (productId) => {
         if (user?.editarProducto || user?.isAdmin) {
-            navigate(`/editProduct/${productId}`);
+            navigate(`/administración/editProduct/${productId}`);
         } else {
             setShowPermissionModal(true); // si no tiene permisos, se muestra modal
         }
@@ -83,8 +82,6 @@ export const AdminProducts = () => {
 
     return (
         <>
-            <AdminNavBar />
-            <main className="mainAdmin">
                 <section className="section-title">
                     <h1 className="page-title">Productos</h1>
                     <Link to='/administración' className="nav-link secondary-button">Volver al dashboard</Link>
@@ -149,7 +146,7 @@ export const AdminProducts = () => {
                     ))}
                 </section>
 
-            </main>
+          
             {/* Modal de confirmación */}
             {showDeleteModal && (
                 <ConfirmDeleteModal

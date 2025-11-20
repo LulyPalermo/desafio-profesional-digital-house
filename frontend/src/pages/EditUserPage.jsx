@@ -1,5 +1,4 @@
 import { Link, useNavigate, useParams } from "react-router-dom"
-import { AdminNavBar } from "../components/AdminNavBar"
 import { useEffect, useState } from "react";
 import { getUserById, updateUser } from "../services/userService";
 import { IconToggle } from "../components/ToggleSwitch";
@@ -58,60 +57,58 @@ export const EditUserPage = () => {
 
     return (
         <>
-            <AdminNavBar />
-            <main className="main-users">
-                <section className="section-title">
-                    <h1 className="page-title">Administrar usuario:</h1>
-                    <Link to='/administración' className="nav-link secondary-button">Volver al dashboard</Link>
-                </section>
+            <section className="section-title">
+                <h1 className="page-title">Administrar usuario:</h1>
+                <Link to='/administración' className="nav-link secondary-button">Volver al dashboard</Link>
+            </section>
 
-                <form onSubmit={handleSubmit}>
-                    <div className="admin-user-section">
-                        <div className="admin-user-title">
-                            <h2>Nombre del usuario:</h2>
-                            <p>{`${user.nombre} ${user.apellido}`}</p>                            {/* <p>Administra a qué secciones del administrador podrá acceder este usuario. </p> */}
-                        </div>
-                        <div>
-                            <div className="toggle-user-group">
+            <form onSubmit={handleSubmit}>
+                <div className="admin-user-section">
+                    <div className="admin-user-title">
+                        <h2>Nombre del usuario:</h2>
+                        <p>{`${user.nombre} ${user.apellido}`}</p>                            {/* <p>Administra a qué secciones del administrador podrá acceder este usuario. </p> */}
+                    </div>
+                    <div>
+                        <div className="toggle-user-group">
 
-                                <IconToggle
-                                    label="Editar productos"
-                                    initialOn={user.editarProducto} // initialOn: El toggle arranca ON u OFF según si editarProducto es true o false.
-                                    onToggle={(val) => handleToggle("editarProducto", val)} // onToggle: llama a la función handleToggle para actualizar solo esa propiedad dentro del objeto user
-                                />
+                            <IconToggle
+                                label="Editar productos"
+                                initialOn={user.editarProducto} // initialOn: El toggle arranca ON u OFF según si editarProducto es true o false.
+                                onToggle={(val) => handleToggle("editarProducto", val)} // onToggle: llama a la función handleToggle para actualizar solo esa propiedad dentro del objeto user
+                            />
 
-                                <IconToggle
-                                    label="Eliminar productos"
-                                    initialOn={user.eliminarProducto}
-                                    onToggle={(val) => handleToggle("eliminarProducto", val)}
-                                />
+                            <IconToggle
+                                label="Eliminar productos"
+                                initialOn={user.eliminarProducto}
+                                onToggle={(val) => handleToggle("eliminarProducto", val)}
+                            />
 
-                                 <IconToggle
-                                    label="Agregar productos"
-                                    initialOn={user.agregarProducto}
-                                    onToggle={(val) => handleToggle("agregarProducto", val)}
-                                />
+                            <IconToggle
+                                label="Agregar productos"
+                                initialOn={user.agregarProducto}
+                                onToggle={(val) => handleToggle("agregarProducto", val)}
+                            />
 
-                                 <IconToggle
-                                    label="Editar caracteristicas"
-                                    initialOn={user.editarCaracteristica}
-                                    onToggle={(val) => handleToggle("editarCaracteristica", val)}
-                                />
+                            <IconToggle
+                                label="Editar caracteristicas"
+                                initialOn={user.editarCaracteristica}
+                                onToggle={(val) => handleToggle("editarCaracteristica", val)}
+                            />
 
-                                 <IconToggle
-                                    label="Eliminar caracteristicas"
-                                    initialOn={user.eliminarCaracteristica}
-                                    onToggle={(val) => handleToggle("eliminarCaracteristica", val)}
-                                />
+                            <IconToggle
+                                label="Eliminar caracteristicas"
+                                initialOn={user.eliminarCaracteristica}
+                                onToggle={(val) => handleToggle("eliminarCaracteristica", val)}
+                            />
 
-                                 <IconToggle
-                                    label="Agregar categorías"
-                                    initialOn={user.agregarCategoria}
-                                    onToggle={(val) => handleToggle("agregarCategoria", val)}
-                                />
+                            <IconToggle
+                                label="Agregar categorías"
+                                initialOn={user.agregarCategoria}
+                                onToggle={(val) => handleToggle("agregarCategoria", val)}
+                            />
 
 
-                                {/*  <IconToggle
+                            {/*  <IconToggle
                                     label="Editar caracteristicas de productos"
                                     initialOn={false}
                                     onToggle={(val) => console.log("¿Activo?", val)} />
@@ -130,19 +127,16 @@ export const EditUserPage = () => {
                                     label="Eliminar categorías"
                                     initialOn={false}
                                     onToggle={(val) => console.log("¿Activo?", val)} /> */}
-                            </div>
                         </div>
                     </div>
-
-                    <div className="new-product-buttons">
-                        <Link to="/administración" className="nav-link secondary-button">
-                            Cancelar
-                        </Link>
-                        <input type="submit" value="Guardar cambios" className="primary-button" />
-                    </div>
-                </form>
-
-            </main>
+                </div>
+            </form>
+            <div className="new-product-buttons">
+                <Link to="/administración" className="nav-link secondary-button">
+                    Cancelar
+                </Link>
+                <input type="submit" value="Guardar cambios" className="primary-button" />
+            </div>
         </>
     )
 }

@@ -1861,7 +1861,7 @@ footer {
         max-height: 30rem;
     }
 
-    .accordion-panel-center{
+    .accordion-panel-center {
         font-size: 1.8rem;
     }
 }
@@ -2281,7 +2281,7 @@ footer {
 
 .mainAdmin {
     background-color: var(--white);
-    min-height: 100vh;
+    /* min-height: 100vh; */
     /* max-width: 120rem; */
     display: flex;
     flex-direction: column;
@@ -2781,7 +2781,7 @@ form {
     align-items: center;
     gap: 4rem;
     justify-content: flex-end;
-    padding-bottom: 3rem;
+    padding-top: 2rem;
 }
 
 .new-product-buttons input {
@@ -2971,6 +2971,7 @@ form {
 
 /* Formulario agregar categoría*/
 
+
 .category-form-info-section {
     display: flex;
     flex-direction: column;
@@ -3071,7 +3072,8 @@ form {
 
 .new-category-buttons {
     width: 30rem;
-    padding: 4rem 0;
+    padding-top: 2rem;
+    align-self: end;
 }
 
 
@@ -3172,7 +3174,8 @@ form {
 
 .new-highlights-buttons {
     width: 30rem;
-    padding: 4rem 0;
+    padding-top: 2rem;
+    align-self: end;
 }
 
 .form-highlights-section {

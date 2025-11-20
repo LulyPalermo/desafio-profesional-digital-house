@@ -1,5 +1,4 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { AdminNavBar } from "../components/AdminNavBar";
 import { useEffect, useState } from "react";
 import { getCaracteristicaById, updateCaracteristica } from "../services/productService";
 import { SuccessModal } from "../components/SuccessModal";
@@ -78,66 +77,62 @@ export const EditHighlightPage = () => {
 
     return (
         <>
-            <AdminNavBar />
-            <main className="mainAdmin">
-                <section className="section-title">
-                    <h1 className="page-title">Editar característica</h1>
-                    <Link to='/administración' className="nav-link secondary-button">Volver al dashboard</Link>
-                </section>
+            <section className="section-title">
+                <h1 className="page-title">Editar característica</h1>
+                <Link to='/administración' className="nav-link secondary-button">Volver al dashboard</Link>
+            </section>
 
-                <form onSubmit={handleSubmit}>
-                    {/* Agregar icono y nombre de la característica */}
-                    <div className="form-info-section">
-                        <div className="form-title">
-                            <h1>Información básica de la característica</h1>
+            <form onSubmit={handleSubmit}>
+                {/* Agregar icono y nombre de la característica */}
+                <div className="form-info-section">
+                    <div className="form-title">
+                        <h1>Información básica de la característica</h1>
+                    </div>
+
+                    <div className="form-info">
+                        {/* Nombre producto */}
+                        <div className="new-product-info">
+                            <label htmlFor="product-name">Nombre:</label>
+                            <input
+                                type="text"
+                                name="name"
+                                id="product-name"
+                                placeholder="Nombre de la característica"
+                                value={caracteristica.name}
+                                onChange={handleInputChange}
+                            />
                         </div>
 
                         <div className="form-info">
-                            {/* Nombre producto */}
-                            <div className="new-product-info">
-                                <label htmlFor="product-name">Nombre:</label>
-                                <input
-                                    type="text"
-                                    name="name"
-                                    id="product-name"
-                                    placeholder="Nombre de la característica"
-                                    value={caracteristica.name}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-
-
-                            <div className="form-info">
-                                <label htmlFor="product-image">
-                                    <div className="upload-picture">
-                                        <span><i className="ri-upload-cloud-2-line"></i></span>
-                                        <div className="upload-picture-info">
-                                            <p>Click aquí para subir el ícono</p>
-                                            {/* <p>(SVG, JPG, o PNG)</p> */}
-                                        </div>
+                            <label htmlFor="product-image">
+                                <div className="upload-picture">
+                                    <span><i className="ri-upload-cloud-2-line"></i></span>
+                                    <div className="upload-picture-info">
+                                        <p>Click aquí para subir el ícono</p>
+                                        {/* <p>(SVG, JPG, o PNG)</p> */}
                                     </div>
-                                </label>
+                                </div>
+                            </label>
 
-                                {/* Input para las imágenes */}
-                                <input
-                                    type="file"
-                                    name="images"
-                                    id="product-image"
-                                    accept="image/*"
-                                    onChange={handleFileChange}
-                                    style={{ display: 'none' }}
-                                />
-                            </div>
+                            {/* Input para las imágenes */}
+                            <input
+                                type="file"
+                                name="images"
+                                id="product-image"
+                                accept="image/*"
+                                onChange={handleFileChange}
+                                style={{ display: 'none' }}
+                            />
                         </div>
                     </div>
+                </div>
+            </form>
+            <div className="new-product-buttons">
+                <Link to="/administración/caracteristicas" className="nav-link secondary-button">Cancelar</Link>
+                {/* <input type="button" value="Cancelar" className="secondary-button"></input> */}
+                <input type="submit" value="Editar característica" className="primary-button" />
+            </div>
 
-                    <div className="new-product-buttons">
-                        <Link to="/administración" className="nav-link secondary-button">Cancelar</Link>
-                        {/* <input type="button" value="Cancelar" className="secondary-button"></input> */}
-                        <input type="submit" value="Editar característica" className="primary-button" />
-                    </div>
-                </form>
-            </main>
             {showSuccessModal && (
                 <SuccessModal
                     message="Característica actualizada con éxito"
@@ -145,6 +140,5 @@ export const EditHighlightPage = () => {
                 />
             )}
         </>
-
     )
 }

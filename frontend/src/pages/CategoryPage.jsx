@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { AdminNavBar } from "../components/AdminNavBar"
 import { useEffect, useState } from "react";
 import { deleteCategoryById, getCategories } from "../services/productService";
 import { SuccessModal } from "../components/SuccessModal";
@@ -52,8 +51,6 @@ export const CategoryPage = () => {
 
     return (
         <>
-            <AdminNavBar />
-            <main className="main-categories">
                 <section className="section-title">
                     <h1 className="page-title">Categorías</h1>
                     <Link to='/administración' className="nav-link secondary-button">Volver al dashboard</Link>
@@ -86,11 +83,10 @@ export const CategoryPage = () => {
                 </section>
 
                 <div className="new-category-buttons">
-                    <Link to='/addCategory'>
+                    <Link to='/administración/addCategory'>
                         <button className="primary-button">Añadir nueva</button>
                     </Link>
                 </div>
-            </main>
 
             {/* Modal de confirmación */}
             {showModal && (
