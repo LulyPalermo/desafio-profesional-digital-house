@@ -43,7 +43,7 @@ export const UserPage = () => {
                         <div className="header-row-cell users-accions-cell">
                             <div id="edit-user" onClick={() => navigate(`/administración/editUser/${user.id}`)}>
                                 <span className="accions"><i className="ri-pencil-fill"></i></span>
-                                <p>Administrar</p>
+                                <p>Administrar permisos</p>
                             </div>
                         </div>
                     </div>

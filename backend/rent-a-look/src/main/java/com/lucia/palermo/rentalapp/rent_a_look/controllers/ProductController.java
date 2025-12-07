@@ -76,41 +76,20 @@ public class ProductController {
     @PutMapping("/products/{id}")
     public ResponseEntity<?> updateProduct(@PathVariable Long id, @RequestBody Product productDetails) {
         try {
-            Optional<Product> optionalProduct = service.findById(id);
-            if (!optionalProduct.isPresent()) {
-                return ResponseEntity.notFound().build();
-            }
-
-            Product product = optionalProduct.get();
-
-            // Validar si se intenta cambiar el nombre a uno ya existente en otro producto
+            // Valida si se intenta cambiar el nombre a uno ya existente
             Product existingByName = service.findByName(productDetails.getName());
             if (existingByName != null && !existingByName.getId().equals(id)) {
                 return ResponseEntity.status(HttpStatus.CONFLICT)
                         .body(Collections.singletonMap("message", "El nombre de este producto ya está en uso."));
             }
 
-            // Actualizar campos
-            product.setName(productDetails.getName());
-            product.setDescription(productDetails.getDescription());
-            product.setPrice(productDetails.getPrice());
-            product.setCode(productDetails.getCode());
-            product.setSize(productDetails.getSize());
+            Product updated = service.updateProduct(id, productDetails);
 
-            if (productDetails.getCategory() != null) {
-                product.setCategory(productDetails.getCategory());
-            }
+            return ResponseEntity.ok(updated);
 
-            // Para actualizar características
-            if (productDetails.getCaracteristicas() != null) {
-                product.setCaracteristicas(productDetails.getCaracteristicas());
-            }
-
-            // No actualizar imágenes por ahora
-            // product.setImages(productDetails.getImages());
-
-            Product updatedProduct = service.save(product);
-            return ResponseEntity.ok(updatedProduct);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Collections.singletonMap("message", e.getMessage()));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Collections.singletonMap("message", "Error actualizando producto"));

@@ -19,11 +19,12 @@ export const EditProductPage = () => {
         caracteristicas: [],
     });
 
+
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showSuccessModal, setShowSuccessModal] = useState(false); //modal de confirmacion
     const [caracteristicas, setCaracteristicas] = useState([]);
-
+    const [selectedFiles, setSelectedFiles] = useState([]); // nuevas imágenes
 
     // Carga producto, categorías y características
     useEffect(() => {
@@ -36,12 +37,13 @@ export const EditProductPage = () => {
                 setProductData({
                     ...product,
                     categoryId: product.category?.id || "",
+                    images: product.images.map(img => img.imageUrl),
                     caracteristicas: product.caracteristicas || [],
                 });
 
-
                 setCategories(cats);
                 setCaracteristicas(caract);  // Guarda características en estado
+
             } catch (error) {
                 console.error(error);
                 alert("Hubo un error al modificar el producto");
@@ -59,37 +61,36 @@ export const EditProductPage = () => {
         setProductData({ ...productData, [name]: value });
     };
 
-    // Manejo de carga de imágenes (igual que en AddProductPage)
-    /*  const handleImageChange = (e) => {
-         const files = Array.from(e.target.files);
-         const imagePreviews = files.map((file) => ({
-             imageUrl: URL.createObjectURL(file),
-         }));
- 
-         setProductData({
-             ...productData,
-             images: imagePreviews,
-         });
-     }; */
+    // Manejo de imágenes nuevas
+    const handleImageChange = (e) => {
+        const files = Array.from(e.target.files);
+        setSelectedFiles(files);
+    };
 
     // Envío del formulario para actualizar
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        let finalImages = productData.images; // si no se eligen imágenes nuevas, quedan las actuales
+
+        if (selectedFiles.length > 0) {
+            // Si hay nuevas imágenes, se reemplazan todas con sus nombres
+            finalImages = selectedFiles.map(f => `/assets/img/${f.name}`);
+        }
+
         try {
             // Se llama al updateProduct para actualizar el producto en el backend
-            await updateProduct(id, productData);
+            await updateProduct(id, {
+                ...productData,
+                images: finalImages.map(url => ({ imageUrl: url }))
+            });
 
-            // Se trae el producto actualizado del backend
-            const updatedProduct = await getProductById(id);
+
+            setShowSuccessModal(true);
 
             // Se guarda el producto actualizado en localStorage para que en el detalle de producto se actualicen los cambios
-            localStorage.setItem("selectedProduct", JSON.stringify(updatedProduct));
+            // localStorage.setItem("selectedProduct", JSON.stringify(updatedProduct));
 
-            // Se muestra el modal de éxito
-            setShowSuccessModal(true); //Aca se muestra el modal que reemplaza el alert de Producto actualizado
-            // alert("Producto actualizado correctamente");
-            // navigate("/administración"); //esto lo saco para que muestre el modal, de lo contrario al actualizar un producto va a dirigirse directamente al panel, sin mostrar el modal
         } catch (error) {
             alert(error.message || "Error al actualizar el producto");
         }
@@ -169,10 +170,46 @@ export const EditProductPage = () => {
                     </div>
                 </div>
 
-                {/* Sección categoría, código y status */}
+                {/* Sección imágenes  */}
                 <div className="form-info-section">
                     <div className="form-title">
-                        <h1>Categoría, código y disponibilidad</h1>
+                        <h1>Imágenes</h1>
+                        <p>Para mantener el orden nombra a tus imágenes seguidas de un número. Ejemplo: <br />nombre1.png <br />nombre.png</p>
+                    </div>
+                    <div className="form-info">
+                        <label htmlFor="product-image">
+                            <div className="upload-picture">
+                                <span><i className="ri-upload-cloud-2-line"></i></span>
+                                <div className="upload-picture-info">
+                                    <p>Click aquí para subir tus fotos</p>
+                                </div>
+                            </div>
+                        </label>
+
+                        {/* Input para las imágenes */}
+                        <input
+                            type="file"
+                            // name="images"
+                            id="product-image"
+                            accept="image/*"
+                            multiple
+                            onChange={handleImageChange}
+                            style={{ display: 'none' }} />
+
+                        <div>
+                            {selectedFiles.length > 0 && (
+                                <p className="image-count">
+                                    {selectedFiles.length} imágen{selectedFiles.length > 1 ? "es" : ""} seleccionad{selectedFiles.length > 1 ? "as" : "a"}
+                                </p>
+                            )}
+                        </div>
+                    </div>
+                </div>
+
+                {/* Sección categoría y código  */}
+                <div className="form-info-section">
+                    <div className="form-title">
+                        <h1>Categoría, código </h1>
                     </div>
 
                     <div className="form-info">
@@ -250,13 +287,15 @@ export const EditProductPage = () => {
                         </div>
                     </div>
                 </div>
+
+                <div className="new-product-buttons">
+                    <Link to="/administración/adminProducts" className="nav-link secondary-button">
+                        Cancelar
+                    </Link>
+                    <input type="submit" value="Guardar cambios" className="primary-button" />
+                </div>
             </form>
-            <div className="new-product-buttons">
-                <Link to="/administración/adminProducts" className="nav-link secondary-button">
-                    Cancelar
-                </Link>
-                <input type="submit" value="Guardar cambios" className="primary-button" />
-            </div>
+
 
             {showSuccessModal && (
                 <SuccessModal

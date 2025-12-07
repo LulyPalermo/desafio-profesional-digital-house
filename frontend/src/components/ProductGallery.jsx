@@ -2,15 +2,15 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import { ModalGaleria } from "./ModalGaleria";
 
-export const ProductGallery = ({ images }) => {
+export const ProductGallery = ({ images, allImages }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-//   if (!images || images.length < 5) return null;
-  if (!images || images.length === 0) return null; 
+  //   if (!images || images.length < 5) return null;
+  if (!images || images.length === 0) return null;
 
   const mainImage = images[0]; // Primera imagen como imagen principal
-  const otherImages = images.slice(1, images.length); // Resto de imágenes en la grilla
-//   const otherImages = images.slice(1, 5);
+  const otherImages = images.slice(1, 5); // 1 principal + 4 en grilla = 5 total
+  //   const otherImages = images.slice(1, 5);
 
   return (
     <div className="gallery-container">
@@ -35,16 +35,18 @@ export const ProductGallery = ({ images }) => {
         <button className="secondary-button" onClick={() => setIsModalOpen(true)}>Ver en galería</button>
       </div>
 
-      {/* Modal de imágenes */}
-      <ModalGaleria images={images} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      {/* Modal con todas las imágenes */}
+      <ModalGaleria
+        images={allImages}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
+      {/* <ModalGaleria images={images} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} /> */}
     </div>
   );
 };
 
 ProductGallery.propTypes = {
-  images: PropTypes.arrayOf(
-    PropTypes.shape({
-      imageUrl: PropTypes.string.isRequired,
-    })
-  ).isRequired,
+  images: PropTypes.array.isRequired,
+  allImages: PropTypes.array.isRequired
 };

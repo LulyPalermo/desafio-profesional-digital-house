@@ -130,13 +130,15 @@ export const EditUserPage = () => {
                         </div>
                     </div>
                 </div>
+
+                <div className="new-product-buttons">
+                    <Link to="/administración" className="nav-link secondary-button">
+                        Cancelar
+                    </Link>
+                    <input type="submit" value="Guardar cambios" className="primary-button" />
+                </div>
             </form>
-            <div className="new-product-buttons">
-                <Link to="/administración" className="nav-link secondary-button">
-                    Cancelar
-                </Link>
-                <input type="submit" value="Guardar cambios" className="primary-button" />
-            </div>
+
         </>
     )
 }

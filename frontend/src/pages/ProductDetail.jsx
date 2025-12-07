@@ -181,7 +181,12 @@ export const ProductDetail = () => {
           <div className="product-detail-container">
             {/* Fotos del producto */}
             <div className="product-detail-img">
-              <ProductGallery images={product.images} />
+              {/* <ProductGallery images={product.images.slice(0, 5)} /> */}
+              <ProductGallery
+                images={product.images.slice(0, 5)}      // solo 5 para mostrar en el detalle
+                allImages={product.images}               // todas para la galería
+              />
+
             </div>
 
             {/* Detalle del producto: Descripción, precio, código, categoría, talle */}

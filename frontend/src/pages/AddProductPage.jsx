@@ -231,11 +231,13 @@ export const AddProductPage = () => {
                         </div>
                     </div>
                 </div>
+
+                <div className="new-product-buttons">
+                    <Link to="/administración" className="nav-link secondary-button">Cancelar</Link>
+                    <input type="submit" value="Agregar producto" className="primary-button" />
+                </div>
             </form>
-            <div className="new-product-buttons">
-                <Link to="/administración" className="nav-link secondary-button">Cancelar</Link>
-                <input type="submit" value="Agregar producto" className="primary-button" />
-            </div>
+
 
             {showNameExistsModal && (
                 <ProductNameExistsModal onClose={() => setShowNameExistsModal(false)} />

@@ -17,6 +17,8 @@ public interface ProductService {
 
     Product findByName(String name); // Método para buscar por nombre
 
+    Product updateProduct(Long id, Product updatedProductData);
+
     Product updateCategory(Long productId, Long categoryId); // Endpoint específico para actualizar solo la categoría de
                                                              // un producto.
 

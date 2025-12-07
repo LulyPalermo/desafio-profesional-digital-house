@@ -87,8 +87,10 @@ export const updateProduct = async (id, productData) => {
         caracteristicas: productData.caracteristicas
             ? productData.caracteristicas.map(c => ({ id: c.id }))
             : [],
+        images: productData.images
+            ? productData.images.map(img => ({ imageUrl: img.imageUrl }))
+            : []
     };
-    delete dataToSend.images;
 
     const response = await fetch(`${API_URL_PRODUCTS}/${id}`, {
         method: "PUT",

@@ -104,12 +104,14 @@ export const AddHighlightPage = () => {
                         </div>
                     </div>
                 </div>
+
+                <div className="new-product-buttons">
+                    <Link to="/administración" className="nav-link secondary-button">Cancelar</Link>
+                    {/* <input type="button" value="Cancelar" className="secondary-button"></input> */}
+                    <input type="submit" value="Agregar característica" className="primary-button" />
+                </div>
             </form>
-            <div className="new-product-buttons">
-                <Link to="/administración" className="nav-link secondary-button">Cancelar</Link>
-                {/* <input type="button" value="Cancelar" className="secondary-button"></input> */}
-                <input type="submit" value="Agregar característica" className="primary-button" />
-            </div>
+
 
             {showSuccessModal && (
                 <SuccessModal

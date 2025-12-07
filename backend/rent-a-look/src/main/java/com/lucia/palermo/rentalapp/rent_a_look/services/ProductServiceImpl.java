@@ -51,7 +51,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public Product save(Product product) {
-        // Establecer la relación inversa: para cada imagen, le decimos a qué producto pertenece
+        // Establecer la relación inversa: para cada imagen, le decimos a qué producto
+        // pertenece
         if (product.getImages() != null) {
             for (ProductImage image : product.getImages()) {
                 image.setProduct(product); // A cada imagen le asigno su "padre"
@@ -70,6 +71,41 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(readOnly = true)
     public Optional<Product> findById(Long id) {
         return repository.findById(id);
+    }
+
+    @Override
+    @Transactional
+    public Product updateProduct(Long id, Product updatedProductData) {
+
+        Product existingProduct = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+        // Campos básicos
+        existingProduct.setName(updatedProductData.getName());
+        existingProduct.setDescription(updatedProductData.getDescription());
+        existingProduct.setPrice(updatedProductData.getPrice());
+        existingProduct.setSize(updatedProductData.getSize());
+        existingProduct.setCode(updatedProductData.getCode());
+        existingProduct.setCategory(updatedProductData.getCategory());
+        existingProduct.setCaracteristicas(updatedProductData.getCaracteristicas());
+
+        // 🔥 LIMPIAR imágenes viejas (gracias a orphanRemoval = true se borran de la
+        // BD)
+        if (existingProduct.getImages() != null) {
+            existingProduct.getImages().clear();
+        }
+
+        // 🔥 CARGAR imágenes nuevas
+        if (updatedProductData.getImages() != null) {
+            for (ProductImage img : updatedProductData.getImages()) {
+                ProductImage newImage = new ProductImage();
+                newImage.setImageUrl(img.getImageUrl());
+                newImage.setProduct(existingProduct);
+                existingProduct.getImages().add(newImage);
+            }
+        }
+
+        return repository.save(existingProduct);
     }
 
     @Override
