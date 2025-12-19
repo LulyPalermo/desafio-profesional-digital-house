@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
-import { NavBarComponent } from "../components/navBarComponent";
 import { useEffect, useState } from "react";
-import { FooterComponent } from "../components/FooterComponent";
 
 export const BookingConfirmationPage = () => {
     const [reservation, setReservation] = useState(null);
@@ -17,9 +15,8 @@ export const BookingConfirmationPage = () => {
     return (
         <>
             <div className="app-container">
-                <NavBarComponent />
 
-                <main className="main-booking main-content">
+                <div className="main-booking">
                     <section className="booking-header">
                         <h1>¡Reserva confirmada con éxito!</h1>
                         <Link to="/" className="secondary-button">Volver al inicio</Link>
@@ -53,9 +50,7 @@ export const BookingConfirmationPage = () => {
                             <p>No hay información de reserva disponible.</p>
                         )}
                     </section>
-                </main>
-
-                <FooterComponent />
+                </div>
             </div>
         </>
     );

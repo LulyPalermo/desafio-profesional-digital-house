@@ -123,7 +123,6 @@ export const ReviewsBlock = ({ product }) => {
                     <button
                         className={`nav-link secondary-button ${!userHasReservation ? "disabled-review-button" : ""}`}
                         onClick={openReviewModal}>Escribir una reseña</button>
-                    {/* <button className="nav-link secondary-button" onClick={openReviewModal}>Escribir una reseña</button> */}
                 </div>
 
                 {/* Puntuación general */}

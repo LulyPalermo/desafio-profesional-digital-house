@@ -23,14 +23,17 @@ export const NavBarComponent = () => {
     const handleFavoritesClick = () => {
         if (user) {
             navigate("/favorites");
+            setIsMenuOpen(false);
         } else {
             setShowLoginModal(true); // si user no esta logueado abre modal de login
+            setIsMenuOpen(false);
         }
     };
 
     const bookingHistoryClick = () => {
         if (user) {
             navigate("/historial");
+            setIsMenuOpen(false);
         }
     };
 
@@ -154,12 +157,14 @@ export const NavBarComponent = () => {
                                     </button>
                                 </li>
                                 <li>
-                                    <button className="nav-link-mobile" onClick={logout}>
+                                    <button className="nav-link-mobile" onClick={() => {
+                                        logout();
+                                        setIsMenuOpen(false);
+                                    }} >
                                         <span><FiLogOut /></span>Cerrar sesión
                                     </button>
                                 </li>
                             </ul>
-
                         </div>
                     ) : (
                         <>
@@ -180,7 +185,6 @@ export const NavBarComponent = () => {
                             </div>
                         </>
                     )}
-
                 </div>
             </div>
 

@@ -1,6 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-import { NavBarComponent } from "../components/navBarComponent";
-import { FooterComponent } from "../components/FooterComponent";
 import { getProducts, searchProducts } from "../services/productService";
 import { Context } from "../Context/Context";
 import { Link } from "react-router-dom";
@@ -184,7 +182,6 @@ export const HomePage = () => {
     return (
         <>
             <div className="app-container">
-                <NavBarComponent />
 
                 {/* Sección buscador */}
                 <section id="search" className="main-content">
@@ -268,7 +265,7 @@ export const HomePage = () => {
                     </div>
                 </section>
 
-                <main className="mainHome">
+                <div className="mainHome">
 
                     {/* Sección resultados de búsqueda */}
                     {searchResults.length > 0 && (
@@ -376,7 +373,7 @@ export const HomePage = () => {
                             <button onClick={goToNextPage} disabled={currentPage === totalPages}>Siguiente ›</button>
                         </div>
                     </section>
-                </main>
+                </div>
 
                 {/* Botón Whatsapp */}
                 <WhatsappButton />
@@ -385,8 +382,6 @@ export const HomePage = () => {
                 <LoginModal
                     isOpen={showLoginModal}
                     onClose={() => setShowLoginModal(false)} />
-
-                <FooterComponent />
             </div>
         </>
     );

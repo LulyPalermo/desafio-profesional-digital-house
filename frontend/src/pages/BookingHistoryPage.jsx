@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import { NavBarComponent } from "../components/navBarComponent";
 import { useUser } from "../Context/UserContext";
 import { getProducts, getReservationsByUser } from "../services/productService";
-import { FooterComponent } from "../components/FooterComponent";
 
 export const BookingHistoryPage = () => {
     const { user } = useUser();
@@ -33,9 +31,8 @@ export const BookingHistoryPage = () => {
     return (
         <>
             <div className="app-container">
-                <NavBarComponent />
 
-                <main className="main-booking main-content">
+                <div className="main-booking">
                     <section className="booking-header">
                         <h1>Historial de reservas</h1>
                         <p>Tienes {reservations.length} {reservations.length === 1 ? "reserva" : "reservas"} pasadas</p>
@@ -57,9 +54,7 @@ export const BookingHistoryPage = () => {
                             ))
                         )}
                     </section>
-                </main>
-
-                <FooterComponent />
+                </div>
             </div>
         </>
     );

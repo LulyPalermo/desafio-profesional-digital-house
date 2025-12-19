@@ -1,5 +1,3 @@
-import { FooterComponent } from "../components/FooterComponent"
-import { NavBarComponent } from "../components/navBarComponent"
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { useUser } from "../Context/UserContext";
 import { Link } from "react-router-dom";
@@ -19,9 +17,8 @@ export const FavoritesPage = () => {
     return (
         <>
             <div className="app-container">
-                <NavBarComponent />
 
-                <main className="mainFavorites main-content">
+                <div className="mainFavorites">
                     <section className="favorites-section-top">
                         <h1>Tus favoritos</h1>
                         <p>Mostrando {userFavorites.length} {userFavorites.length === 1 ? "producto" : "productos"}</p>
@@ -48,9 +45,7 @@ export const FavoritesPage = () => {
                             </li>
                         ))}
                     </ul>
-                </main>
-
-                <FooterComponent />
+                </div>
             </div>
         </>
     )

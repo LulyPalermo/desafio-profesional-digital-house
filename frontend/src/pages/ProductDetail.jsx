@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { NavBarComponent } from "../components/navBarComponent"
 import { ProductGallery } from "../components/ProductGallery";
 import { Link, useNavigate } from "react-router-dom";
 import { DateRange } from "react-date-range";
@@ -14,7 +13,6 @@ import { RiShare2Line } from "react-icons/ri";
 import { ShareProductModal } from "../components/ShareProductModal";
 import { LoginModal } from "../components/LoginModal";
 import { useUser } from "../Context/UserContext";
-import { FooterComponent } from "../components/FooterComponent";
 import { WhatsappButton } from "../components/WhatsappButton";
 
 
@@ -167,9 +165,7 @@ export const ProductDetail = () => {
   return (
     <>
       <div className="app-container">
-        <NavBarComponent />
-
-        <main className="mainDetailProduct main-content">
+        <div className="mainDetailProduct">
           <section className="detailHeader">
             <h1 className="product-detail-title">{product.name}</h1>
             <div className="header-links">
@@ -292,7 +288,7 @@ export const ProductDetail = () => {
 
             </div>
           </div>
-        </main>
+        </div>
 
         {/* Botón Whatsapp */}
         <WhatsappButton />
@@ -300,8 +296,6 @@ export const ProductDetail = () => {
         {/* Modal compartir producto*/}
         <ShareProductModal isOpen={showShareModal} onClose={closeShareModal} product={product} />
         <LoginModal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)} isMandatory={true} />
-
-        <FooterComponent />
       </div>
     </>
   );

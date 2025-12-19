@@ -1,11 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
-import { NavBarComponent } from "../components/navBarComponent";
 import { GoPlusCircle } from "react-icons/go";
 import { useEffect, useState } from "react";
 import { AiOutlineMinusCircle } from "react-icons/ai";
 import { useUser } from "../Context/UserContext";
 import { createReservation } from "../services/productService";
-import { FooterComponent } from "../components/FooterComponent";
 
 
 
@@ -88,9 +86,8 @@ export const BookingPage = () => {
     return (
         <>
             <div className="app-container">
-                <NavBarComponent />
 
-                <main className="main-booking main-content">
+                <div className="main-booking">
                     <section className="booking-header">
                         <h1>Reserva: {product?.name || "Cargando..."}</h1>
                         <Link to="/" className="secondary-button">Salir</Link>
@@ -206,9 +203,7 @@ export const BookingPage = () => {
                             )}
                         </div>
                     </section>
-                </main>
-
-                <FooterComponent />
+                </div>
             </div>
         </>
     );

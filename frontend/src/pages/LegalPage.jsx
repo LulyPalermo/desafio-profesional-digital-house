@@ -1,13 +1,9 @@
-import { FooterComponent } from "../components/FooterComponent"
-import { NavBarComponent } from "../components/navBarComponent"
-
 export const LegalPage = () => {
     return (
         <>
             <div className="app-container">
-                <NavBarComponent />
 
-                <div className="main-legal main-content">
+                <div className="main-legal">
                     <section className="legal-section-header">
                         <h1>Políticas de Privacidad</h1>
                     </section>
@@ -23,8 +19,6 @@ export const LegalPage = () => {
                         </div>
                     </section>
                 </div>
-
-                <FooterComponent />
             </div>
         </>
     )

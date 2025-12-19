@@ -24,6 +24,8 @@ import { CategoryPage } from './pages/CategoryPage';
 import { AddCategoryPage } from './pages/AddCategoryPage';
 import { UserPage } from './pages/UserPage';
 import { EditUserPage } from './pages/EditUserPage';
+import { PublicLayout } from './components/PublicLayout';
+
 
 export const RentalApp = () => {
     return (
@@ -31,13 +33,15 @@ export const RentalApp = () => {
             <Routes>
 
                 {/* -----------Rutas públicas-------------- */}
-                <Route path='/' element={<HomePage />} />
-                <Route path='/detail' element={<ProductDetail />} />
-                <Route path='/favorites' element={<FavoritesPage />} />
-                <Route path="/reservas/:id" element={<BookingPage />} />
-                <Route path="/confirmation" element={<BookingConfirmationPage />} />
-                <Route path="/historial" element={<BookingHistoryPage />} />
-                <Route path="/legales" element={<LegalPage />} />
+                <Route path='/' element={<PublicLayout />}>
+                    <Route index element={<HomePage />} />
+                    <Route path='detail' element={<ProductDetail />} />
+                    <Route path='favorites' element={<FavoritesPage />} />
+                    <Route path="reservas/:id" element={<BookingPage />} />
+                    <Route path="confirmation" element={<BookingConfirmationPage />} />
+                    <Route path="historial" element={<BookingHistoryPage />} />
+                    <Route path="legales" element={<LegalPage />} />
+                </Route>
 
                 {/* -----------Admin-------------- */}
                 <Route path='/administraciónLogin' element={<AdminLogin />} />
