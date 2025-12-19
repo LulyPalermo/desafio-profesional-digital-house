@@ -1,11 +1,14 @@
 import { Link, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react";
 import { getUsers } from "../services/userService";
+import { useUser } from "../Context/UserContext";
 
 export const UserPage = () => {
 
     const [users, setUsers] = useState([]);
     const navigate = useNavigate();
+    const { user: loggedUser } = useUser();
+
 
     // Se cargan los usuarios
     useEffect(() => {
@@ -41,10 +44,23 @@ export const UserPage = () => {
                         <p className="header-row-cell users-name-cell">{user.nombre + " " + user.apellido}</p>
                         <p className="header-row-cell users-email-cell">{user.email}</p>
                         <div className="header-row-cell users-accions-cell">
-                            <div id="edit-user" onClick={() => navigate(`/administración/editUser/${user.id}`)}>
+                            {/* <div id="edit-user" onClick={() => navigate(`/administración/editUser/${user.id}`)}>
                                 <span className="accions"><i className="ri-pencil-fill"></i></span>
                                 <p>Administrar permisos</p>
+                            </div> */}
+                            <div className="header-row-cell users-accions-cell">
+                                {loggedUser?.id === user.id ? (
+                                    <p className="admin-label">Eres administrador</p>
+                                ) : (
+                                    <div id="edit-user" onClick={() => navigate(`/administración/editUser/${user.id}`)}>
+                                        <span className="accions">
+                                            <i className="ri-pencil-fill"></i>
+                                        </span>
+                                        <p>Administrar permisos</p>
+                                    </div>
+                                )}
                             </div>
+
                         </div>
                     </div>
                 ))}

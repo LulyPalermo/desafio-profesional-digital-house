@@ -46,16 +46,17 @@ export const AdminLogin = () => {
                     <p className="login-modal-description">Inicia sesión con tu email y contraseña para ingresar al administrador.</p>
                 </div>
 
-                <form className="login-modal-form" onSubmit={handleSubmit}>                    <div className='login-form-labels'>
-                    <label>Correo electrónico</label>
-                    <input
-                        type="email"
-                        name="email"
-                        required
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                </div>
+                <form className="login-modal-form" onSubmit={handleSubmit}>
+                    <div className='login-form-labels'>
+                        <label>Correo electrónico</label>
+                        <input
+                            type="email"
+                            name="email"
+                            required
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </div>
                     <div className='login-form-labels'>
                         <label>Contraseña</label>
                         <input

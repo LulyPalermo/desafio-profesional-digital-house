@@ -102,7 +102,7 @@ export const EditUserPage = () => {
                             />
 
                             <IconToggle
-                                label="Agregar categorías"
+                                label="Agregar y eliminar categorías"
                                 initialOn={user.agregarCategoria}
                                 onToggle={(val) => handleToggle("agregarCategoria", val)}
                             />

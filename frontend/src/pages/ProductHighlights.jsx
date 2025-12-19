@@ -134,13 +134,7 @@ export const ProductHighlights = () => {
             )}
 
             {/* Modal de permisos insuficientes */}
-            {showPermissionModal && (
-                <SuccessModal
-                    message="No tienes permisos para realizar esta acción"
-                    onClose={handleCloseModal}
-                />
-            )}
-
+    
             {showPermissionModal && (
                 <SuccessModal
                     message="No tienes permisos para realizar esta acción"
