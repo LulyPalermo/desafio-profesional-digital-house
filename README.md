@@ -1,20 +1,23 @@
-![Logo](/assets/img/logo-readme.png)
+![Logo](frontend/public/assets/img/logo-readme.png)
+
+---
 
 ### 🛒 Descripción
 **Rent a look** es una aplicación web Full Stack para alquilar ropa y accesorios para fiestas.
 Permite a los usuarios explorar productos, gestionar favoritos y realizar reservas, mientras que los administradores pueden gestionar productos, usuarios y funcionalidades del sistema.
 
----
+
 
 ### 🚀 Tecnologías utilizadas
-## Frontend
+
+#### Frontend
 - **React 19**
 - **React Router DOM 7.1.5**
 - **Vite 6**
 - **SweetAlert2**
 - **Material UI Icons**
 
-## Backend
+#### Backend
 - **Java 17**
 - **Spring Boot 3.3.x**
 - **Spring Data JPA**
@@ -22,18 +25,18 @@ Permite a los usuarios explorar productos, gestionar favoritos y realizar reserv
 - **MySQL**
 - **Hibernate**
 
----
+
 
 ### ⚙️ Instalación local
 Para correr este proyecto de manera local, seguí estos pasos:
 
-## 📦 Cloná el repositorio
+#### 📦 Cloná el repositorio
 ```bash
   git clone https://github.com/LulyPalermo/desafio-profesional-digital-house
   cd rent-a-look
 ```
 
-## 🛠️ Backend (Spring Boot)
+#### 🛠️ Backend (Spring Boot)
 1. **Configuración de Base de Datos**: Accedé a MySQL y creá la base de datos:
 ```bash
 CREATE DATABASE db_rental_springboot;
@@ -63,7 +66,7 @@ Ejecutá spring-boot:
 mvn spring-boot:run
 ```
 
-## 🎨 Frontend (React + Vite)
+#### 🎨 Frontend (React + Vite)
 1. Accedé a la carpeta del frontend:
 ```bash
 cd frontend
@@ -81,16 +84,16 @@ npm run dev
 ```
 4. Abrí en tu navegador la URL que te indique la consola
 
----
+
 
 ### 📬 Endpoints (API REST)
 
-## 🔐 Admin
+#### 🔐 Admin
 | Método | Endpoint              | Descripción                          | ¿Se debe loguear?   |
 |--------|-----------------------|--------------------------------------|---------------------|
 | GET    | /admin_users          | Listado de usuarios administradores  |✅ (ADMIN)           |
 
-## 👗 Productos
+#### 👗 Productos
 | Método | Endpoint              | Descripción                          | ¿Se debe loguear?    |
 |--------|-----------------------|--------------------------------------|----------------------|
 | GET    | /products             | Listado de productos                 | ❌                   |
@@ -98,29 +101,30 @@ npm run dev
 | POST   | /products             | Crear producto                       | ✅ (ADMIN)           |
 | DELETE | /products/{id}        | Eliminar producto                    | ✅ (ADMIN)           |
 
-## 📅 Reservas
+#### 📅 Reservas
 | Método | Endpoint                           | Descripción                    | ¿Se debe loguear?  |
 |--------|------------------------------------|--------------------------------|--------------------|
 | POST   | /reservations                      | Crear una reserva              | ✅                 |
 | GET    | /reservations/user/{userId}        | Listar reservas de un usuario  | ✅                 |
 | GET    | /reservations/product/{productId}  | Listar reservas de un producto | ❌                 |
 
----
+
 
 ### 🗂️ Diagrama de Entidades
-[Link al diagrama](https://www.figma.com/design/D8pb8YtySUind4VRhLDEpF/Desaf%C3%ADo-profesional---Digital-House?node-id=2003-12&t=TOD7kyS114yf8sgd-1)
+- [Link al diagrama](https://www.figma.com/design/D8pb8YtySUind4VRhLDEpF/Desaf%C3%ADo-profesional---Digital-House?node-id=2003-12&t=TOD7kyS114yf8sgd-1)
 
-> Creado con [dbdiagram](https://dbdiagram.io)
+Creado con [dbdiagram](https://dbdiagram.io)
 
----
+
 
 ### 🧪 Planificación y ejecución de los tests
-[Link test sprint 1](https://www.figma.com/design/D8pb8YtySUind4VRhLDEpF/Desaf%C3%ADo-profesional---Digital-House?node-id=160-707&t=TOD7kyS114yf8sgd-1)
-[Link test sprint 2](https://www.figma.com/design/D8pb8YtySUind4VRhLDEpF/Desaf%C3%ADo-profesional---Digital-House?node-id=160-1442&t=TOD7kyS114yf8sgd-1)
-[Link test sprint 3](https://www.figma.com/design/D8pb8YtySUind4VRhLDEpF/Desaf%C3%ADo-profesional---Digital-House?node-id=220-3011&t=TOD7kyS114yf8sgd-1)
-[Link test sprint 4](https://www.figma.com/design/D8pb8YtySUind4VRhLDEpF/Desaf%C3%ADo-profesional---Digital-House?node-id=220-3012&t=TOD7kyS114yf8sgd-1)
 
----
+- [Link test sprint 1](https://www.figma.com/design/D8pb8YtySUind4VRhLDEpF/Desaf%C3%ADo-profesional---Digital-House?node-id=160-707&t=TOD7kyS114yf8sgd-1)
+- [Link test sprint 2](https://www.figma.com/design/D8pb8YtySUind4VRhLDEpF/Desaf%C3%ADo-profesional---Digital-House?node-id=160-1442&t=TOD7kyS114yf8sgd-1)
+- [Link test sprint 3](https://www.figma.com/design/D8pb8YtySUind4VRhLDEpF/Desaf%C3%ADo-profesional---Digital-House?node-id=220-3011&t=TOD7kyS114yf8sgd-1)
+- [Link test sprint 4](https://www.figma.com/design/D8pb8YtySUind4VRhLDEpF/Desaf%C3%ADo-profesional---Digital-House?node-id=220-3012&t=TOD7kyS114yf8sgd-1)
+
+
 
 ### ✉️ Envío de confirmación de reservas
 Al crear una reserva, la aplicación genera un correo de confirmación usando **SendGrid.**
@@ -138,7 +142,7 @@ sendgrid.from.email=TU_EMAIL
 ```
 3. Reiniciar el servidor Spring Boot.
 
----
+
 
 ### 🗒️ Notas adicionales
 La aplicación cuenta con un archivo import.sql el cual contiene todos los datos para utilizar la app.
@@ -158,13 +162,17 @@ Contraseña: 123456o&
 
 👉🏼 En la carpeta public hay imágenes guardadas para poder realizar la subida de productos o de caracteristicas (se llaman img-prueba / icon-caract-prueba).
 
----
+
 
 #### 📷 Imágenes
 Las imágenes utilizadas en este proyecto fueron tomadas con fines educativos y de demostración. **No son de autoría propia.**
 
-#### 📚 Documentación en Figma
-[Link](https://www.figma.com/design/D8pb8YtySUind4VRhLDEpF/Desaf%C3%ADo-profesional---Digital-House?node-id=2005-20&t=TOD7kyS114yf8sgd-1) 
+
+
+### 📚 Documentación en Figma
+- [Link a Figma](https://www.figma.com/design/D8pb8YtySUind4VRhLDEpF/Desaf%C3%ADo-profesional---Digital-House?node-id=2005-20&t=TOD7kyS114yf8sgd-1) 
+
+
 
 #### 👩🏻‍💻 Desarrollado por Lucía Palermo
 Proyecto académico Professional Developer | Digital House | 2025
