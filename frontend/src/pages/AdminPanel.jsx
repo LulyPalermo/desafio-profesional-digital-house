@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../Context/UserContext";
 import { SuccessModal } from "../components/SuccessModal";
-// import { GiClothes } from "react-icons/gi";
 
 export const AdminPanel = () => {
     const [isMobile, setIsMobile] = useState(false);
@@ -119,8 +118,7 @@ export const AdminPanel = () => {
                         }
                     >
                         <button className="admin-panel-button">
-                            <i className="ri-add-fill"></i>
-                            {/* <GiClothes /> */}
+                            <i className="ri-t-shirt-line"></i>
                             Categorías de productos
                         </button>
                     </Link>

@@ -1,7 +1,5 @@
-# spring.application.name=rent-a-look
-
 # Configuración de base de datos (modificar según tu entorno)
-spring.datasource.url=jdbc:mysql://localhost:3306/NOMBRE_DE_TU_BASE
+spring.datasource.url=jdbc:mysql://localhost:3306/db_rental_springboot
 spring.datasource.username=TU_USUARIO
 spring.datasource.password=TU_CONTRASENA
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
@@ -16,6 +14,5 @@ logging.level.org.hibernate.SQL=debug
 # server.port=8081
 
 # SendGrid
-# La API key real NO debe ir aquí. Se reemplaza localmente mediante variables de entorno
 sendgrid.api.key=${SENDGRID_API_KEY}
 sendgrid.from.email=TU_EMAIL
